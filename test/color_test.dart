@@ -24,6 +24,13 @@ void main() {
       expect(color.g, equals(255));
       expect(color.b, equals(238));
     });
+    test("through the Color.hsl constructor", () {
+      Color color = new Color.hsl(164, 100, 87.6);
+      expect(color is Color, isTrue);
+      expect(color.r, equals(192));
+      expect(color.g, equals(255));
+      expect(color.b, equals(238));
+    });
   });
   group("A Color can be converted to a string ", () {
     test("through the Color.toString() method", () {

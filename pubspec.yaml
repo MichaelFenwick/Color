@@ -1,5 +1,5 @@
 name: color
-version: '0.1.0'
+version: '0.2.0'
 description: A simple class to encapsulate the concept of a color and provide some helpful conversion methods..
 author: Michael Fenwick <mike@mikefenwick.com>
 homepage: http://github.com/MichaelFenwick/Color
