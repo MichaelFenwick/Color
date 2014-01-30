@@ -1,5 +1,32 @@
+/**
+* Copyright (c) 2014 Michael Fenwick <mike@mikefenwick.com>
+*
+* The use of this source code is governed by the MIT license as specified
+* in the LICENSE file.
+*/
+
+library color;
+
 import 'dart:math';
 
+/**
+* An object representing a color in the RGB color space.
+*
+* A [Color] can be constructed be specifying its value as either an RGB
+* vector, a 6 digit hex string, or an HSL vector, using the appropriate
+* named constructor.  For example, the following constructions are all
+* identical:
+*
+*     new Color.rgb(192, 255, 238);
+*     new Color.hex('c0ffee');
+*     new Color.hsl(163.8, 100, 87.6);
+*
+* Each of the above constructors will result in a Color object that has
+* internal RGB values of 192, 255, 238.
+*
+* [Color]s can also be directly compared using the `==` operator, which
+* will return true if the two [Color] objects represent the same RGB color.
+*/
 class Color {
   int _r;
   int _g;
@@ -7,12 +34,31 @@ class Color {
 
   Color() {}
 
+  /**
+  * Creates a [Color] using a vector describing its red, green, and blue
+  * values.
+  *
+  * The value for [r], [g], and [b] should be in the range between 0 and
+  * 255 (inclusive).  Values above this range will be assumed to be a value
+  * of 255, and values below this range will be assumed to be a value of 0.
+  */
   Color.rgb(int r, int g, int b) {
     this.r = r;
     this.g = g;
     this.b = b;
   }
 
+  /**
+  * Creates a [Color] using a [String] describing its RGB value in hex.
+  *
+  * The [hexCode] should be a string of 6 characters, each of which is a
+  * valid hex character (0 through 9 and A through F).  Capital and lowercase
+  * letters will work equally well.  Characters after the first 6 characters
+  * will be ignored.  If non-valid hex characters are encountered, a
+  * [FormatException] will be thrown.
+  *
+  * The [hexCode] should not be preceeded with a pound sign (#).
+  */
   Color.hex(String hexCode) {
     Map<String, int> rgb = hexToRgb(hexCode);
     this.r = rgb['r'];
@@ -20,6 +66,18 @@ class Color {
     this.b = rgb['b'];
   }
 
+  /**
+  * Creates a [Color] using a vector describing its hue, saturation, and
+  * luminance.
+  *
+  * The [hue] is given as a number in degrees, typically ranging in value
+  * between 0 and 360.  Values outside of this converted as `hue % 360` to
+  * be fit into the standard angle range.
+  *
+  * The [saturation] is given as a percentage between 0 and 100 (inclusive).
+  *
+  * The [luminance] is given as a percentage between 0 and 100 (inclusive).
+  */
   Color.hsl(num hue, num saturation, num luminance) {
     Map<String, int> rgb = hslToRgb(hue, saturation, luminance);
     this.r = rgb['r'];
