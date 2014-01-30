@@ -6,22 +6,22 @@ Installation
 -----
 1. Add this to your package's `pubspec.yaml` file:
 
-    ```yaml
-    dependencies:
-      color: any
-    ```
+```yaml
+dependencies:
+  color: any
+```
 
 1. Get the package using your IDE's GUI or via command line with
 
-    ```bash
-    $ pub get
-    ```
+```bash
+$ pub get
+```
 
 1. Import the `color.dart` file in your app
 
-    ```dart
-    import 'package:color/color.dart';
-    ```
+```dart
+import 'package:color/color.dart';
+```
 
 Usage
 -----
