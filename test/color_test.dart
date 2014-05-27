@@ -3,6 +3,7 @@ import 'package:unittest/unittest.dart';
 import 'package:unittest/html_config.dart';
 
 void main() {
+  print("Running");
   useHtmlConfiguration();
 
   group("A Color can be constructed ", () {
@@ -38,6 +39,11 @@ void main() {
       String string = color.toString();
       expect(string, equals('r: 192, g: 255, b: 238'));
     });
+    test("through the Color.toRgbString() method", () {
+      Color color = new Color.rgb(192, 255, 238);
+      String string = color.toRgbString();
+      expect(string, equals('r: 192, g: 255, b: 238'));
+    });
     test("through the Color.toHexString() method", () {
       Color color = new Color.hex('c0ffee');
       String string = color.toHexString();
@@ -47,6 +53,12 @@ void main() {
       Color color = new Color.hsl(163.8, 100, 87.6);
       String string = color.toHslString();
       expect(string, equals('h: 164, s: 100.0%, l: 87.6%'));
+    });
+    test("and hex strings are prepended with 0s properly", () {
+      Color black = new Color.hex('000000');
+      Color green = new Color.hex('00ff00');
+      expect(black.toHexString(), equals('000000'));
+      expect(green.toHexString(), equals('00ff00'));
     });
   });
   group("Colors can be compared to each other ", () {

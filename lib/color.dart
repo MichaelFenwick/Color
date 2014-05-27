@@ -97,6 +97,7 @@ class Color {
   operator ==(Color o) => r == o.r && g == o.g && b == o.b;
 
   String toString() => "r: $r, g: $g, b: $b";
+  String toRgbString() => toString();
   String toHexString() => rgbToHexString(r, g, b);
   String toHslString() {
     Map <String, num> hsl = rgbToHsl(r, g, b);
@@ -110,9 +111,9 @@ class Color {
 
   static Map<String, String> rgbToHex(int r, int g, int b) {
     return {
-        'r': r.toRadixString(16),
-        'g': g.toRadixString(16),
-        'b': b.toRadixString(16)
+        'r': r.toRadixString(16).padLeft(2, '0'),
+        'g': g.toRadixString(16).padLeft(2, '0'),
+        'b': b.toRadixString(16).padLeft(2, '0')
     };
   }
 

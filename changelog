@@ -1,0 +1,16 @@
+0.1.0
+-----
+* Creation of the Color class supporting rgb colors.
+
+0.2.0
+-----
+* Added hex support and conversion functions.
+
+0.3.0
+-----
+* Added hsl support and conversion functions.
+
+0.3.1
+-----
+* Resolved bug where Color.toHexString() was not prepending each byte with 0s as appropriate.
+* Added Color.toRgbString() as an alias for Color.toSting().
