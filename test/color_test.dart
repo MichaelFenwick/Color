@@ -27,6 +27,13 @@ void main() {
       expect(color.s, equals(100));
       expect(color.l, equals(87.6));
     });
+    test("through the Color.xyz constructor", () {
+      XyzColor color = new Color.xyz(72.931, 88.9, 94.204);
+      expect(color is Color, isTrue);
+      expect(color.x, equals(72.931));
+      expect(color.y, equals(88.9));
+      expect(color.z, equals(94.204));
+    });
     test("as an RgbColor", () {
       RgbColor color = new RgbColor(192, 255, 238);
       expect(color is Color, isTrue);
@@ -40,6 +47,20 @@ void main() {
       expect(color.r, equals(192));
       expect(color.g, equals(255));
       expect(color.b, equals(238));
+    });
+    test("as a HslColor", () {
+      HslColor color = new HslColor(163.8, 100, 87.6);
+      expect(color is Color, isTrue);
+      expect(color.h, equals(163.8));
+      expect(color.s, equals(100));
+      expect(color.l, equals(87.6));
+    });
+    test("as a XyzColor", () {
+      XyzColor color = new XyzColor(72.931, 88.9, 94.204);
+      expect(color is Color, isTrue);
+      expect(color.x, equals(72.931));
+      expect(color.y, equals(88.9));
+      expect(color.z, equals(94.204));
     });
   });
   group("Colors can be converted to a string ", () {
@@ -87,10 +108,12 @@ void main() {
     RgbColor rgb;
     HexColor hex;
     HslColor hsl;
+    XyzColor xyz;
     setUp(() {
       rgb = new RgbColor(192, 255, 238);
       hex = new HexColor('c0ffee');
       hsl = new HslColor(163.8, 100, 87.6);
+      xyz = new XyzColor(72.931, 88.9, 94.204);
     });
     test("from rgb to hex", () {
       HexColor conversion = rgb.toHexColor();
@@ -110,6 +133,14 @@ void main() {
     });
     test("from hsl to rgb", () {
       RgbColor conversion = hsl.toRgbColor();
+      expect(conversion, equals(rgb));
+    });
+    test("from rgb to xyz", () {
+      XyzColor conversion =  rgb.toXyzColor();
+      expect(conversion, equals(xyz));
+    });
+    test("from xyz to rgb", () {
+      RgbColor conversion =  xyz.toRgbColor();
       expect(conversion, equals(rgb));
     });
   });
