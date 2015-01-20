@@ -12,6 +12,12 @@ class XyzColor extends Color {
     _z = z;
   }
 
+  XyzColor.referenceWhite() {
+    _x = 95.047;
+    _y = 100;
+    _z = 108.883;
+  }
+
   get x => _x;
   get y => _y;
   get z => _z;
@@ -43,5 +49,31 @@ class XyzColor extends Color {
     return new RgbColor(rgb['r'], rgb['g'], rgb['b']);
   }
 
+  CielabColor toCielabColor() {
+    Map<String, num> lab = {};
+    Map<String, num> xyz = {};
+    XyzColor referenceWhite = new XyzColor.referenceWhite();
+
+    this.toMap().forEach((String key, num value) {
+      value /= referenceWhite[key];
+
+      if (value > 0.008856) {
+        value = pow(value, 1/3);
+      } else {
+        value = (7.787 * value) + 16 / 116;
+      }
+      xyz[key] = value;
+    });
+
+    lab['l'] = (116 * xyz['y']) - 16;
+    lab['a'] = 500 * (xyz['x'] - xyz['y']);
+    lab['b'] = 200 * (xyz['y'] - xyz['z']);
+
+    return new CielabColor(lab['l'], lab['a'], lab['b']);
+  }
+
   String toString() => "x: $x, y: $y, z: $z";
+
+  Map<String, num> toMap() => {'x': x, 'y': y, 'z': z};
+
 }

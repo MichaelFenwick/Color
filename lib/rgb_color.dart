@@ -14,7 +14,7 @@ class RgbColor extends Color {
    * 255 (inclusive).  Values above this range will be assumed to be a value
    * of 255, and values below this range will be assumed to be a value of 0.
    */
-  RgbColor(int r, int g, int b) {
+  RgbColor(num r, num g, num b) {
     _r = r.toInt();
     _g = g.toInt();
     _b = b.toInt();
@@ -81,9 +81,19 @@ class RgbColor extends Color {
     return new XyzColor(x, y, z);
   }
 
+  CielabColor toCielabColor() => this.toXyzColor().toCielabColor();
+
   HexColor toHexColor() => new HexColor.fromRgb(_r, _g, _b);
 
   RgbColor toRgbColor() => this;
+
+  Map<String, int> toMap() {
+    return {
+      'r': r,
+      'g': g,
+      'b': b
+    };
+  }
 
   String toString() => "r: $r, g: $g, b: $b";
 

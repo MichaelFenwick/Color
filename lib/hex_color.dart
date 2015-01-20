@@ -37,6 +37,3 @@ class HexColor extends RgbColor {
   String toString() => '$rHex$gHex$bHex';
 
 }
-
-
-

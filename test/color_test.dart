@@ -1,11 +1,8 @@
 import '../lib/color.dart';
 import 'package:unittest/unittest.dart';
-import 'package:unittest/html_config.dart';
 
 void main() {
-  useHtmlConfiguration();
-
-  group("A Color can be constructed ", () {
+  group("A Color can be constructed", () {
     test("through the Color.rgb constructor", () {
       RgbColor color = new Color.rgb(192, 255, 238);
       expect(color is Color, isTrue);
@@ -33,6 +30,13 @@ void main() {
       expect(color.x, equals(72.931));
       expect(color.y, equals(88.9));
       expect(color.z, equals(94.204));
+    });
+    test("through the Color.cielab constructor", () {
+      CielabColor color = new Color.cielab(95.538, -23.02, 1.732);
+      expect(color is Color, isTrue);
+      expect(color.l, equals(95.538));
+      expect(color.a, equals(-23.02));
+      expect(color.b, equals(1.732));
     });
     test("as an RgbColor", () {
       RgbColor color = new RgbColor(192, 255, 238);
@@ -62,8 +66,15 @@ void main() {
       expect(color.y, equals(88.9));
       expect(color.z, equals(94.204));
     });
+    test("as a CielabColor", () {
+      CielabColor color = new CielabColor(95.538, -23.02, 1.732);
+      expect(color is Color, isTrue);
+      expect(color.l, equals(95.538));
+      expect(color.a, equals(-23.02));
+      expect(color.b, equals(1.732));
+    });
   });
-  group("Colors can be converted to a string ", () {
+  group("Colors can be converted to a string", () {
     test("from an RgbColor", () {
       Color color = new Color.rgb(192, 255, 238);
       String string = color.toString();
@@ -85,6 +96,16 @@ void main() {
       String string = color.toString();
       expect(string, equals('h: 163.8, s: 100.0%, l: 87.6%'));
     });
+    test("from a XyzColor", () {
+      Color color = new Color.xyz(72.931, 88.9, 94.204);
+      String string = color.toString();
+      expect(string, equals('x: 72.931, y: 88.9, z: 94.204'));
+    });
+    test("from an CielabColor", () {
+      Color color = new Color.cielab(95.538, -23.02, 1.732);
+      String string = color.toString();
+      expect(string, equals('l: 95.538, a: -23.02, b: 1.732'));
+    });
   });
   group("Colors can be compared to each other ", () {
     Color coffee1;
@@ -104,16 +125,18 @@ void main() {
       expect(coffee1, isNot(equals(tea)));
     });
   });
-  group("Colors can be converted ", () {
+  group("Colors can be converted", () {
     RgbColor rgb;
     HexColor hex;
     HslColor hsl;
     XyzColor xyz;
+    CielabColor cielab;
     setUp(() {
       rgb = new RgbColor(192, 255, 238);
       hex = new HexColor('c0ffee');
       hsl = new HslColor(163.8, 100, 87.6);
       xyz = new XyzColor(72.931, 88.9, 94.204);
+      cielab = new CielabColor(95.538, -23.02, 1.732);
     });
     test("from rgb to hex", () {
       HexColor conversion = rgb.toHexColor();
@@ -142,6 +165,22 @@ void main() {
     test("from xyz to rgb", () {
       RgbColor conversion =  xyz.toRgbColor();
       expect(conversion, equals(rgb));
+    });
+    test("from rgb to cielab", () {
+      CielabColor conversion =  rgb.toCielabColor();
+      expect(conversion, equals(cielab));
+    });
+    test("from xyz to cielab", () {
+      CielabColor conversion =  xyz.toCielabColor();
+      expect(conversion, equals(xyz));
+    });
+    test("from cielab to rgb", () {
+      RgbColor conversion =  cielab.toRgbColor();
+      expect(conversion, equals(cielab));
+    });
+    test("from cielab to xyz", () {
+      XyzColor conversion =  cielab.toXyzColor();
+      expect(conversion, equals(cielab));
     });
   });
 }

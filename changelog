@@ -14,3 +14,16 @@
 -----
 * Resolved bug where Color.toHexString() was not prepending each byte with 0s as appropriate.
 * Added Color.toRgbString() as an alias for Color.toSting().
+
+1.0.0
+-----
+* Major refactor which will break code using earlier versions.
+* Refactored to pull each color space into its own subclass extending a base Color class.
+
+1.1.0
+-----
+Added XYZ color space support with bidirectional conversions between XYZ and RGB color spaces.
+
+1.2.0
+-----
+Added CIELAB color space support with bidirectional conversions with the XYZ color space (and the RGB color space using XYZ as an intermediary).

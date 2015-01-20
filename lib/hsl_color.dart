@@ -59,22 +59,19 @@ class HslColor extends Color {
       rgb[2] = 6 - hue * 6;
     }
 
-    rgb = rgb.map((val) => val + (1 - saturation) * (0.5 - val));
+    rgb = rgb.map((val) => val + (1 - saturation) * (0.5 - val)).toList();
 
     if (luminance < 0.5) {
-      rgb = rgb.map((val) => luminance * 2 * val);
+      rgb = rgb.map((val) => luminance * 2 * val).toList();
     } else {
-      rgb = rgb.map((val) => luminance * 2 * (1 - val) + 2 * val - 1);
+      rgb = rgb.map((val) => luminance * 2 * (1 - val) + 2 * val - 1).toList();
     }
 
-    rgb = rgb.map((val) => (val * 255).round());
-
-    rgb = rgb.toList();
+    rgb = rgb.map((val) => (val * 255).round()).toList();
 
     return new RgbColor(rgb[0], rgb[1], rgb[2]);
   }
 
   String toString() => "h: $h, s: $s%, l: $l%";
-
 
 }

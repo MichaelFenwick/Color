@@ -13,6 +13,7 @@ part 'rgb_color.dart';
 part 'hex_color.dart';
 part 'hsl_color.dart';
 part 'xyz_color.dart';
+part 'cielab_color.dart';
 
 /**
  * An object representing a color.
@@ -35,9 +36,11 @@ abstract class Color {
   factory Color.hex(String hexCode) => new HexColor(hexCode);
   factory Color.hsl(num h, num s, num l) => new HslColor(h, s, l);
   factory Color.xyz(num x, num y, num z) => new XyzColor(x, y, z);
+  factory Color.cielab(num l, num a, num b) => new CielabColor(l, a, b);
 
   String toString();
   RgbColor toRgbColor();
+  Map<String, num> toMap();
 
   get hashCode {
     RgbColor rgb = this.toRgbColor();
@@ -46,5 +49,9 @@ abstract class Color {
 
   operator ==(Object other) {
     return other is Color && this.hashCode == other.hashCode;
+  }
+
+  operator [](String key) {
+    return this.toMap()[key];
   }
 }

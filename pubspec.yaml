@@ -1,5 +1,5 @@
 name: color
-version: '1.1'
+version: '1.2.0'
 description: A simple Dart package exposing a Color class which can be used to create, convert, and compare colors.
 author: Michael Fenwick <mike@mikefenwick.com>
 homepage: http://github.com/MichaelFenwick/Color
