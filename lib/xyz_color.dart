@@ -49,6 +49,10 @@ class XyzColor extends Color {
     return new RgbColor(rgb['r'], rgb['g'], rgb['b']);
   }
 
+  HslColor toHslColor() => this.toRgbColor().toHslColor();
+
+  XyzColor toXyzColor() => this;
+
   CielabColor toCielabColor() {
     Map<String, num> lab = {};
     Map<String, num> xyz = {};

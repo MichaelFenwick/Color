@@ -38,8 +38,12 @@ abstract class Color {
   factory Color.xyz(num x, num y, num z) => new XyzColor(x, y, z);
   factory Color.cielab(num l, num a, num b) => new CielabColor(l, a, b);
 
-  String toString();
   RgbColor toRgbColor();
+  HslColor toHslColor();
+  XyzColor toXyzColor();
+  CielabColor toCielabColor();
+
+  String toString();
   Map<String, num> toMap();
 
   get hashCode {

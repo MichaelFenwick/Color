@@ -5,6 +5,12 @@ class HslColor extends Color {
   num _h;
   num _s;
   num _l;
+  static const num hMin = 0;
+  static const num sMin = 0;
+  static const num lMin = 0;
+  static const num hMax = 360;
+  static const num sMax = 100;
+  static const num lMax = 100;
 
   /**
    * Creates a [HslColor] using a vector describing its hue, saturation, and
@@ -19,7 +25,7 @@ class HslColor extends Color {
    * The [luminance] is given as a percentage between 0 and 100 (inclusive).
    */
   HslColor(num hue, num saturation, num luminance) {
-    _h = hue % 360;
+    _h = hue % hMax;
     _s = saturation;
     _l = luminance;
   }
@@ -28,9 +34,9 @@ class HslColor extends Color {
   get s => _s;
   get l => _l;
 
-  set h(num h) => _h = h % 360;
-  set s(num s) => _s = max(0, min(100, s));
-  set l(num l) => _l = max(0, min(100, l));
+  set h(num h) => _h = h % hMax;
+  set s(num s) => _s = max(sMin, min(sMax, s));
+  set l(num l) => _l = max(lMin, min(lMax, l));
 
   RgbColor toRgbColor() {
     List<num> rgb = [0, 0, 0];
@@ -72,6 +78,14 @@ class HslColor extends Color {
     return new RgbColor(rgb[0], rgb[1], rgb[2]);
   }
 
+  HslColor toHslColor() => this;
+
+  XyzColor toXyzColor() => this.toRgbColor().toXyzColor();
+
+  CielabColor toCielabColor() => this.toRgbColor().toXyzColor().toCielabColor();
+
   String toString() => "h: $h, s: $s%, l: $l%";
+
+  Map<String, num> toMap() => {'h': _h, 's': _s, 'l': _l};
 
 }

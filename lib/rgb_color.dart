@@ -5,6 +5,12 @@ class RgbColor extends Color {
   int _r;
   int _g;
   int _b;
+  static const int rMin = 0;
+  static const int gMin = 0;
+  static const int bMin = 0;
+  static const int rMax = 255;
+  static const int gMax = 255;
+  static const int bMax = 255;
 
   /**
    * Creates a [Color] using a vector describing its red, green, and blue
@@ -24,9 +30,11 @@ class RgbColor extends Color {
   get g => _g;
   get b => _b;
 
-  set r(int r) => _r = max(0, min(255, r.toInt()));
-  set g(int g) => _g = max(0, min(255, g.toInt()));
-  set b(int b) => _b = max(0, min(255, b.toInt()));
+  set r(int r) => _r = max(bMin, min(rMax, r.toInt()));
+  set g(int g) => _g = max(bMin, min(gMax, g.toInt()));
+  set b(int b) => _b = max(bMin, min(bMax, b.toInt()));
+
+  RgbColor toRgbColor() => this;
 
   HslColor toHslColor() {
     num rf = _r / 255;
@@ -85,7 +93,7 @@ class RgbColor extends Color {
 
   HexColor toHexColor() => new HexColor.fromRgb(_r, _g, _b);
 
-  RgbColor toRgbColor() => this;
+  String toString() => "r: $r, g: $g, b: $b";
 
   Map<String, int> toMap() {
     return {
@@ -94,7 +102,4 @@ class RgbColor extends Color {
       'b': b
     };
   }
-
-  String toString() => "r: $r, g: $g, b: $b";
-
 }

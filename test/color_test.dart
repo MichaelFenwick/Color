@@ -138,49 +138,78 @@ void main() {
       xyz = new XyzColor(72.931, 88.9, 94.204);
       cielab = new CielabColor(95.538, -23.02, 1.732);
     });
+
     test("from rgb to hex", () {
       HexColor conversion = rgb.toHexColor();
       expect(conversion, equals(hex));
-    });
-    test("from hex to rgb", () {
-      RgbColor conversion = hex.toRgbColor();
-      expect(conversion, equals(rgb));
     });
     test("from rgb to hsl", () {
       HslColor conversion = rgb.toHslColor();
       expect(conversion, equals(hsl));
     });
-    test("from hex to hsl", () {
-      HslColor conversion = hex.toHslColor();
-      expect(conversion, equals(hsl));
-    });
-    test("from hsl to rgb", () {
-      RgbColor conversion = hsl.toRgbColor();
-      expect(conversion, equals(rgb));
-    });
     test("from rgb to xyz", () {
       XyzColor conversion =  rgb.toXyzColor();
       expect(conversion, equals(xyz));
-    });
-    test("from xyz to rgb", () {
-      RgbColor conversion =  xyz.toRgbColor();
-      expect(conversion, equals(rgb));
     });
     test("from rgb to cielab", () {
       CielabColor conversion =  rgb.toCielabColor();
       expect(conversion, equals(cielab));
     });
-    test("from xyz to cielab", () {
-      CielabColor conversion =  xyz.toCielabColor();
-      expect(conversion, equals(xyz));
+
+    test("from hex to rgb", () {
+      RgbColor conversion = hex.toRgbColor();
+      expect(conversion, equals(rgb));
     });
+    test("from hex to hsl", () {
+      HslColor conversion = hex.toHslColor();
+      expect(conversion, equals(hsl));
+    });
+    test("from hex to xyz", () {
+      XyzColor conversion = hex.toXyzColor();
+      expect(conversion, equals(hsl));
+    });
+    test("from hex to cielab", () {
+      CielabColor conversion = hex.toCielabColor();
+      expect(conversion, equals(hsl));
+    });
+
+    test("from hsl to rgb", () {
+      RgbColor conversion = hsl.toRgbColor();
+      expect(conversion, equals(rgb));
+    });
+    test("from hsl to xyz", () {
+      XyzColor conversion = hsl.toXyzColor();
+      expect(conversion, equals(hsl));
+    });
+    test("from hsl to cielab", () {
+      CielabColor conversion = hsl.toCielabColor();
+      expect(conversion, equals(hsl));
+    });
+
+    test("from xyz to rgb", () {
+      RgbColor conversion = xyz.toRgbColor();
+      expect(conversion, equals(rgb));
+    });
+    test("from xyz to hsl", () {
+      HslColor conversion = xyz.toHslColor();
+      expect(conversion, equals(hsl));
+    });
+    test("from xyz to cielab", () {
+      CielabColor conversion = xyz.toCielabColor();
+      expect(conversion, equals(hsl));
+    });
+
     test("from cielab to rgb", () {
-      RgbColor conversion =  cielab.toRgbColor();
-      expect(conversion, equals(cielab));
+      RgbColor conversion = cielab.toRgbColor();
+      expect(conversion, equals(rgb));
+    });
+    test("from cielab to hsl", () {
+      HslColor conversion = cielab.toHslColor();
+      expect(conversion, equals(hsl));
     });
     test("from cielab to xyz", () {
-      XyzColor conversion =  cielab.toXyzColor();
-      expect(conversion, equals(cielab));
+      XyzColor conversion = cielab.toXyzColor();
+      expect(conversion, equals(hsl));
     });
   });
 }

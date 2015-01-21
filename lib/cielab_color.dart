@@ -25,6 +25,8 @@ class CielabColor extends Color {
     return xyz.toRgbColor();
   }
 
+  HslColor toHslColor() => this.toRgbColor().toHslColor();
+
   XyzColor toXyzColor() {
     Map<String, num> xyz = {
       'x': _a / 500 + (_l + 16) / 116,
@@ -46,6 +48,8 @@ class CielabColor extends Color {
 
     return new XyzColor(xyz['x'], xyz['y'], xyz['z']);
   }
+
+  CielabColor toCielabColor() => this;
 
   String toString() => "l: $l, a: $a, b: $b";
 
