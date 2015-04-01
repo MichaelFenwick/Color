@@ -102,4 +102,6 @@ class RgbColor extends Color {
       'b': b
     };
   }
+
+  RgbColor clone() => new RgbColor(this.r, this.g, this.b);
 }

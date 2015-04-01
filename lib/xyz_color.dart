@@ -80,4 +80,6 @@ class XyzColor extends Color {
 
   Map<String, num> toMap() => {'x': x, 'y': y, 'z': z};
 
+  XyzColor clone() => new XyzColor(this.x, this.y, this.z);
+
 }

@@ -88,4 +88,6 @@ class HslColor extends Color {
 
   Map<String, num> toMap() => {'h': _h, 's': _s, 'l': _l};
 
+  HslColor clone() => new HslColor(this.h, this.s, this.l);
+
 }

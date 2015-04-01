@@ -55,4 +55,6 @@ class CielabColor extends Color {
 
   Map<String, num> toMap() => {'l': l, 'a': a, 'b': b};
 
+  CielabColor clone() => new CielabColor(this.l, this.a, this.b);
+
 }

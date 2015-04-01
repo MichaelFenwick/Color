@@ -36,4 +36,6 @@ class HexColor extends RgbColor {
 
   String toString() => '$rHex$gHex$bHex';
 
+  HexColor clone() => new HexColor.fromRgb(this.r, this.g, this.b);
+
 }

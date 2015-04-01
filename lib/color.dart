@@ -46,6 +46,8 @@ abstract class Color {
   String toString();
   Map<String, num> toMap();
 
+  Color clone();
+
   get hashCode {
     RgbColor rgb = this.toRgbColor();
     return 256 * 256 * rgb.r + 256 * rgb.g + rgb.b;

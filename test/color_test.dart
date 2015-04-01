@@ -125,6 +125,38 @@ void main() {
       expect(coffee1, isNot(equals(tea)));
     });
   });
+  group("Colors can be cloned", () {
+    test("as rgb", () {
+      RgbColor rgb = new RgbColor(192, 255, 238);
+      RgbColor rgbClone = rgb.clone();
+      expect(rgb, equals(rgbClone));
+      expect(identical(rgb, rgbClone), isFalse);
+    });
+    test("as hex", () {
+      HexColor hex = new HexColor('c0ffee');
+      HexColor hexClone = hex.clone();
+      expect(hex, equals(hexClone));
+      expect(identical(hex, hexClone), isFalse);
+    });
+    test("as hsl", () {
+      HslColor hsl = new HslColor(163.8, 100, 87.6);
+      HslColor hslClone = hsl.clone();
+      expect(hsl, equals(hslClone));
+      expect(identical(hsl, hslClone), isFalse);
+    });
+    test("as xyz", () {
+      XyzColor xyz = new XyzColor(72.931, 88.9, 94.204);
+      XyzColor xyzClone = xyz.clone();
+      expect(xyz, equals(xyzClone));
+      expect(identical(xyz, xyzClone), isFalse);
+    });
+    test("as cielab", () {
+      CielabColor cielab = new CielabColor(95.538, -23.02, 1.732);
+      CielabColor cielabClone = cielab.clone();
+      expect(cielab, equals(cielabClone));
+      expect(identical(cielab, cielabClone), isFalse);
+    });
+  });
   group("Colors can be converted", () {
     RgbColor rgb;
     HexColor hex;
