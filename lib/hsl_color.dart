@@ -86,6 +86,8 @@ class HslColor extends Color {
 
   String toString() => "h: $h, s: $s%, l: $l%";
 
+  String toCssString() => 'hsl($h, $s%, $l%)';
+
   Map<String, num> toMap() => {'h': _h, 's': _s, 'l': _l};
 
   HslColor clone() => new HslColor(this.h, this.s, this.l);

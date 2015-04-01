@@ -14,6 +14,9 @@ class HexColor extends RgbColor {
    * The [hexCode] should not be preceeded with a pound sign (#).
    */
   HexColor(String hexCode) : super(0, 0, 0) {
+    if (hexCode.startsWith('#')) {
+      hexCode = hexCode.substring(1);
+    }
     List<String> hexDigits = hexCode.split('');
     _r = int.parse(hexDigits.sublist(0, 2).join(), radix: 16);
     _g = int.parse(hexDigits.sublist(2, 4).join(), radix: 16);
@@ -35,6 +38,8 @@ class HexColor extends RgbColor {
   set b(int b) => _b = max(0, min(255, b));
 
   String toString() => '$rHex$gHex$bHex';
+
+  String toCssString() => '#$rHex$gHex$bHex';
 
   HexColor clone() => new HexColor.fromRgb(this.r, this.g, this.b);
 

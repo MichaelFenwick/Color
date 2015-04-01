@@ -95,6 +95,8 @@ class RgbColor extends Color {
 
   String toString() => "r: $r, g: $g, b: $b";
 
+  String toCssString() => 'rgb($r, $g, $b)';
+
   Map<String, int> toMap() {
     return {
       'r': r,

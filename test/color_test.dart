@@ -52,6 +52,13 @@ void main() {
       expect(color.g, equals(255));
       expect(color.b, equals(238));
     });
+    test("as a HexColor with leading hash", () {
+      HexColor color = new HexColor('#c0ffee');
+      expect(color is Color, isTrue);
+      expect(color.r, equals(192));
+      expect(color.g, equals(255));
+      expect(color.b, equals(238));
+    });
     test("as a HslColor", () {
       HslColor color = new HslColor(163.8, 100, 87.6);
       expect(color is Color, isTrue);
@@ -105,6 +112,29 @@ void main() {
       Color color = new Color.cielab(95.538, -23.02, 1.732);
       String string = color.toString();
       expect(string, equals('l: 95.538, a: -23.02, b: 1.732'));
+    });
+  });
+  group("Colors can be converted to css style strings", () {
+    test("from an RgbColor", () {
+      RgbColor color = new Color.rgb(192, 255, 238);
+      String string = color.toCssString();
+      expect(string, equals('rgb(192, 255, 238)'));
+    });
+    test("from a HexColor", () {
+      HexColor color = new Color.hex('c0ffee');
+      String string = color.toCssString();
+      expect(string, equals('#c0ffee'));
+    });
+    test("and hex strings are prepended with 0s properly", () {
+      HexColor black = new Color.hex('000000');
+      HexColor green = new Color.hex('00ff00');
+      expect(black.toCssString(), equals('#000000'));
+      expect(green.toCssString(), equals('#00ff00'));
+    });
+    test("from an HslColor", () {
+      HslColor color = new Color.hsl(163.8, 100.0, 87.6);
+      String string = color.toCssString();
+      expect(string, equals('hsl(163.8, 100.0%, 87.6%)'));
     });
   });
   group("Colors can be compared to each other ", () {
