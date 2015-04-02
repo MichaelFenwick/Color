@@ -1,0 +1,10 @@
+.grid {
+  width: 1863px;
+  line-height: 0;
+}
+
+.color-block {
+  display: inline-block;
+  width: 23px;
+  height: 23px;
+}

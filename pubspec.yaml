@@ -5,3 +5,4 @@ author: Michael Fenwick <mike@mikefenwick.com>
 homepage: http://github.com/MichaelFenwick/Color
 dev_dependencies:
   unittest: any
+  browser: any
