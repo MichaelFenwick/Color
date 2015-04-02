@@ -1,7 +1,6 @@
 part of color;
 
 class XyzColor extends Color {
-
   num _x;
   num _y;
   num _z;
@@ -62,7 +61,7 @@ class XyzColor extends Color {
       value /= referenceWhite[key];
 
       if (value > 0.008856) {
-        value = pow(value, 1/3);
+        value = pow(value, 1 / 3);
       } else {
         value = (7.787 * value) + 16 / 116;
       }
@@ -81,5 +80,4 @@ class XyzColor extends Color {
   Map<String, num> toMap() => {'x': x, 'y': y, 'z': z};
 
   XyzColor clone() => new XyzColor(this.x, this.y, this.z);
-
 }

@@ -210,11 +210,11 @@ void main() {
       expect(conversion, equals(hsl));
     });
     test("from rgb to xyz", () {
-      XyzColor conversion =  rgb.toXyzColor();
+      XyzColor conversion = rgb.toXyzColor();
       expect(conversion, equals(xyz));
     });
     test("from rgb to cielab", () {
-      CielabColor conversion =  rgb.toCielabColor();
+      CielabColor conversion = rgb.toCielabColor();
       expect(conversion, equals(cielab));
     });
 

@@ -1,7 +1,6 @@
 part of color;
 
 class RgbColor extends Color {
-
   int _r;
   int _g;
   int _b;
@@ -67,11 +66,7 @@ class RgbColor extends Color {
   }
 
   XyzColor toXyzColor() {
-    Map<String, num> rgb = {
-      'r': _r / 255,
-      'g': _g / 255,
-      'b': _b / 255
-    };
+    Map<String, num> rgb = {'r': _r / 255, 'g': _g / 255, 'b': _b / 255};
 
     rgb.forEach((key, value) {
       if (value > 0.04045) {
@@ -98,11 +93,7 @@ class RgbColor extends Color {
   String toCssString() => 'rgb($r, $g, $b)';
 
   Map<String, int> toMap() {
-    return {
-      'r': r,
-      'g': g,
-      'b': b
-    };
+    return {'r': r, 'g': g, 'b': b};
   }
 
   RgbColor clone() => new RgbColor(this.r, this.g, this.b);

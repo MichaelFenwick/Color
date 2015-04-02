@@ -1,7 +1,6 @@
 part of color;
 
 class HslColor extends Color {
-
   num _h;
   num _s;
   num _l;
@@ -91,5 +90,4 @@ class HslColor extends Color {
   Map<String, num> toMap() => {'h': _h, 's': _s, 'l': _l};
 
   HslColor clone() => new HslColor(this.h, this.s, this.l);
-
 }

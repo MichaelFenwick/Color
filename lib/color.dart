@@ -30,7 +30,6 @@ part 'cielab_color.dart';
  * considered equivalent.
  */
 abstract class Color {
-
   Color() {}
   factory Color.rgb(int r, int g, int b) => new RgbColor(r, g, b);
   factory Color.hex(String hexCode) => new HexColor(hexCode);
