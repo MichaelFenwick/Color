@@ -20,18 +20,18 @@ class RgbColor extends Color {
    * of 255, and values below this range will be assumed to be a value of 0.
    */
   RgbColor(num r, num g, num b) {
-    _r = r.toInt();
-    _g = g.toInt();
-    _b = b.toInt();
+    this.r = r;
+    this.g = g;
+    this.b = b;
   }
 
   get r => _r;
   get g => _g;
   get b => _b;
 
-  set r(int r) => _r = max(bMin, min(rMax, r.toInt()));
-  set g(int g) => _g = max(bMin, min(gMax, g.toInt()));
-  set b(int b) => _b = max(bMin, min(bMax, b.toInt()));
+  set r(num r) => _r = max(bMin, min(rMax, r)).toInt();
+  set g(num g) => _g = max(bMin, min(gMax, g)).toInt();
+  set b(num b) => _b = max(bMin, min(bMax, b)).toInt();
 
   RgbColor toRgbColor() => this;
 
@@ -52,6 +52,10 @@ class RgbColor extends Color {
       hue = 60 * ((bf - rf) / delta + 2);
     } else {
       hue = 60 * ((rf - gf) / delta + 4);
+    }
+
+    if (hue.isNaN || hue.isInfinite) {
+      hue = 0;
     }
 
     luminance = (cMax + cMin) / 2;
