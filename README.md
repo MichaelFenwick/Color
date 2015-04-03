@@ -31,6 +31,7 @@ To create a color from rgb values, call
 
 ```dart
 Color rgbColor = new Color.rgb(192, 255, 238);
+RgbColor rgbColor = new RgbColor(192, 255, 238);
 ```
 
 Alternatively, a color can be created from a string containing a hex value with
@@ -39,10 +40,22 @@ Alternatively, a color can be created from a string containing a hex value with
 Color hexColor = new Color.hex('c0ffee');
 ```
 
-Regardless of how a color is constructed, its value is internally stored as rgb values and is accessed the same as any other color.
-
 Colors can be compared using the `==` operator, which will evaluate to true if the two colors share identical rgb values.
 
 ```dart
 assert(new Color.hex('c0ffee') == new Color.hex('c0ffee'));
+```
+
+Colors can be converted from one color space to another by calling the appropriate `toXXXColor` method on them.
+
+```dart
+HslColor hsl = new RgbColor(192, 255, 238).toHslColor();
+```
+
+Colors can be altered using a ColorFilter, which will return a new color in the same color space as the input color with that filter 
+applied to it.
+
+```dart
+RgbColor grey = ColorFilter.greyscale(new RgbColor(192, 255, 238));
+HslColor sepia = ColorFilter.sepia(new HslColor(163.8, 100, 87.6));
 ```

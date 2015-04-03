@@ -27,3 +27,11 @@ Added XYZ color space support with bidirectional conversions between XYZ and RGB
 1.2.0
 -----
 Added CIELAB color space support with bidirectional conversions with the XYZ color space (and the RGB color space using XYZ as an intermediary).
+
+1.3.0
+-----
+Added toXXXColor() conversion methods for all possible color space transitions.
+Added Color.clone() method to make a copy of a Color object.
+Added toCssString() method to RGB, Hex, and HSL colors for easier use with CSS.
+Added ColorFilters to alter colors according to various filtering rules.
+Added a demo page to test the package and see the effect of filters.
