@@ -14,6 +14,7 @@ part 'hex_color.dart';
 part 'hsl_color.dart';
 part 'xyz_color.dart';
 part 'cielab_color.dart';
+part 'color_filter.dart';
 
 /**
  * An object representing a color.
@@ -58,5 +59,20 @@ abstract class Color {
 
   operator [](String key) {
     return this.toMap()[key];
+  }
+
+  Color _convert(Type colorType) {
+    switch (colorType) {
+      case RgbColor:
+        return this.toRgbColor();
+      case HslColor:
+        return this.toHslColor();
+      case XyzColor:
+        return this.toXyzColor();
+      case CielabColor:
+        return this.toCielabColor();
+      default:
+        return this;
+    }
   }
 }
