@@ -92,6 +92,8 @@ class RgbColor extends Color {
 
   HexColor toHexColor() => new HexColor.fromRgb(_r, _g, _b);
 
+  RgbaColor toRgbaColor() => new Color.rgba(r, g, b, 1);
+
   String toString() => "r: $r, g: $g, b: $b";
 
   String toCssString() => 'rgb($r, $g, $b)';

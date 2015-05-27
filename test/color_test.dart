@@ -10,6 +10,14 @@ void main() {
       expect(color.g, equals(255));
       expect(color.b, equals(238));
     });
+    test("through the Color.rgba constructor", () {
+      RgbaColor color = new Color.rgba(192, 255, 238, 0.5);
+      expect(color is Color, isTrue);
+      expect(color.r, equals(192));
+      expect(color.g, equals(255));
+      expect(color.b, equals(238));
+      expect(color.a, equals(0.5));
+    });
     test("through the Color.hex constructor", () {
       HexColor color = new Color.hex('c0ffee');
       expect(color is Color, isTrue);
@@ -44,6 +52,14 @@ void main() {
       expect(color.r, equals(192));
       expect(color.g, equals(255));
       expect(color.b, equals(238));
+    });
+    test("as an RgbaColor", () {
+      RgbaColor color = new RgbaColor(192, 255, 238, 0.5);
+      expect(color is Color, isTrue);
+      expect(color.r, equals(192));
+      expect(color.g, equals(255));
+      expect(color.b, equals(238));
+      expect(color.a, equals(0.5));
     });
     test("as a HexColor", () {
       HexColor color = new HexColor('c0ffee');
@@ -87,6 +103,11 @@ void main() {
       String string = color.toString();
       expect(string, equals('r: 192, g: 255, b: 238'));
     });
+    test("from an RgbaColor", () {
+      Color color = new Color.rgba(192, 255, 238, 0.5);
+      String string = color.toString();
+      expect(string, equals('r: 192, g: 255, b: 238, a: 0.5'));
+    });
     test("from a HexColor", () {
       Color color = new Color.hex('c0ffee');
       String string = color.toString();
@@ -119,6 +140,11 @@ void main() {
       RgbColor color = new Color.rgb(192, 255, 238);
       String string = color.toCssString();
       expect(string, equals('rgb(192, 255, 238)'));
+    });
+    test("from an RgbaColor", () {
+      RgbColor color = new Color.rgba(192, 255, 238, 0.5);
+      String string = color.toCssString();
+      expect(string, equals('rgba(192, 255, 238, 0.5)'));
     });
     test("from a HexColor", () {
       HexColor color = new Color.hex('c0ffee');
@@ -162,6 +188,12 @@ void main() {
       expect(rgb, equals(rgbClone));
       expect(identical(rgb, rgbClone), isFalse);
     });
+    test("as rgba", () {
+      RgbaColor rgba = new RgbaColor(192, 255, 238, 0.5);
+      RgbaColor rgbaClone = rgba.clone();
+      expect(rgba, equals(rgbaClone));
+      expect(identical(rgba, rgbaClone), isFalse);
+    });
     test("as hex", () {
       HexColor hex = new HexColor('c0ffee');
       HexColor hexClone = hex.clone();
@@ -189,18 +221,24 @@ void main() {
   });
   group("Colors can be converted", () {
     RgbColor rgb;
+    RgbaColor rgba;
     HexColor hex;
     HslColor hsl;
     XyzColor xyz;
     CielabColor cielab;
     setUp(() {
       rgb = new RgbColor(192, 255, 238);
+      rgba = new RgbaColor(192, 255, 238, 1);
       hex = new HexColor('c0ffee');
       hsl = new HslColor(163.8, 100, 87.6);
       xyz = new XyzColor(72.931, 88.9, 94.204);
       cielab = new CielabColor(95.538, -23.02, 1.732);
     });
 
+    test("from rgb to rgba", () {
+      RgbaColor conversion = rgb.toRgbaColor();
+      expect(conversion, equals(rgba));
+    });
     test("from rgb to hex", () {
       HexColor conversion = rgb.toHexColor();
       expect(conversion, equals(hex));
@@ -218,9 +256,34 @@ void main() {
       expect(conversion, equals(cielab));
     });
 
+    test("from rgba to rgb", () {
+      RgbColor conversion = rgba.toRgbColor();
+      expect(conversion, equals(rgb));
+    });
+    test("from rgba to hex", () {
+      HexColor conversion = rgba.toHexColor();
+      expect(conversion, equals(hex));
+    });
+    test("from rgba to hsl", () {
+      HslColor conversion = rgba.toHslColor();
+      expect(conversion, equals(hsl));
+    });
+    test("from rgba to xyz", () {
+      XyzColor conversion = rgba.toXyzColor();
+      expect(conversion, equals(xyz));
+    });
+    test("from rgba to cielab", () {
+      CielabColor conversion = rgba.toCielabColor();
+      expect(conversion, equals(cielab));
+    });
+
     test("from hex to rgb", () {
       RgbColor conversion = hex.toRgbColor();
       expect(conversion, equals(rgb));
+    });
+    test("from hex to rgba", () {
+      RgbaColor conversion = hex.toRgbaColor();
+      expect(conversion, equals(rgba));
     });
     test("from hex to hsl", () {
       HslColor conversion = hex.toHslColor();
@@ -239,6 +302,10 @@ void main() {
       RgbColor conversion = hsl.toRgbColor();
       expect(conversion, equals(rgb));
     });
+    test("from hsl to rgba", () {
+      RgbaColor conversion = hsl.toRgbaColor();
+      expect(conversion, equals(rgba));
+    });
     test("from hsl to xyz", () {
       XyzColor conversion = hsl.toXyzColor();
       expect(conversion, equals(hsl));
@@ -252,6 +319,10 @@ void main() {
       RgbColor conversion = xyz.toRgbColor();
       expect(conversion, equals(rgb));
     });
+    test("from xyz to rgba", () {
+      RgbaColor conversion = xyz.toRgbaColor();
+      expect(conversion, equals(rgba));
+    });
     test("from xyz to hsl", () {
       HslColor conversion = xyz.toHslColor();
       expect(conversion, equals(hsl));
@@ -264,6 +335,10 @@ void main() {
     test("from cielab to rgb", () {
       RgbColor conversion = cielab.toRgbColor();
       expect(conversion, equals(rgb));
+    });
+    test("from cielab to rgba", () {
+      RgbaColor conversion = cielab.toRgbaColor();
+      expect(conversion, equals(rgba));
     });
     test("from cielab to hsl", () {
       HslColor conversion = cielab.toHslColor();

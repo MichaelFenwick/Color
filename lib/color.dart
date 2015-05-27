@@ -10,6 +10,7 @@ library color;
 import 'dart:math';
 
 part 'rgb_color.dart';
+part 'rgba_color.dart';
 part 'hex_color.dart';
 part 'hsl_color.dart';
 part 'xyz_color.dart';
@@ -33,12 +34,14 @@ part 'color_filter.dart';
 abstract class Color {
   Color() {}
   factory Color.rgb(int r, int g, int b) => new RgbColor(r, g, b);
+  factory Color.rgba(int r, int g, int b, num a) => new RgbaColor(r, g, b, a);
   factory Color.hex(String hexCode) => new HexColor(hexCode);
   factory Color.hsl(num h, num s, num l) => new HslColor(h, s, l);
   factory Color.xyz(num x, num y, num z) => new XyzColor(x, y, z);
   factory Color.cielab(num l, num a, num b) => new CielabColor(l, a, b);
 
   RgbColor toRgbColor();
+  RgbaColor toRgbaColor();
   HslColor toHslColor();
   XyzColor toXyzColor();
   CielabColor toCielabColor();
@@ -49,8 +52,11 @@ abstract class Color {
   Color clone();
 
   get hashCode {
-    RgbColor rgb = this.toRgbColor();
-    return 256 * 256 * rgb.r + 256 * rgb.g + rgb.b;
+    RgbaColor rgba = this.toRgbaColor();
+    return (pow(2, 30) * rgba.a).round() +
+        256 * 256 * rgba.r +
+        256 * rgba.g +
+        rgba.b;
   }
 
   operator ==(Object other) {
@@ -71,6 +77,8 @@ abstract class Color {
         return this.toXyzColor();
       case CielabColor:
         return this.toCielabColor();
+      case RgbaColor:
+        return this.toRgbaColor();
       default:
         return this;
     }

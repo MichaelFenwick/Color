@@ -48,6 +48,8 @@ class CielabColor extends Color {
     return new XyzColor(xyz['x'], xyz['y'], xyz['z']);
   }
 
+  RgbaColor toRgbaColor() => this.toRgbColor().toRgbaColor();
+
   CielabColor toCielabColor() => this;
 
   String toString() => "l: $l, a: $a, b: $b";
