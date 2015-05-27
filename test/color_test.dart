@@ -17,6 +17,13 @@ void main() {
       expect(color.g, equals(255));
       expect(color.b, equals(238));
     });
+    test("through the Color.named constructor", () {
+      HexColor color = new Color.named("black");
+      expect(color is Color, isTrue);
+      expect(color.r, equals(0));
+      expect(color.g, equals(0));
+      expect(color.b, equals(0));
+    });
     test("through the Color.hsl constructor", () {
       HslColor color = new Color.hsl(163.8, 100, 87.6);
       expect(color is Color, isTrue);
@@ -273,5 +280,8 @@ void main() {
       XyzColor conversion = cielab.toXyzColor();
       expect(conversion, equals(hsl));
     });
+  });
+  test("CSS 3 color list is unmodifiable", () {
+    expect(() => CSS3_COLORS["black"] = "3", throwsUnsupportedError);
   });
 }
