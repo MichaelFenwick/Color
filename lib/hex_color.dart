@@ -23,6 +23,8 @@ class HexColor extends RgbColor {
     _b = int.parse(hexDigits.sublist(4).join(), radix: 16);
   }
 
+  HexColor.fromName(String name) : this(CSS3_COLORS[name]);
+
   HexColor.fromRgb(int r, int g, int b) : super(r, g, b);
 
   get r => _r;

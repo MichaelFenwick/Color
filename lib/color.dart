@@ -8,6 +8,7 @@
 library color;
 
 import 'dart:math';
+import 'dart:collection';
 
 part 'rgb_color.dart';
 part 'hex_color.dart';
@@ -15,6 +16,7 @@ part 'hsl_color.dart';
 part 'xyz_color.dart';
 part 'cielab_color.dart';
 part 'color_filter.dart';
+part 'css3_colors.dart';
 
 /**
  * An object representing a color.
@@ -34,6 +36,7 @@ abstract class Color {
   Color() {}
   factory Color.rgb(int r, int g, int b) => new RgbColor(r, g, b);
   factory Color.hex(String hexCode) => new HexColor(hexCode);
+  factory Color.named(String name) => new HexColor.fromName(name);
   factory Color.hsl(num h, num s, num l) => new HslColor(h, s, l);
   factory Color.xyz(num x, num y, num z) => new XyzColor(x, y, z);
   factory Color.cielab(num l, num a, num b) => new CielabColor(l, a, b);
