@@ -77,6 +77,8 @@ class HslColor extends Color {
     return new RgbColor(rgb[0], rgb[1], rgb[2]);
   }
 
+  RgbaColor toRgbaColor() => this.toRgbColor().toRgbaColor();
+
   HslColor toHslColor() => this;
 
   XyzColor toXyzColor() => this.toRgbColor().toXyzColor();

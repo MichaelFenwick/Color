@@ -48,6 +48,8 @@ class XyzColor extends Color {
     return new RgbColor(rgb['r'], rgb['g'], rgb['b']);
   }
 
+  RgbaColor toRgbaColor() => this.toRgbColor().toRgbaColor();
+
   HslColor toHslColor() => this.toRgbColor().toHslColor();
 
   XyzColor toXyzColor() => this;
