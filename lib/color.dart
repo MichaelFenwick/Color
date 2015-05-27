@@ -43,6 +43,7 @@ abstract class Color {
   XyzColor toXyzColor();
   CielabColor toCielabColor();
 
+  String toCssString();
   String toString();
   Map<String, num> toMap();
 

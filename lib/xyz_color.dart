@@ -75,6 +75,8 @@ class XyzColor extends Color {
     return new CielabColor(lab['l'], lab['a'], lab['b']);
   }
 
+  String toCssString() => toRgbColor().toCssString();
+
   String toString() => "x: $x, y: $y, z: $z";
 
   Map<String, num> toMap() => {'x': x, 'y': y, 'z': z};
