@@ -1,5 +1,5 @@
 import '../lib/color.dart';
-import 'package:unittest/unittest.dart';
+import 'package:test/test.dart';
 
 void main() {
   group("A Color can be constructed", () {
