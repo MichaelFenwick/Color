@@ -22,16 +22,27 @@
 
 1.1.0
 -----
-Added XYZ color space support with bidirectional conversions between XYZ and RGB color spaces.
+* Added XYZ color space support with bidirectional conversions between XYZ and RGB color spaces.
 
 1.2.0
 -----
-Added CIELAB color space support with bidirectional conversions with the XYZ color space (and the RGB color space using XYZ as an intermediary).
+* Added CIELAB color space support with bidirectional conversions with the XYZ color space (and the RGB color space using XYZ as an intermediary).
 
 1.3.0
 -----
-Added toXXXColor() conversion methods for all possible color space transitions.
-Added Color.clone() method to make a copy of a Color object.
-Added toCssString() method to RGB, Hex, and HSL colors for easier use with CSS.
-Added ColorFilters to alter colors according to various filtering rules.
-Added a demo page to test the package and see the effect of filters.
+* Added toXXXColor() conversion methods for all possible color space transitions.
+* Added Color.clone() method to make a copy of a Color object.
+* Added toCssString() method to RGB, Hex, and HSL colors for easier use with CSS.
+* Added ColorFilters to alter colors according to various filtering rules.
+* Added a demo page to test the package and see the effect of filters.
+
+2.0.0
+-----
+* Color and all subclasses now implement a const constructor.
+* Colors are no longer mutable, and all conversion and filter methods return new Color objects.
+* Removed the Color.clone() method (this was only generally useful when Colors were mutable).
+* Adjusted the greyscale and invert ColorFilters to use the CIELAB color space, giving better results.
+* Added a lighten and darken ColorFilter.
+* Added an RgbColor.name() constructor to create colors by CSS3 name.
+* Added a Color.toHexColor() method for easier conversion to the HexColor class.
+* Added a CssColorSpace interface for the color spaces which have representation in the CSS standard (RGB, HEX, and HSL).
