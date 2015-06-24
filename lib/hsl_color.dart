@@ -1,9 +1,9 @@
 part of color;
 
 class HslColor extends Color {
-  num _h;
-  num _s;
-  num _l;
+  final num h;
+  final num s;
+  final num l;
   static const num hMin = 0;
   static const num sMin = 0;
   static const num lMin = 0;
@@ -23,26 +23,14 @@ class HslColor extends Color {
    *
    * The [luminance] is given as a percentage between 0 and 100 (inclusive).
    */
-  HslColor(num hue, num saturation, num luminance) {
-    _h = hue % hMax;
-    _s = saturation;
-    _l = luminance;
-  }
-
-  get h => _h % 360;
-  get s => _s;
-  get l => _l;
-
-  set h(num h) => _h = h % hMax;
-  set s(num s) => _s = max(sMin, min(sMax, s));
-  set l(num l) => _l = max(lMin, min(lMax, l));
+  const HslColor(num this.h, num this.s, num this.l);
 
   RgbColor toRgbColor() {
     List<num> rgb = [0, 0, 0];
 
-    num hue = _h / 360 % 1;
-    num saturation = _s / 100;
-    num luminance = _l / 100;
+    num hue = h / 360 % 1;
+    num saturation = s / 100;
+    num luminance = l / 100;
 
     if (hue < 1 / 6) {
       rgb[0] = 1;
@@ -87,7 +75,5 @@ class HslColor extends Color {
 
   String toCssString() => 'hsl($h, $s%, $l%)';
 
-  Map<String, num> toMap() => {'h': _h, 's': _s, 'l': _l};
-
-  HslColor clone() => new HslColor(this.h, this.s, this.l);
+  Map<String, num> toMap() => {'h': h, 's': s, 'l': l};
 }

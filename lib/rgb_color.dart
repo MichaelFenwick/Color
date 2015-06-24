@@ -1,9 +1,9 @@
 part of color;
 
 class RgbColor extends Color {
-  int _r;
-  int _g;
-  int _b;
+  final num r;
+  final num g;
+  final num b;
   static const int rMin = 0;
   static const int gMin = 0;
   static const int bMin = 0;
@@ -19,26 +19,14 @@ class RgbColor extends Color {
    * 255 (inclusive).  Values above this range will be assumed to be a value
    * of 255, and values below this range will be assumed to be a value of 0.
    */
-  RgbColor(num r, num g, num b) {
-    this.r = r;
-    this.g = g;
-    this.b = b;
-  }
-
-  get r => _r;
-  get g => _g;
-  get b => _b;
-
-  set r(num r) => _r = max(bMin, min(rMax, r)).toInt();
-  set g(num g) => _g = max(bMin, min(gMax, g)).toInt();
-  set b(num b) => _b = max(bMin, min(bMax, b)).toInt();
+  const RgbColor(num this.r, num this.g, num this.b);
 
   RgbColor toRgbColor() => this;
 
   HslColor toHslColor() {
-    num rf = _r / 255;
-    num gf = _g / 255;
-    num bf = _b / 255;
+    num rf = r / 255;
+    num gf = g / 255;
+    num bf = b / 255;
     num cMax = [rf, gf, bf].reduce(max);
     num cMin = [rf, gf, bf].reduce(min);
     num delta = cMax - cMin;
@@ -70,7 +58,7 @@ class RgbColor extends Color {
   }
 
   XyzColor toXyzColor() {
-    Map<String, num> rgb = {'r': _r / 255, 'g': _g / 255, 'b': _b / 255};
+    Map<String, num> rgb = {'r': r / 255, 'g': g / 255, 'b': b / 255};
 
     rgb.forEach((key, value) {
       if (value > 0.04045) {
@@ -90,15 +78,11 @@ class RgbColor extends Color {
 
   CielabColor toCielabColor() => this.toXyzColor().toCielabColor();
 
-  HexColor toHexColor() => new HexColor.fromRgb(_r, _g, _b);
+  HexColor toHexColor() => new HexColor.fromRgb(r, g, b);
 
   String toString() => "r: $r, g: $g, b: $b";
 
-  String toCssString() => 'rgb($r, $g, $b)';
+  String toCssString() => 'rgb(${r.toInt()}, ${g.toInt()}, ${b.toInt()})';
 
-  Map<String, int> toMap() {
-    return {'r': r, 'g': g, 'b': b};
-  }
-
-  RgbColor clone() => new RgbColor(this.r, this.g, this.b);
+  Map<String, num> toMap() => {'r': r, 'g': g, 'b': b};
 }

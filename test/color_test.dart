@@ -83,7 +83,7 @@ void main() {
   });
   group("Colors can be converted to a string", () {
     test("from an RgbColor", () {
-      Color color = new Color.rgb(192, 255, 238);
+      Color color = const Color.rgb(192, 255, 238);
       String string = color.toString();
       expect(string, equals('r: 192, g: 255, b: 238'));
     });
@@ -99,24 +99,24 @@ void main() {
       expect(green.toString(), equals('00ff00'));
     });
     test("from an HslColor", () {
-      Color color = new Color.hsl(163.8, 100.0, 87.6);
+      Color color = const Color.hsl(163.8, 100.0, 87.6);
       String string = color.toString();
       expect(string, equals('h: 163.8, s: 100.0%, l: 87.6%'));
     });
     test("from a XyzColor", () {
-      Color color = new Color.xyz(72.931, 88.9, 94.204);
+      Color color = const Color.xyz(72.931, 88.9, 94.204);
       String string = color.toString();
       expect(string, equals('x: 72.931, y: 88.9, z: 94.204'));
     });
     test("from an CielabColor", () {
-      Color color = new Color.cielab(95.538, -23.02, 1.732);
+      Color color = const Color.cielab(95.538, -23.02, 1.732);
       String string = color.toString();
       expect(string, equals('l: 95.538, a: -23.02, b: 1.732'));
     });
   });
   group("Colors can be converted to css style strings", () {
     test("from an RgbColor", () {
-      RgbColor color = new Color.rgb(192, 255, 238);
+      RgbColor color = const Color.rgb(192, 255, 238);
       String string = color.toCssString();
       expect(string, equals('rgb(192, 255, 238)'));
     });
@@ -132,7 +132,7 @@ void main() {
       expect(green.toCssString(), equals('#00ff00'));
     });
     test("from an HslColor", () {
-      HslColor color = new Color.hsl(163.8, 100.0, 87.6);
+      HslColor color = const Color.hsl(163.8, 100.0, 87.6);
       String string = color.toCssString();
       expect(string, equals('hsl(163.8, 100.0%, 87.6%)'));
     });
@@ -155,38 +155,6 @@ void main() {
       expect(coffee1, isNot(equals(tea)));
     });
   });
-  group("Colors can be cloned", () {
-    test("as rgb", () {
-      RgbColor rgb = new RgbColor(192, 255, 238);
-      RgbColor rgbClone = rgb.clone();
-      expect(rgb, equals(rgbClone));
-      expect(identical(rgb, rgbClone), isFalse);
-    });
-    test("as hex", () {
-      HexColor hex = new HexColor('c0ffee');
-      HexColor hexClone = hex.clone();
-      expect(hex, equals(hexClone));
-      expect(identical(hex, hexClone), isFalse);
-    });
-    test("as hsl", () {
-      HslColor hsl = new HslColor(163.8, 100, 87.6);
-      HslColor hslClone = hsl.clone();
-      expect(hsl, equals(hslClone));
-      expect(identical(hsl, hslClone), isFalse);
-    });
-    test("as xyz", () {
-      XyzColor xyz = new XyzColor(72.931, 88.9, 94.204);
-      XyzColor xyzClone = xyz.clone();
-      expect(xyz, equals(xyzClone));
-      expect(identical(xyz, xyzClone), isFalse);
-    });
-    test("as cielab", () {
-      CielabColor cielab = new CielabColor(95.538, -23.02, 1.732);
-      CielabColor cielabClone = cielab.clone();
-      expect(cielab, equals(cielabClone));
-      expect(identical(cielab, cielabClone), isFalse);
-    });
-  });
   group("Colors can be converted", () {
     RgbColor rgb;
     HexColor hex;
@@ -194,11 +162,11 @@ void main() {
     XyzColor xyz;
     CielabColor cielab;
     setUp(() {
-      rgb = new RgbColor(192, 255, 238);
+      rgb = const RgbColor(192, 255, 238);
       hex = new HexColor('c0ffee');
-      hsl = new HslColor(163.8, 100, 87.6);
-      xyz = new XyzColor(72.931, 88.9, 94.204);
-      cielab = new CielabColor(95.538, -23.02, 1.732);
+      hsl = const HslColor(163.8, 100, 87.6);
+      xyz = const XyzColor(72.931, 88.9, 94.204);
+      cielab = const CielabColor(95.538, -23.02, 1.732);
     });
 
     test("from rgb to hex", () {

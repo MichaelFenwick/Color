@@ -1,34 +1,18 @@
 part of color;
 
 class XyzColor extends Color {
-  num _x;
-  num _y;
-  num _z;
+  final num x;
+  final num y;
+  final num z;
 
-  XyzColor(num x, num y, num z) {
-    _x = x;
-    _y = y;
-    _z = z;
-  }
+  static const referenceWhite = const XyzColor(95.047, 100, 108.883);
 
-  XyzColor.referenceWhite() {
-    _x = 95.047;
-    _y = 100;
-    _z = 108.883;
-  }
-
-  get x => _x;
-  get y => _y;
-  get z => _z;
-
-  set x(num x) => _x = x;
-  set y(num y) => _y = y;
-  set z(num z) => _z = z;
+  const XyzColor(num this.x, num this.y, num this.z);
 
   RgbColor toRgbColor() {
-    num x = _x / 100;
-    num y = _y / 100;
-    num z = _z / 100;
+    num x = this.x / 100;
+    num y = this.y / 100;
+    num z = this.z / 100;
 
     Map<String, num> rgb = {
       'r': x * 3.2406 + y * -1.5372 + z * -0.4986,
@@ -55,7 +39,6 @@ class XyzColor extends Color {
   CielabColor toCielabColor() {
     Map<String, num> lab = {};
     Map<String, num> xyz = {};
-    XyzColor referenceWhite = new XyzColor.referenceWhite();
 
     this.toMap().forEach((String key, num value) {
       value /= referenceWhite[key];
@@ -78,6 +61,4 @@ class XyzColor extends Color {
   String toString() => "x: $x, y: $y, z: $z";
 
   Map<String, num> toMap() => {'x': x, 'y': y, 'z': z};
-
-  XyzColor clone() => new XyzColor(this.x, this.y, this.z);
 }

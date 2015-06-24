@@ -13,33 +13,24 @@ class HexColor extends RgbColor {
    *
    * The [hexCode] should not be preceeded with a pound sign (#).
    */
-  HexColor(String hexCode) : super(0, 0, 0) {
+  factory HexColor(String hexCode) {
     if (hexCode.startsWith('#')) {
       hexCode = hexCode.substring(1);
     }
     List<String> hexDigits = hexCode.split('');
-    _r = int.parse(hexDigits.sublist(0, 2).join(), radix: 16);
-    _g = int.parse(hexDigits.sublist(2, 4).join(), radix: 16);
-    _b = int.parse(hexDigits.sublist(4).join(), radix: 16);
+    int r = int.parse(hexDigits.sublist(0, 2).join(), radix: 16);
+    int g = int.parse(hexDigits.sublist(2, 4).join(), radix: 16);
+    int b = int.parse(hexDigits.sublist(4).join(), radix: 16);
+    return new HexColor.fromRgb(r, g, b);
   }
 
-  HexColor.fromRgb(int r, int g, int b) : super(r, g, b);
+  const HexColor.fromRgb(num r, num g, num b) : super(r, g, b);
 
-  get r => _r;
-  get g => _g;
-  get b => _b;
-
-  get rHex => _r.toRadixString(16).padLeft(2, '0');
-  get gHex => _g.toRadixString(16).padLeft(2, '0');
-  get bHex => _b.toRadixString(16).padLeft(2, '0');
-
-  set r(int r) => _r = max(0, min(255, r));
-  set g(int g) => _g = max(0, min(255, g));
-  set b(int b) => _b = max(0, min(255, b));
+  get rHex => r.toInt().toRadixString(16).padLeft(2, '0');
+  get gHex => g.toInt().toRadixString(16).padLeft(2, '0');
+  get bHex => b.toInt().toRadixString(16).padLeft(2, '0');
 
   String toString() => '$rHex$gHex$bHex';
 
   String toCssString() => '#$rHex$gHex$bHex';
-
-  HexColor clone() => new HexColor.fromRgb(this.r, this.g, this.b);
 }
