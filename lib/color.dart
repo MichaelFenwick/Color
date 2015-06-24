@@ -32,6 +32,7 @@ abstract class Color {
   const factory Color.cielab(num l, num a, num b) = CielabColor;
 
   RgbColor toRgbColor();
+  HexColor toHexColor() => toRgbColor().toHexColor();
   HslColor toHslColor();
   XyzColor toXyzColor();
   CielabColor toCielabColor();
@@ -52,6 +53,8 @@ abstract class Color {
     switch (colorType) {
       case RgbColor:
         return this.toRgbColor();
+      case HexColor:
+        return this.toHexColor();
       case HslColor:
         return this.toHslColor();
       case XyzColor:

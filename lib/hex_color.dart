@@ -30,6 +30,8 @@ class HexColor extends RgbColor {
   get gHex => g.toInt().toRadixString(16).padLeft(2, '0');
   get bHex => b.toInt().toRadixString(16).padLeft(2, '0');
 
+  HexColor toHexColor() => this;
+
   String toString() => '$rHex$gHex$bHex';
 
   String toCssString() => '#$rHex$gHex$bHex';
