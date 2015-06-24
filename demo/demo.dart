@@ -8,22 +8,27 @@ main() {
   addGrid('Sepia', ColorFilter.sepia);
   addGrid('Greyscale', ColorFilter.greyscale);
   addGrid('Inverted', ColorFilter.invert);
+  addGrid('Lightened (20%)', ColorFilter.lighten, [.2]);
+  addGrid('Darkened (20%)', ColorFilter.darken, [.2]);
 }
 
 addGrid(String name, [ColorFilter filter, List filterArgs = const []]) {
   body.appendText(name);
   Element grid = new Element.div()..classes.add('grid');
   body.append(grid);
-  for (int r = 0; r <= 255; r += 31.875) {
-    for (int g = 0; g <= 255; g += 31.875) {
-      for (int b = 0; b <= 255; b += 31.875) {
-        RgbColor rgb = new RgbColor(r, g, b);
+  num step = 15.9375;
+  for (num l = 0; l <= 100; l += step * 100 / 255) {
+    Element block = new Element.div()..classes.add('block');
+    grid.append(block);
+    for (num a = -128; a <= 127; a += step) {
+      for (num b = -128; b <= 127; b += step) {
+        CielabColor color = new CielabColor(l, a, b);
         if (filter != null) {
-          rgb = filter(rgb, filterArgs);
+          color = filter(color, filterArgs);
         }
-        grid.append(new Element.div()
+        block.append(new Element.div()
           ..classes.add('color-block')
-          ..style.background = rgb.toCssString());
+          ..style.background = color.toRgbColor().toCssString());
       }
     }
   }

@@ -1,10 +1,16 @@
 .grid {
-  width: 1863px;
+  width: 1159px;
   line-height: 0;
+  font-size: 0;
+}
+
+.block {
+  display: inline-block;
+  width: 68px;
 }
 
 .color-block {
   display: inline-block;
-  width: 23px;
-  height: 23px;
+  width: 4px;
+  height: 4px;
 }
