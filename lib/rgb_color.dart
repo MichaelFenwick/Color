@@ -1,6 +1,6 @@
 part of color;
 
-class RgbColor extends Color {
+class RgbColor extends Color implements CssColorSpace {
   final num r;
   final num g;
   final num b;

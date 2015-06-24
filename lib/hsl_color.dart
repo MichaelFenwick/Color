@@ -1,6 +1,6 @@
 part of color;
 
-class HslColor extends Color {
+class HslColor extends Color implements CssColorSpace {
   final num h;
   final num s;
   final num l;

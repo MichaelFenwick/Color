@@ -15,6 +15,7 @@ part 'hsl_color.dart';
 part 'xyz_color.dart';
 part 'cielab_color.dart';
 part 'color_filter.dart';
+part 'css_color_space.dart';
 
 /**
  * An object representing a color.
