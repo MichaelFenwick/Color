@@ -46,3 +46,7 @@
 * Added an RgbColor.name() constructor to create colors by CSS3 name.
 * Added a Color.toHexColor() method for easier conversion to the HexColor class.
 * Added a CssColorSpace interface for the color spaces which have representation in the CSS standard (RGB, HEX, and HSL).
+
+2.0.1
+-----
+* Removed a switch statement that was preventing dart2js compilation.

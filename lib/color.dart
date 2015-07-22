@@ -51,19 +51,18 @@ abstract class Color {
   operator [](String key) => this.toMap()[key];
 
   Color _convert(Type colorType) {
-    switch (colorType) {
-      case RgbColor:
-        return this.toRgbColor();
-      case HexColor:
-        return this.toHexColor();
-      case HslColor:
-        return this.toHslColor();
-      case XyzColor:
-        return this.toXyzColor();
-      case CielabColor:
-        return this.toCielabColor();
-      default:
-        return this;
+    if (colorType is RgbColor) {
+      return this.toRgbColor();
+    } else if (colorType is HexColor) {
+      return this.toHexColor();
+    } else if (colorType is HslColor) {
+      return this.toHslColor();
+    } else if (colorType is XyzColor) {
+      return this.toXyzColor();
+    } else if (colorType is CielabColor) {
+      return this.toCielabColor();
+    } else {
+      return this;
     }
   }
 }
