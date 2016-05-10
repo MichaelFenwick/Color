@@ -16,6 +16,7 @@ part 'xyz_color.dart';
 part 'cielab_color.dart';
 part 'color_filter.dart';
 part 'css_color_space.dart';
+part 'color_parser.dart';
 
 /**
  * An object representing a color.

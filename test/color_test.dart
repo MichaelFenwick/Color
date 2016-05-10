@@ -242,4 +242,115 @@ void main() {
       expect(conversion, equals(hsl));
     });
   });
+  group("Colors can be parsed", () {
+    ColorParser parser = new ColorParser();
+    test("from a named color", () {
+      Color c = parser.parse("black");
+      expect(c, equals(new RgbColor.name("black")));
+    });
+    test("from a named color with mixed case", () {
+      Color c = parser.parse("Khaki");
+      expect(c, equals(new RgbColor.name("khaki")));
+    });
+    test("from a named color, irrespective of whitespace", () {
+      Color c = parser.parse("  black  ");
+      expect(c, equals(new RgbColor.name("black")));
+    });
+    test("for all well-known name values", () {
+      RgbColor.namedColors.keys.forEach(
+          (key) => expect(parser.parse(key), RgbColor.namedColors[key]));
+    });
+    test("from an explicit hex color", () {
+      Color c = parser.parse("#FFFAFA");
+      expect(c, equals(new HexColor("FFFAFA")));
+    });
+    test("from an implicit hex color", () {
+      Color c = parser.parse("FA8072");
+      expect(c, equals(new HexColor("FA8072")));
+    });
+    test("from an abbreviated, explicit hex color", () {
+      Color c = parser.parse("#ff0");
+      expect(c, equals(new HexColor("FFFF00")));
+    });
+    test("from an abbreviated, implicit hex color", () {
+      Color c = parser.parse("ff0");
+      expect(c, equals(new HexColor("FFFF00")));
+    });
+    test("from a hex color, irrespective of whitespace", () {
+      Color c = parser.parse(" c0ffee ");
+      expect(c, equals(new HexColor("c0ffee")));
+      Color c2 = parser.parse(" #c0ffee ");
+      expect(c2, equals(new HexColor("c0ffee")));
+      Color c3 = parser.parse(" cfe ");
+      expect(c3, equals(new HexColor("ccffee")));
+      Color c4 = parser.parse(" #cfe ");
+      expect(c4, equals(new HexColor("ccffee")));
+    });
+    test("for a broad sample of legit hex codes", () {
+      List<int> decimalSamples = [0, 1, 2, 126, 127, 128, 129, 254, 255];
+      String _base16Padded(int decimal) => decimal.toRadixString(16).padLeft(2, "0");
+      decimalSamples.forEach((r) =>
+          decimalSamples.forEach((g) =>
+              decimalSamples.forEach((b) =>
+                  expect(parser.parse("${_base16Padded(r)}${_base16Padded(g)}${_base16Padded(b)}"), equals(new RgbColor(r, g, b)))
+              )
+          )
+      );
+    });
+    test("from an explicit decimal rgb color", () {
+      Color c = parser.parse("rgb(119,136,153)");
+      expect(c, equals(new RgbColor(119,136,153)));
+    });
+    test("from an implicit decimal rgb color", () {
+      Color c = parser.parse("72,61,139");
+      expect(c, equals(new RgbColor(72,61,139)));
+    });
+    test("from a decimal rgb color, irrespective of whitespace", () {
+      Color c = parser.parse(" 192 , 255  ,  238 ");
+      expect(c, equals(new HexColor("c0ffee")));
+      Color c2 = parser.parse(" rgb( 192 , 255  ,  238 ) ");
+      expect(c2, equals(new HexColor("c0ffee")));
+    });
+    test("for a broad sample of legit decimal rgb values", () {
+      List<int> decimalSamples = [0, 1, 2, 126, 127, 128, 129, 254, 255];
+      decimalSamples.forEach((r) =>
+          decimalSamples.forEach((g) =>
+              decimalSamples.forEach((b) =>
+                  expect(parser.parse("$r,$g,$b"), equals(new RgbColor(r, g, b)))
+              )
+          )
+      );
+    });
+    test("from an explicit hsl color", () {
+      Color c = parser.parse("hsl(240,100%, 50%)");
+      expect(c, equals(new HslColor(240, 100, 50)));
+    });
+    test("from an explicit hsl color, irrespective of whitespace", () {
+      Color c = parser.parse("  hsl(  240  ,  100%   , 50% )  ");
+      expect(c, equals(new HslColor(240, 100, 50)));
+    });
+    test("from an explicit hsl color, with varying decimal formats", () {
+      Color c = parser.parse("hsl(0,0.25%,0.25%)");
+      expect(c, equals(new HslColor(0, 0.25, 0.25)));
+      Color c2 = parser.parse("hsl(0,.25%,.25%)");
+      expect(c2, equals(new HslColor(0, 0.25, 0.25)));
+    });
+    test("for a broad sample of legit hsl values", () {
+      List<int> hueSamples = [0, 1, 2, 179, 180, 181, 359, 360, 361, 362, 719, 720];
+      List<double> percentSamples = [0.0, 0.1, 0.9, 49.0, 49.5, 50.0, 99.9999, 100.0];
+      hueSamples.forEach((h) =>
+          percentSamples.forEach((s) =>
+              percentSamples.forEach((l) =>
+                  expect(parser.parse("hsl($h,$s%,$l%)"), equals(new HslColor(h, s, l)))
+              )
+          )
+      );
+    });
+    test("... or else there is a fallback", () {
+      Color c = parser.parse("amarillo");
+      expect(c, isNull);
+      Color c2 = parser.parse("azul", orElse: () => new HexColor("c0ffee"));
+      expect(c2, equals(new HexColor("c0ffee")));
+    });
+  });
 }
