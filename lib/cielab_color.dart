@@ -33,6 +33,7 @@ class CielabColor extends Color {
   CielabColor toCielabColor() => this;
 
   String toString() => "l: $l, a: $a, b: $b";
+  String toCssString() => toRgbColor().toCssString();
 
   Map<String, num> toMap() => {'l': l, 'a': a, 'b': b};
 }
