@@ -5,6 +5,8 @@ authors:
 - Michael Fenwick <mike@mikefenwick.com>
 - Tim Kluge <timklge@wh2.tu-dresden.de>
 homepage: http://github.com/MichaelFenwick/Color
+environment:
+  sdk: '>=2.0.0-dev.61.0 <3.0.0'
 dev_dependencies:
   browser: any
   test: any
