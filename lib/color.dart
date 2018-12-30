@@ -54,7 +54,7 @@ abstract class Color {
   // TODO: Write tests.
   RgbaColor toRgbaColor();
 
-  HexColor toHexColor() => toRgbColor().toHexColor();
+  HexColor toHexColor() => toRgbaColor().toHexColor();
 
   HslColor toHslColor();
 
