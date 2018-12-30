@@ -3,7 +3,7 @@ part of color;
 class RgbaColor extends RgbColor {
   final double _opacity;
 
-  get opacity => double.parse(_opacity.toStringAsFixed(2));
+  double get opacity => double.parse(_opacity.toStringAsFixed(2));
 
   static const minOpacity = 0.0;
 
