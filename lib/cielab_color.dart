@@ -35,4 +35,8 @@ class CielabColor extends Color {
   String toString() => "l: $l, a: $a, b: $b";
 
   Map<String, num> toMap() => {'l': l, 'a': a, 'b': b};
+
+  // TODO: Write tests.
+  @override
+  RgbaColor toRgbaColor() => toRgbColor().toRgbaColor();
 }

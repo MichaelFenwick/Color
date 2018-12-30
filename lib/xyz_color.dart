@@ -61,4 +61,8 @@ class XyzColor extends Color {
   String toString() => "x: $x, y: $y, z: $z";
 
   Map<String, num> toMap() => {'x': x, 'y': y, 'z': z};
+
+  // TODO: Write tests.
+  @override
+  RgbaColor toRgbaColor() => toRgbColor().toRgbaColor();
 }

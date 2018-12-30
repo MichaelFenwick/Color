@@ -51,6 +51,9 @@ abstract class Color {
 
   RgbColor toRgbColor();
 
+  // TODO: Write tests.
+  RgbaColor toRgbaColor();
+
   HexColor toHexColor() => toRgbColor().toHexColor();
 
   HslColor toHslColor();
@@ -93,8 +96,6 @@ abstract class OpacityCapableColor extends Color {
   const OpacityCapableColor();
 
   OpacityCapableColor withOpacity(double a);
-
-  RgbaColor toRgbaColor();
 
   HslaColor toHslaColor();
 
