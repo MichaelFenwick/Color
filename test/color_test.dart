@@ -424,15 +424,15 @@ void main() {
       expect(c2, equals(RgbaColor(192, 255, 238, 0.5)));
     });
     test("for a broad sample of legit decimal rgba values", () {
-      List<int> decimalSamples = [0, 1, 2, 126, 127, 128, 129, 254, 255];
-      decimalSamples.forEach((r) =>
-          decimalSamples.forEach((g) =>
-              decimalSamples.forEach((b) =>
-                  decimalSamples.forEach((a) =>
+      List<int> integerExamples = [0, 1, 2, 126, 127, 128, 129, 254, 255];
+      List<double> decimalExamples = [0.0, 1.0, 0, 1, 0.5, 0.6, 0.2];
+      integerExamples.forEach((r) =>
+          integerExamples.forEach((g) =>
+              integerExamples.forEach((b) =>
+                  decimalExamples.forEach((o) =>
                       expect(
-                          parser.parse("$r,$g,$b,$a"),
-                          equals(new RgbaColor(
-                              r, g, b, RgbaColor.alphaToOpacity(a))))))));
+                          parser.parse("$r,$g,$b,$o"),
+                          equals(new RgbaColor(r, g, b, o)))))));
     });
     test("from an explicit hsl color", () {
       Color c = parser.parse("hsl(240,100%, 50%)");
@@ -472,9 +472,11 @@ void main() {
       expect(c2, equals(new HslaColor(0, 0.25, 0.25, 0.5)));
     });
     test("for a broad sample of legit hsl values", () {
-      var hueSamples = [0, 1, 2, 179, 180, 181, 359, 360, 361, 362, 719, 720];
-      var percentSamples = [0.0, 0.1, 0.9, 49.0, 49.5, 50.0, 99.9999, 100.0];
-      var decimalSamples = [0.0, 0.1, 0.9, 49.0, 49.5, 50.0, 99.9999, 100.0];
+      List<int> hueSamples = [
+        0, 1, 2, 179, 180, 181, 359, 360, 361, 362, 719, 720];
+      List<double> percentSamples = [
+        0.0, 0.1, 0.9, 49.0, 49.5, 50.0, 99.9999, 100.0];
+      List<double> decimalSamples = [0.0, 0.1, 0.9, 1, 0];
 
       hueSamples.forEach((h) =>
           percentSamples.forEach((s) =>
