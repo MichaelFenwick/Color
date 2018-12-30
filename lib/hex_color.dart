@@ -45,10 +45,14 @@ class HexColor extends RgbaColor {
 
   HexColor toHexColor() => this;
 
-  String toString() =>
+  // TODO: Create extra method with parameter where you can choose whether to include the opacity or not.
+  /*String toString() =>
       _opacity == RgbaColor.maxOpacity
           ? '#$rHex$gHex$bHex'
-          : '#$rHex$gHex$bHex$opacityHex';
+          : '#$rHex$gHex$bHex$opacityHex';*/
+
+  // TODO: Just a quick fix -> remove this.
+  String toString() => '#$rHex$gHex$bHex$opacityHex';
 
   // -----
   // Helpers
