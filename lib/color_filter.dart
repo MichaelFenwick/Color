@@ -37,9 +37,13 @@ class ColorFilter {
    */
   static ColorFilter sepia = new ColorFilter((Color baseColor, [List args]) {
     RgbColor color = baseColor.toRgbColor();
-    return new RgbColor(min(RgbColor.rMax, (color.r * 0.393 + color.g * 0.769 + color.b * 0.189)),
-        min(RgbColor.gMax, (color.r * 0.349 + color.g * 0.686 + color.b * 0.168)),
-        min(RgbColor.bMax, (color.r * 0.272 + color.g * 0.534 + color.b * 0.131))).toCielabColor();
+    return new RgbColor(min(RgbColor.rMax,
+        (color.r * 0.393 + color.g * 0.769 + color.b * 0.189).round()),
+        min(RgbColor.gMax,
+            (color.r * 0.349 + color.g * 0.686 + color.b * 0.168).round()),
+        min(RgbColor.bMax,
+            (color.r * 0.272 + color.g * 0.534 + color.b * 0.131).round()))
+        .toCielabColor();
   }, RgbColor);
 
   /**

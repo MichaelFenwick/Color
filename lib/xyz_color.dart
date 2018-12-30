@@ -14,7 +14,7 @@ class XyzColor extends Color {
     num y = this.y / 100;
     num z = this.z / 100;
 
-    Map<String, num> rgb = {
+    Map<String, double> rgb = {
       'r': x * 3.2406 + y * -1.5372 + z * -0.4986,
       'g': x * -0.9689 + y * 1.8758 + z * 0.0415,
       'b': x * 0.0557 + y * -0.2040 + z * 1.0570
@@ -29,7 +29,7 @@ class XyzColor extends Color {
       rgb[key] *= 255;
     });
 
-    return new RgbColor(rgb['r'], rgb['g'], rgb['b']);
+    return new RgbColor(rgb['r'].round(), rgb['g'].round(), rgb['b'].round());
   }
 
   HslColor toHslColor() => this.toRgbColor().toHslColor();

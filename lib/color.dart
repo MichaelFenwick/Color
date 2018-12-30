@@ -1,21 +1,30 @@
 /**
-* Copyright (c) 2014 Michael Fenwick <mike@mikefenwick.com>
-*
-* The use of this source code is governed by the MIT license as specified
-* in the LICENSE file.
-*/
+ * Copyright (c) 2014 Michael Fenwick <mike@mikefenwick.com>
+ *
+ * The use of this source code is governed by the MIT license as specified
+ * in the LICENSE file.
+ */
 
 library color;
 
 import 'dart:math';
 
 part 'rgb_color.dart';
+
+part 'rgba_color.dart';
+
 part 'hex_color.dart';
+
 part 'hsl_color.dart';
+
+part 'hsla_color.dart';
+
 part 'xyz_color.dart';
+
 part 'cielab_color.dart';
+
 part 'color_filter.dart';
-part 'css_color_space.dart';
+
 part 'color_parser.dart';
 
 /**
@@ -27,19 +36,31 @@ part 'color_parser.dart';
  */
 abstract class Color {
   const Color();
-  const factory Color.rgb(num r, num g, num b) = RgbColor;
+
+  const factory Color.rgb(int r, int g, int b) = RgbColor;
+
+  const factory Color.rgba(int r, int g, int b, double opacity) = RgbaColor;
+
   factory Color.hex(String hexCode) = HexColor;
+
   const factory Color.hsl(num h, num s, num l) = HslColor;
+
   const factory Color.xyz(num x, num y, num z) = XyzColor;
+
   const factory Color.cielab(num l, num a, num b) = CielabColor;
 
   RgbColor toRgbColor();
+
   HexColor toHexColor() => toRgbColor().toHexColor();
+
   HslColor toHslColor();
+
   XyzColor toXyzColor();
+
   CielabColor toCielabColor();
 
   String toString();
+
   Map<String, num> toMap();
 
   get hashCode {
@@ -67,3 +88,23 @@ abstract class Color {
     }
   }
 }
+
+abstract class OpacityCapableColor extends Color {
+  const OpacityCapableColor();
+
+  OpacityCapableColor withOpacity(double a);
+
+  RgbaColor toRgbaColor();
+
+  HslaColor toHslaColor();
+
+  get hashCode {
+    RgbaColor rgba = this.toRgbaColor();
+    return (pow(2, 30) * rgba._opacity).round() +
+        256 * 256 * rgba.r +
+        256 * rgba.g +
+        rgba.b;
+  }
+}
+
+

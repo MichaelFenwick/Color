@@ -1,6 +1,6 @@
 part of color;
 
-class HslColor extends Color implements CssColorSpace {
+class HslColor extends OpacityCapableColor {
   final num h;
   final num s;
   final num l;
@@ -71,9 +71,16 @@ class HslColor extends Color implements CssColorSpace {
 
   CielabColor toCielabColor() => this.toRgbColor().toXyzColor().toCielabColor();
 
-  String toString() => "h: $h, s: $s%, l: $l%";
-
-  String toCssString() => 'hsl($h, $s%, $l%)';
+  String toString() => 'hsl($h, $s%, $l%)';
 
   Map<String, num> toMap() => {'h': h, 's': s, 'l': l};
+
+  @override
+  HslaColor toHslaColor() => HslaColor(h, s, l);
+
+  @override
+  RgbaColor toRgbaColor() => toRgbColor().toRgbaColor();
+
+  @override
+  OpacityCapableColor withOpacity(double a) => toHslaColor().withOpacity(a);
 }

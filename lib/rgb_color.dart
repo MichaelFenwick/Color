@@ -1,9 +1,9 @@
 part of color;
 
-class RgbColor extends Color implements CssColorSpace {
-  final num r;
-  final num g;
-  final num b;
+class RgbColor extends OpacityCapableColor {
+  final int r;
+  final int g;
+  final int b;
   static const int rMin = 0;
   static const int gMin = 0;
   static const int bMin = 0;
@@ -19,7 +19,7 @@ class RgbColor extends Color implements CssColorSpace {
    * 255 (inclusive).  Values above this range will be assumed to be a value
    * of 255, and values below this range will be assumed to be a value of 0.
    */
-  const RgbColor(num this.r, num this.g, num this.b);
+  const RgbColor(int this.r, int this.g, int this.b);
 
   factory RgbColor.name(String name) {
     if (RgbColor.namedColors.containsKey(name)) {
@@ -89,9 +89,7 @@ class RgbColor extends Color implements CssColorSpace {
 
   HexColor toHexColor() => new HexColor.fromRgb(r, g, b);
 
-  String toString() => "r: $r, g: $g, b: $b";
-
-  String toCssString() => 'rgb(${r.toInt()}, ${g.toInt()}, ${b.toInt()})';
+  String toString() => "rgb(${r.toInt()}, ${g.toInt()}, ${b.toInt()})";
 
   Map<String, num> toMap() => {'r': r, 'g': g, 'b': b};
 
@@ -245,4 +243,13 @@ class RgbColor extends Color implements CssColorSpace {
     'yellow': const Color.rgb(255, 255, 0),
     'yellowgreen': const Color.rgb(154, 205, 50)
   };
+
+  @override
+  OpacityCapableColor withOpacity(double a) => RgbaColor(r, g, b, a);
+
+  @override
+  HslaColor toHslaColor() => toHslColor().toHslaColor();
+
+  @override
+  RgbaColor toRgbaColor() => RgbaColor(r, g, b);
 }
