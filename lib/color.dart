@@ -41,6 +41,9 @@ abstract class Color {
 
   const factory Color.hsl(num h, num s, num l) = HslColor;
 
+// -----
+// Converters
+// -----
 
   RgbColor toRgbColor();
 
@@ -55,13 +58,12 @@ abstract class Color {
 
   Color withOpacity(double a);
 
+  // -----
+  // Other
+  // -----
+
+  /// Returns this as a CSS color string.
   String toString();
-
-  Map<String, num> toMap();
-
-  // -----
-  // Operators, Helpers, etc.
-  // -----
 
   get hashCode {
     RgbaColor rgba = this.toRgbaColor();
