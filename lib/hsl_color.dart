@@ -1,36 +1,53 @@
 part of color;
 
-class HslColor extends OpacityCapableColor {
-  final num h;
-  final num s;
-  final num l;
-  static const num hMin = 0;
-  static const num sMin = 0;
-  static const num lMin = 0;
-  static const num hMax = 360;
-  static const num sMax = 100;
-  static const num lMax = 100;
+class HslColor extends Color {
+  /// Number in degrees representing the [hue] of a color typically ranging in
+  /// value between 0 and 360. Values outside of this converted as `hue % 360`
+  /// when used in calculations.
+  /// E.g. -40 -> ||-40| - 360| = 320, 450 -> ||450| - 360| = 90
+  final num hue;
 
-  /**
-   * Creates a [HslColor] using a vector describing its hue, saturation, and
-   * luminance.
-   *
-   * The [hue] is given as a number in degrees, typically ranging in value
-   * between 0 and 360.  Values outside of this converted as `hue % 360` to
-   * be fit into the standard angle range.
-   *
-   * The [saturation] is given as a percentage between 0 and 100 (inclusive).
-   *
-   * The [luminance] is given as a percentage between 0 and 100 (inclusive).
-   */
-  const HslColor(num this.h, num this.s, num this.l);
+  /// Percentage between 0 and 100 representing the [saturation] of a color.
+  /// Gets clipped to a number between 0 and 100 (inclusive) when used in
+  /// calculations.
+  final num saturation;
+
+  /// Percentage representing the [lightness] of a color.
+  /// Gets clipped to a number between 0 and 100 (inclusive) when used in
+  /// calculations.
+  final num lightness;
+
+  static const hueMin = 0;
+  static const saturationMin = 0;
+  static const lightnessMin = 0;
+  static const hueMax = 360;
+  static const saturationMax = 100;
+  static const lightnessMax = 100;
+
+  /// Creates a [HslColor] using a vector describing its hue, saturation, and
+  /// luminance.
+  ///
+  /// The [hue] is given as a number in degrees, typically ranging in value
+  /// between 0 and 360. Values outside of this converted as `hue % 360` to
+  /// be fit into the standard angle range.
+  ///
+  /// The [saturation] is given as a percentage between 0 and 100 (inclusive).
+  /// Gets clipped to a number between 0 and 100 (inclusive).
+  ///
+  /// The [lightness] is given as a percentage between 0 and 100 (inclusive).
+  /// Gets clipped to a number between 0 and 100 (inclusive).
+  const HslColor(num this.hue, num this.saturation, num this.lightness);
+
+  // -----
+  // Converters
+  // -----
 
   RgbColor toRgbColor() {
     List<num> rgb = [0, 0, 0];
 
-    num hue = h / 360 % 1;
-    num saturation = s / 100;
-    num luminance = l / 100;
+    num hue = this.hue / 360 % 1;
+    num saturation = this.saturation / 100;
+    num luminance = this.lightness / 100;
 
     if (hue < 1 / 6) {
       rgb[0] = 1;
@@ -65,22 +82,23 @@ class HslColor extends OpacityCapableColor {
     return new RgbColor(rgb[0], rgb[1], rgb[2]);
   }
 
+  @override
   HslColor toHslColor() => this;
 
-  XyzColor toXyzColor() => this.toRgbColor().toXyzColor();
-
-  CielabColor toCielabColor() => this.toRgbColor().toXyzColor().toCielabColor();
-
-  String toString() => 'hsl($h, $s%, $l%)';
-
-  Map<String, num> toMap() => {'h': h, 's': s, 'l': l};
-
   @override
-  HslaColor toHslaColor() => HslaColor(h, s, l);
+  HslaColor toHslaColor() => HslaColor(hue, saturation, lightness);
 
   @override
   RgbaColor toRgbaColor() => toRgbColor().toRgbaColor();
 
   @override
-  OpacityCapableColor withOpacity(double a) => toHslaColor().withOpacity(a);
+  Color withOpacity(double a) => toHslaColor().withOpacity(a);
+
+  // -----
+  // Other
+  // -----
+
+  String toString() => 'hsl($hue, $saturation%, $lightness%)';
+
+  Map<String, num> toMap() => {'h': hue, 's': saturation, 'l': lightness};
 }

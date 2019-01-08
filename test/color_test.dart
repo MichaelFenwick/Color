@@ -34,7 +34,7 @@ void main() {
     test("through the Color.cielab constructor", () {
       CielabColor color = new Color.cielab(95.538, -23.02, 1.732);
       expect(color is Color, isTrue);
-      expect(color.l, equals(95.538));
+      expect(color.lightness, equals(95.538));
       expect(color.a, equals(-23.02));
       expect(color.b, equals(1.732));
     });
@@ -100,7 +100,7 @@ void main() {
     test("as a CielabColor", () {
       CielabColor color = new CielabColor(95.538, -23.02, 1.732);
       expect(color is Color, isTrue);
-      expect(color.l, equals(95.538));
+      expect(color.lightness, equals(95.538));
       expect(color.a, equals(-23.02));
       expect(color.b, equals(1.732));
     });

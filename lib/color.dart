@@ -19,10 +19,6 @@ part 'hsl_color.dart';
 
 part 'hsla_color.dart';
 
-part 'xyz_color.dart';
-
-part 'cielab_color.dart';
-
 part 'color_filter.dart';
 
 part 'color_parser.dart';
@@ -45,9 +41,6 @@ abstract class Color {
 
   const factory Color.hsl(num h, num s, num l) = HslColor;
 
-  const factory Color.xyz(num x, num y, num z) = XyzColor;
-
-  const factory Color.cielab(num l, num a, num b) = CielabColor;
 
   RgbColor toRgbColor();
 
@@ -58,17 +51,24 @@ abstract class Color {
 
   HslColor toHslColor();
 
-  XyzColor toXyzColor();
+  HslaColor toHslaColor();
 
-  CielabColor toCielabColor();
+  Color withOpacity(double a);
 
   String toString();
 
   Map<String, num> toMap();
 
+  // -----
+  // Operators, Helpers, etc.
+  // -----
+
   get hashCode {
-    RgbColor rgb = this.toRgbColor();
-    return 256 * 256 * rgb.r.toInt() + 256 * rgb.g.toInt() + rgb.b.toInt();
+    RgbaColor rgba = this.toRgbaColor();
+    return (pow(2, 30) * rgba._opacity).round() +
+        256 * 256 * rgba.r +
+        256 * rgba.g +
+        rgba.b;
   }
 
   operator ==(Object other) => other is Color && this.hashCode == other.hashCode;
@@ -82,29 +82,9 @@ abstract class Color {
       return this.toHexColor();
     } else if (colorType is HslColor) {
       return this.toHslColor();
-    } else if (colorType is XyzColor) {
-      return this.toXyzColor();
-    } else if (colorType is CielabColor) {
-      return this.toCielabColor();
     } else {
       return this;
     }
-  }
-}
-
-abstract class OpacityCapableColor extends Color {
-  const OpacityCapableColor();
-
-  OpacityCapableColor withOpacity(double a);
-
-  HslaColor toHslaColor();
-
-  get hashCode {
-    RgbaColor rgba = this.toRgbaColor();
-    return (pow(2, 30) * rgba._opacity).round() +
-        256 * 256 * rgba.r +
-        256 * rgba.g +
-        rgba.b;
   }
 }
 

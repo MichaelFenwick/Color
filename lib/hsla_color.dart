@@ -31,9 +31,10 @@ class HslaColor extends HslColor {
   RgbaColor toRgbaColor() => toRgbColor().withOpacity(opacity);
 
   @override
-  OpacityCapableColor withOpacity(double a) => HslaColor(h, s, l, a);
+  Color withOpacity(double a) => HslaColor(hue, saturation, lightness, a);
 
-  String toString() => 'hsla($h, $s%, $l%, $opacity)';
+  String toString() => 'hsla($hue, $saturation%, $lightness%, $opacity)';
 
-  Map<String, num> toMap() => {'h': h, 's': s, 'l': l, 'opacity': opacity};
+  Map<String, num> toMap() =>
+      {'h': hue, 's': saturation, 'l': lightness, 'opacity': opacity};
 }
