@@ -1,6 +1,13 @@
 part of color;
 
 class HslColor extends Color {
+  static const hueMin = 0;
+  static const saturationMin = 0;
+  static const lightnessMin = 0;
+  static const hueMax = 360;
+  static const saturationMax = 100;
+  static const lightnessMax = 100;
+
   /// Number in degrees representing the [hue] of a color typically ranging in
   /// value between 0 and 360. Values outside of this converted as `hue % 360`
   /// when used in calculations.
@@ -16,13 +23,6 @@ class HslColor extends Color {
   /// Gets clipped to a number between 0 and 100 (inclusive) when used in
   /// calculations.
   final num lightness;
-
-  static const hueMin = 0;
-  static const saturationMin = 0;
-  static const lightnessMin = 0;
-  static const hueMax = 360;
-  static const saturationMax = 100;
-  static const lightnessMax = 100;
 
   /// Creates a [HslColor] using a vector describing its hue, saturation, and
   /// luminance.
