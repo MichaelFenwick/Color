@@ -43,7 +43,4 @@ class HslaColor extends HslColor {
   // -----
 
   String toString() => 'hsla($hue, $saturation%, $lightness%, $opacity)';
-
-  Map<String, num> toMap() =>
-      {'h': hue, 's': saturation, 'l': lightness, 'opacity': opacity};
 }

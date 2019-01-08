@@ -99,7 +99,4 @@ class HslColor extends Color {
   // -----
 
   String toString() => 'hsl($hue, $saturation%, $lightness%)';
-
-  Map<String, num> toMap() =>
-      {'hue': hue, 'saturation': saturation, 'lightness': lightness};
 }

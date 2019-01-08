@@ -73,8 +73,6 @@ abstract class Color {
 
   operator ==(Object other) => other is Color && this.hashCode == other.hashCode;
 
-  operator [](String key) => this.toMap()[key];
-
   Color _convert(Type colorType) {
     if (colorType is RgbColor) {
       return this.toRgbColor();
