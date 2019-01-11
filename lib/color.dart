@@ -19,7 +19,7 @@ part 'hsl_color.dart';
 
 part 'hsla_color.dart';
 
-part 'color_filter.dart';
+//part 'color_filter.dart';
 
 part 'color_parser.dart';
 

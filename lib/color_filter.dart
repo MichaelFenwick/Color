@@ -1,4 +1,4 @@
-part of color;
+/*part of color;
 
 typedef Color FilterFunction(Color color, [List args]);
 
@@ -73,4 +73,4 @@ class ColorFilter {
     color = color._convert(startingColorSpace);
     return color;
   }
-}
+}*/

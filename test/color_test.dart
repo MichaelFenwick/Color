@@ -1,4 +1,4 @@
-import '../lib/color.dart';
+/*import '../lib/color.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -493,4 +493,4 @@ void main() {
       expect(c2, equals(new HexColor("c0ffee")));
     });
   });
-}
+}*/

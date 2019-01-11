@@ -1,4 +1,4 @@
-import 'dart:html';
+/*import 'dart:html';
 import 'package:color/color.dart';
 
 Element body = querySelector('body');
@@ -32,4 +32,4 @@ addGrid(String name, [ColorFilter filter, List filterArgs = const []]) {
       }
     }
   }
-}
+}*/
