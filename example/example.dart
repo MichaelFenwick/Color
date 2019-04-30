@@ -1,4 +1,4 @@
-import 'dart:html';
+/*import 'dart:html';
 import 'package:color/color.dart';
 
 Element body = querySelector('body');
@@ -28,8 +28,8 @@ addGrid(String name, [ColorFilter filter, List filterArgs = const []]) {
         }
         block.append(new Element.div()
           ..classes.add('color-block')
-          ..style.background = color.toRgbColor().toCssString());
+          ..style.background = color.toRgbColor().toString());
       }
     }
   }
-}
+}*/

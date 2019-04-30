@@ -1,4 +1,4 @@
-part of color;
+/*part of color;
 
 typedef Color FilterFunction(Color color, [List args]);
 
@@ -17,7 +17,7 @@ class ColorFilter {
     if (args is List && args.length > 0 && args[0] is num) {
       percent = args[0];
     }
-    return new CielabColor(color.l * (1 + percent), color.a, color.b);
+    return new CielabColor(color.lightness * (1 + percent), color.a, color.b);
   }, CielabColor);
 
   /**
@@ -29,7 +29,7 @@ class ColorFilter {
     if (args is List && args.length > 0 && args[0] is num) {
       percent = args[0];
     }
-    return new CielabColor(color.l * (1 - percent), color.a, color.b);
+    return new CielabColor(color.lightness * (1 - percent), color.a, color.b);
   }, CielabColor);
 
   /**
@@ -37,9 +37,13 @@ class ColorFilter {
    */
   static ColorFilter sepia = new ColorFilter((Color baseColor, [List args]) {
     RgbColor color = baseColor.toRgbColor();
-    return new RgbColor(min(RgbColor.rMax, (color.r * 0.393 + color.g * 0.769 + color.b * 0.189)),
-        min(RgbColor.gMax, (color.r * 0.349 + color.g * 0.686 + color.b * 0.168)),
-        min(RgbColor.bMax, (color.r * 0.272 + color.g * 0.534 + color.b * 0.131))).toCielabColor();
+    return new RgbColor(min(RgbColor.rMax,
+        (color.r * 0.393 + color.g * 0.769 + color.b * 0.189).round()),
+        min(RgbColor.gMax,
+            (color.r * 0.349 + color.g * 0.686 + color.b * 0.168).round()),
+        min(RgbColor.bMax,
+            (color.r * 0.272 + color.g * 0.534 + color.b * 0.131).round()))
+        .toCielabColor();
   }, RgbColor);
 
   /**
@@ -47,7 +51,7 @@ class ColorFilter {
    */
   static ColorFilter greyscale = new ColorFilter((Color inputColor, [List args]) {
     CielabColor color = inputColor.toCielabColor();
-    num rgbLevel = color.l * 255 / 100;
+    num rgbLevel = color.lightness * 255 / 100;
     return new RgbColor(rgbLevel, rgbLevel, rgbLevel).toCielabColor();
   }, CielabColor);
 
@@ -56,7 +60,7 @@ class ColorFilter {
    */
   static ColorFilter invert = new ColorFilter((Color inputColor, [List args]) {
     CielabColor color = inputColor.toCielabColor();
-    return new CielabColor(100 - color.l, -1 * color.a, -1 * color.b);
+    return new CielabColor(100 - color.lightness, -1 * color.a, -1 * color.b);
   }, CielabColor);
 
   /**
@@ -69,4 +73,4 @@ class ColorFilter {
     color = color._convert(startingColorSpace);
     return color;
   }
-}
+}*/

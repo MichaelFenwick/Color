@@ -1,9 +1,9 @@
 part of color;
 
-class RgbColor extends Color implements CssColorSpace {
-  final num r;
-  final num g;
-  final num b;
+class RgbColor extends Color {
+  final int r;
+  final int g;
+  final int b;
   static const int rMin = 0;
   static const int gMin = 0;
   static const int bMin = 0;
@@ -19,7 +19,7 @@ class RgbColor extends Color implements CssColorSpace {
    * 255 (inclusive).  Values above this range will be assumed to be a value
    * of 255, and values below this range will be assumed to be a value of 0.
    */
-  const RgbColor(num this.r, num this.g, num this.b);
+  const RgbColor(int this.r, int this.g, int this.b);
 
   factory RgbColor.name(String name) {
     if (RgbColor.namedColors.containsKey(name)) {
@@ -66,32 +66,9 @@ class RgbColor extends Color implements CssColorSpace {
     return new HslColor(hue, saturation * 100, luminance * 100);
   }
 
-  XyzColor toXyzColor() {
-    Map<String, num> rgb = {'r': r / 255, 'g': g / 255, 'b': b / 255};
-
-    rgb.forEach((key, value) {
-      if (value > 0.04045) {
-        rgb[key] = pow((value + 0.055) / 1.055, 2.4);
-      } else {
-        rgb[key] = value / 12.92;
-      }
-      rgb[key] *= 100;
-    });
-
-    num x = rgb['r'] * 0.4124 + rgb['g'] * 0.3576 + rgb['b'] * 0.1805;
-    num y = rgb['r'] * 0.2126 + rgb['g'] * 0.7152 + rgb['b'] * 0.0722;
-    num z = rgb['r'] * 0.0193 + rgb['g'] * 0.1192 + rgb['b'] * 0.9505;
-
-    return new XyzColor(x, y, z);
-  }
-
-  CielabColor toCielabColor() => this.toXyzColor().toCielabColor();
-
   HexColor toHexColor() => new HexColor.fromRgb(r, g, b);
 
-  String toString() => "r: $r, g: $g, b: $b";
-
-  String toCssString() => 'rgb(${r.toInt()}, ${g.toInt()}, ${b.toInt()})';
+  String toString() => "rgb(${r.toInt()}, ${g.toInt()}, ${b.toInt()})";
 
   Map<String, num> toMap() => {'r': r, 'g': g, 'b': b};
 
@@ -245,4 +222,13 @@ class RgbColor extends Color implements CssColorSpace {
     'yellow': const Color.rgb(255, 255, 0),
     'yellowgreen': const Color.rgb(154, 205, 50)
   };
+
+  @override
+  Color withOpacity(double a) => RgbaColor(r, g, b, a);
+
+  @override
+  HslaColor toHslaColor() => toHslColor().toHslaColor();
+
+  @override
+  RgbaColor toRgbaColor() => RgbaColor(r, g, b);
 }
