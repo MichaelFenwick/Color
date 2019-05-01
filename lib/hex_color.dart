@@ -12,7 +12,9 @@ class HexColor extends RgbaColor {
    *
    * The [hexCode] should not be preceeded with a pound sign (#).
    */
-  factory HexColor(String hexCode) {
+
+  // TODO: Move to parser.
+  factory HexColor.fromHex(String hexCode) {
     if (hexCode.startsWith('#')) {
       hexCode = hexCode.substring(1);
     }
@@ -28,6 +30,8 @@ class HexColor extends RgbaColor {
 
     return new HexColor.fromRgba(red, green, blue, opacity);
   }
+
+  const HexColor(int value) : super(value);
 
   const HexColor.fromRgb(num red, num green, num blue)
       : super(red, green, blue);

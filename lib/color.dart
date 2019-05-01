@@ -19,50 +19,45 @@ part 'hsl_color.dart';
 
 part 'hsla_color.dart';
 
-//part 'color_filter.dart';
-
 part 'color_parser.dart';
 
-/**
- * An object representing a color.
- *
- * A [Color] can be constructed be specifying its value as either an RGB vector, a 6 digit hex string, an HSL vector, an XYZ vector, or a LAB vector using the appropriate named constructor. Alternatively, the appropriate subclass can be instantiated directly.
- *
- * [Color]s can be directly compared using the `==` operator, which will return true if the two [Color] objects represent the same RGB color.
- */
 abstract class Color {
   const Color();
 
-  const factory Color.rgb(int r, int g, int b) = RgbColor;
+  const factory Color.rgb(int red, int green, int blue) = RgbColor.fromRgb;
 
-  const factory Color.rgba(int r, int g, int b, double opacity) = RgbaColor;
+  const factory Color.rgba(int red, int green, int blue, int alpha) =
+      RgbaColor.fromRgba;
 
-  factory Color.hex(String hexCode) = HexColor;
+  const factory Color.hsl(num hue, num saturation, num lightness) = HslColor;
 
-  const factory Color.hsl(num h, num s, num l) = HslColor;
+  const factory Color.hsla(num hue, num saturation, num lightness, num alpha) =
+      HslaColor;
+
+  Color.parse(String color) {
+    // TODO
+  }
 
 // -----
 // Converters
 // -----
 
-  RgbColor toRgbColor();
+  Color toRgbColor();
 
-  // TODO: Write tests.
-  RgbaColor toRgbaColor();
+  Color toRgbaColor();
 
-  HexColor toHexColor() => toRgbaColor().toHexColor();
+  Color toHexColor() => toRgbaColor().toHexColor();
 
-  HslColor toHslColor();
+  Color toHslColor();
 
-  HslaColor toHslaColor();
+  Color toHslaColor();
 
-  Color withOpacity(double a);
+  Color withAlpha(int alpha);
 
   // -----
   // Other
   // -----
 
-  /// Returns this as a CSS color string.
   String toString();
 
   get hashCode {
@@ -73,7 +68,8 @@ abstract class Color {
         rgba.b;
   }
 
-  operator ==(Object other) => other is Color && this.hashCode == other.hashCode;
+  operator ==(Object other) =>
+      other is Color && this.hashCode == other.hashCode;
 
   Color _convert(Type colorType) {
     if (colorType is RgbColor) {
@@ -87,5 +83,3 @@ abstract class Color {
     }
   }
 }
-
-
