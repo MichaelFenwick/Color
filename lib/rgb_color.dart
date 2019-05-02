@@ -1,7 +1,18 @@
-part of color;
+import 'package:meta/meta.dart';
+import 'dart:math';
+
+import 'color.dart';
+import 'hsl_color.dart';
 
 class RgbColor extends Color {
+  static const maxAlpha = 255;
+  static const maxOpacity = 1;
+
   final int value;
+
+  num get opacity => alpha / maxAlpha;
+
+  int get alpha => value & 0xFF000000 >> 24;
 
   int get red => value & 0xFF0000 >> 16;
 
@@ -9,15 +20,60 @@ class RgbColor extends Color {
 
   int get blue => value & 0x0000FF >> 0;
 
-  const RgbColor(int value) : value = value & 0xFFFFFF;
+  // -----
+  // Constructors
+  // -----
 
-  const RgbColor.fromRgb(int red, int green, int blue)
-      : value = ((red & 0xff) << 16) |
-  ((green & 0xff) << 8) |
-  ((blue & 0xff) << 0) & 0xFFFFFF;
+  const RgbColor(int value)
+      : assert(value != null),
+        value = value & 0xFFFFFFFF;
+
+  const RgbColor.fromRgba(
+      {@required int red, @required int green, @required int blue, int alpha})
+      : assert(red != null),
+        assert(green != null),
+        assert(blue != null),
+        value = ((alpha ?? maxAlpha & 0xff) << 24) |
+            ((red & 0xff) << 16) |
+            ((green & 0xff) << 8) |
+            ((blue & 0xff) << 0) & 0xFFFFFF;
+
+  const RgbColor.fromRgbo(
+      {@required int red, @required int green, @required int blue, num opacity})
+      : assert(red != null),
+        assert(green != null),
+        assert(blue != null),
+        value = (((maxAlpha ~/ (1 / (opacity ?? maxOpacity))) & 0xff) << 24) |
+            ((red & 0xff) << 16) |
+            ((green & 0xff) << 8) |
+            ((blue & 0xff) << 0) & 0xFFFFFF;
+
+  // -----
+  // Manipulation
+  // -----
+
+  RgbColor withAlpha(int alpha) => opacity != null
+      ? RgbColor.fromRgba(red: red, green: green, blue: blue, alpha: alpha)
+      : this;
+
+  RgbColor withOpacity(num opacity) => opacity != null
+      ? RgbColor.fromRgbo(red: red, green: green, blue: blue, opacity: opacity)
+      : this;
+
+  @override
+  Color lighten(num steps) => toHsl().lighten(steps);
+
+  @override
+  Color darken(num steps) => toHsl().darken(steps);
+
+  // -----
+  // Conversion
+  // -----
 
   // TODO: Cleanup.
-  Color toHslColor() {
+  /// Using https://en.wikipedia.org/wiki/HSL_and_HSV#RGB_to_HSL_and_HSV
+  @override
+  HslColor toHsl() {
     num rf = red / 255;
     num gf = green / 255;
     num bf = blue / 255;
@@ -26,7 +82,7 @@ class RgbColor extends Color {
     num delta = cMax - cMin;
     num hue;
     num saturation;
-    num luminance;
+    num lightness;
 
     if (cMax == rf) {
       hue = 60 * ((gf - bf) / delta % 6);
@@ -40,26 +96,26 @@ class RgbColor extends Color {
       hue = 0;
     }
 
-    luminance = (cMax + cMin) / 2;
+    lightness = (cMax + cMin) / 2;
 
     if (delta == 0) {
       saturation = 0;
     } else {
-      saturation = delta / (1 - (luminance * 2 - 1).abs());
+      saturation = delta / (1 - (lightness * 2 - 1).abs());
     }
 
-    return HslColor(hue, saturation * 100, luminance * 100);
+    return HslColor.fromHsla(
+        hue: hue,
+        saturation: saturation * 100,
+        lightness: lightness * 100,
+        alpha: alpha);
   }
 
   @override
-  Color toHslaColor() => toHslColor().toHslaColor();
+  RgbColor toRgb() => this;
 
   @override
-  Color toRgbColor() => this;
-
-  @override
-  Color toRgbaColor() => RgbaColor(value);
-
-  @override
-  Color withAlpha(int alpha) => toRgbaColor().withAlpha(alpha);
+  String asCss() => alpha == maxAlpha
+      ? 'rgb($red, $green, $blue)'
+      : 'rgba($red, $green, $blue, $opacity)';
 }

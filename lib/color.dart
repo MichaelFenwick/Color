@@ -7,79 +7,63 @@
 
 library color;
 
-import 'dart:math';
+import 'package:color/rgb_color.dart';
 
-part 'rgb_color.dart';
+import 'hsl_color.dart';
 
-part 'rgba_color.dart';
-
-part 'hex_color.dart';
-
-part 'hsl_color.dart';
-
-part 'hsla_color.dart';
-
-part 'color_parser.dart';
+abstract class CssColor<O> {
+  String asCss(O displayOption);
+}
 
 abstract class Color {
   const Color();
 
-  const factory Color.rgb(int red, int green, int blue) = RgbColor.fromRgb;
+  const factory Color.hex(int value) = RgbColor;
 
-  const factory Color.rgba(int red, int green, int blue, int alpha) =
-      RgbaColor.fromRgba;
+  const factory Color.rgb({int red, int green, int blue}) = RgbColor.fromRgba;
 
-  const factory Color.hsl(num hue, num saturation, num lightness) = HslColor;
+  const factory Color.rgba({int red, int green, int blue, int alpha}) =
+      RgbColor.fromRgba;
 
-  const factory Color.hsla(num hue, num saturation, num lightness, num alpha) =
-      HslaColor;
+  const factory Color.rgbo({int red, int green, int blue, num opacity}) =
+      RgbColor.fromRgbo;
 
-  Color.parse(String color) {
+  const factory Color.hsl({num hue, num saturation, num lightness}) =
+      HslColor.fromHslo;
+
+  const factory Color.hslo(
+      {num hue,
+      num saturation,
+      num lightness,
+      num opacity}) = HslColor.fromHslo;
+
+  const factory Color.hsla(
+      {num hue, num saturation, num lightness, int alpha}) = HslColor.fromHsla;
+
+  Color.parse(String value) {
     // TODO
   }
 
-// -----
-// Converters
-// -----
+  // -----
+  // Conversion
+  // -----
 
-  Color toRgbColor();
+  HslColor toHsl();
 
-  Color toRgbaColor();
+  RgbColor toRgb();
 
-  Color toHexColor() => toRgbaColor().toHexColor();
+  String asCss();
 
-  Color toHslColor();
+  // -----
+  // Manipulation
+  // -----
 
-  Color toHslaColor();
 
   Color withAlpha(int alpha);
 
-  // -----
-  // Other
-  // -----
+  Color withOpacity(int opacity);
 
-  String toString();
+  Color lighten(num steps);
 
-  get hashCode {
-    RgbaColor rgba = this.toRgbaColor();
-    return (pow(2, 30) * rgba._opacity).round() +
-        256 * 256 * rgba.r +
-        256 * rgba.g +
-        rgba.b;
-  }
-
-  operator ==(Object other) =>
-      other is Color && this.hashCode == other.hashCode;
-
-  Color _convert(Type colorType) {
-    if (colorType is RgbColor) {
-      return this.toRgbColor();
-    } else if (colorType is HexColor) {
-      return this.toHexColor();
-    } else if (colorType is HslColor) {
-      return this.toHslColor();
-    } else {
-      return this;
-    }
-  }
+  Color darken(num steps);
 }
