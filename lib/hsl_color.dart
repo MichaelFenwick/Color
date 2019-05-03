@@ -17,6 +17,7 @@ class HslColor extends Color {
   static const maxOpacity = 1;
   static const maxAlpha = 255;
 
+  @override
   final num opacity;
 
   /// Number in degrees representing the [hue] of a color typically ranging in
@@ -96,6 +97,14 @@ class HslColor extends Color {
           opacity: opacity)
       : this;
 
+  @override
+  Color lighten(num steps) =>
+      steps != null ? _copy(lightness: this.lightness + steps) : this;
+
+  @override
+  Color darken(num steps) =>
+      steps != null ? _copy(lightness: this.lightness - steps) : this;
+
   // -----
   // Conversion
   // -----
@@ -120,18 +129,6 @@ class HslColor extends Color {
   String asCss() => opacity == maxOpacity
       ? 'hsl($hue, $saturation%, $lightness%)'
       : 'hsla($hue, $saturation%, $lightness%, $opacity%)';
-
-  // -----
-  // Manipulation
-  // -----
-
-  @override
-  Color lighten(num steps) =>
-      steps != null ? _copy(lightness: this.lightness + steps) : this;
-
-  @override
-  Color darken(num steps) =>
-      steps != null ? _copy(lightness: this.lightness - steps) : this;
 
   // -----
   // Util

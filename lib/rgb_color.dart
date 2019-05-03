@@ -10,6 +10,7 @@ class RgbColor extends Color {
 
   final int value;
 
+  @override
   num get opacity => alpha / maxAlpha;
 
   int get alpha => value & 0xFF000000 >> 24;
@@ -52,11 +53,11 @@ class RgbColor extends Color {
   // Manipulation
   // -----
 
-  RgbColor withAlpha(int alpha) => opacity != null
+  Color withAlpha(int alpha) => opacity != null
       ? RgbColor.fromRgba(red: red, green: green, blue: blue, alpha: alpha)
       : this;
 
-  RgbColor withOpacity(num opacity) => opacity != null
+  Color withOpacity(num opacity) => opacity != null
       ? RgbColor.fromRgbo(red: red, green: green, blue: blue, opacity: opacity)
       : this;
 

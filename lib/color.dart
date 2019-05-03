@@ -16,6 +16,8 @@ abstract class CssColor<O> {
 }
 
 abstract class Color {
+  static const maxOpacity = 100;
+
   const Color();
 
   const factory Color.hex(int value) = RgbColor;
@@ -23,19 +25,18 @@ abstract class Color {
   const factory Color.rgb({int red, int green, int blue}) = RgbColor.fromRgba;
 
   const factory Color.rgba({int red, int green, int blue, int alpha}) =
-      RgbColor.fromRgba;
+  RgbColor.fromRgba;
 
   const factory Color.rgbo({int red, int green, int blue, num opacity}) =
-      RgbColor.fromRgbo;
+  RgbColor.fromRgbo;
 
   const factory Color.hsl({num hue, num saturation, num lightness}) =
-      HslColor.fromHslo;
+  HslColor.fromHslo;
 
-  const factory Color.hslo(
-      {num hue,
-      num saturation,
-      num lightness,
-      num opacity}) = HslColor.fromHslo;
+  const factory Color.hslo({num hue,
+    num saturation,
+    num lightness,
+    num opacity}) = HslColor.fromHslo;
 
   const factory Color.hsla(
       {num hue, num saturation, num lightness, int alpha}) = HslColor.fromHsla;
@@ -43,6 +44,8 @@ abstract class Color {
   Color.parse(String value) {
     // TODO
   }
+
+  num get opacity;
 
   // -----
   // Conversion
@@ -52,12 +55,9 @@ abstract class Color {
 
   RgbColor toRgb();
 
-  String asCss();
-
   // -----
   // Manipulation
   // -----
-
 
   Color withAlpha(int alpha);
 
