@@ -1,4 +1,5 @@
 import 'package:color/color.dart';
+import 'package:color/rgb_color.dart';
 
 abstract class CssColorFormat {
   String format(Color color);
@@ -24,9 +25,7 @@ abstract class _RgbFormat implements CssColorFormat {
     final stringBuffer = StringBuffer();
     stringBuffer
         .write('$prefix(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue}');
-    if (opacityMode == OpacityMode.always ||
-        opacityMode == OpacityMode.whenTranslucent &&
-            color.opacity == Color.maxOpacity) {
+    if (_shouldIncludeOpacity(opacityMode, color.isTranslucent)) {
       stringBuffer.write(', ${_formatOpacity(opacityStyle, color.opacity)}');
     }
     stringBuffer.write(')');
@@ -86,14 +85,8 @@ abstract class _HslFormat implements CssColorFormat {
     final lightness = '${hslColor.lightness}%';
 
     stringBuffer.write('$prefix($hue, $saturation, $lightness');
-    if (opacityMode == OpacityMode.always ||
-        opacityMode == OpacityMode.whenTranslucent &&
-            color.opacity == Color.maxOpacity) {
-      if (opacityMode == OpacityMode.always ||
-          opacityMode == OpacityMode.whenTranslucent &&
-              color.opacity == Color.maxOpacity) {
-        stringBuffer.write(', ${_formatOpacity(opacityStyle, color.opacity)}');
-      }
+    if (_shouldIncludeOpacity(opacityMode, color.isTranslucent)) {
+      stringBuffer.write(', ${_formatOpacity(opacityStyle, color.opacity)}');
     }
     stringBuffer.write(')');
 
@@ -127,6 +120,34 @@ class HslaFormat extends _HslFormat {
             opacityStyle: opacityStyle);
 }
 
+class HexFormat implements CssColorFormat {
+  final bool isUpperCase;
+  final OpacityMode opacityMode;
+
+  HexFormat({bool isUpperCase, bool isCompact, OpacityMode opacityMode})
+      : this.isUpperCase = isUpperCase ?? true,
+        this.opacityMode = opacityMode ?? OpacityMode.whenTranslucent;
+
+  @override
+  String format(Color color) {
+    final rgbColor = color.toRgb();
+    final rgbHex = (rgbColor.value & 0xFFFFFF).toRadixString(16);
+
+    final stringBuffer = StringBuffer();
+    stringBuffer.write("#$rgbHex");
+    if (_shouldIncludeOpacity(opacityMode, rgbColor.isTranslucent)) {
+      final alphaHex = rgbColor.alpha == RgbColor.minAlpha
+          ? "00"
+          : rgbColor.alpha.toRadixString(16);
+      stringBuffer.write(alphaHex);
+    }
+
+    final hex = stringBuffer.toString();
+
+    return isUpperCase ? hex.toUpperCase() : hex.toLowerCase();
+  }
+}
+
 // -----
 // Utils
 // -----
@@ -136,6 +157,10 @@ String _formatOpacity(PercentOrDecimal style, num value) =>
 
 String _formatHue(DegreeOrDecimal style, num value) =>
     style == DegreeOrDecimal.degree ? '${value}' : '${value}deg';
+
+bool _shouldIncludeOpacity(OpacityMode opacityMode, bool isTranslucent) =>
+    opacityMode == OpacityMode.always ||
+    opacityMode == OpacityMode.whenTranslucent && isTranslucent;
 
 enum PercentOrDecimal { percent, decimal }
 

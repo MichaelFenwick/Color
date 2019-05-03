@@ -125,11 +125,6 @@ class HslColor extends Color {
         red: f(0), green: f(8), blue: f(4), opacity: opacity);
   }
 
-  @override
-  String asCss() => opacity == maxOpacity
-      ? 'hsl($hue, $saturation%, $lightness%)'
-      : 'hsla($hue, $saturation%, $lightness%, $opacity%)';
-
   // -----
   // Util
   // -----

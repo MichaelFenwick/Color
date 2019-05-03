@@ -8,6 +8,8 @@ class RgbColor extends Color {
   static const maxAlpha = 255;
   static const maxOpacity = 1;
 
+  static const minAlpha = 0;
+
   final int value;
 
   @override
@@ -114,9 +116,4 @@ class RgbColor extends Color {
 
   @override
   RgbColor toRgb() => this;
-
-  @override
-  String asCss() => alpha == maxAlpha
-      ? 'rgb($red, $green, $blue)'
-      : 'rgba($red, $green, $blue, $opacity)';
 }
