@@ -25,29 +25,27 @@ abstract class Color {
   const factory Color.rgb({int red, int green, int blue}) = RgbColor.fromRgba;
 
   const factory Color.rgba({int red, int green, int blue, int alpha}) =
-  RgbColor.fromRgba;
+      RgbColor.fromRgba;
 
   const factory Color.rgbo({int red, int green, int blue, num opacity}) =
-  RgbColor.fromRgbo;
+      RgbColor.fromRgbo;
 
   const factory Color.hsl({num hue, num saturation, num lightness}) =
-  HslColor.fromHslo;
+      HslColor.fromHslo;
 
-  const factory Color.hslo({num hue,
-    num saturation,
-    num lightness,
-    num opacity}) = HslColor.fromHslo;
+  const factory Color.hslo(
+      {num hue,
+      num saturation,
+      num lightness,
+      num opacity}) = HslColor.fromHslo;
 
   const factory Color.hsla(
       {num hue, num saturation, num lightness, int alpha}) = HslColor.fromHsla;
 
-  Color.parse(String value) {
-    // TODO
-  }
-
   num get opacity;
 
   bool get isOpaque => opacity == maxOpacity;
+
   bool get isTranslucent => opacity != maxOpacity;
 
   // -----
