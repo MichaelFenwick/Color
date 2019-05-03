@@ -11,10 +11,6 @@ import 'package:color/rgb_color.dart';
 
 import 'hsl_color.dart';
 
-abstract class CssColor<O> {
-  String asCss(O displayOption);
-}
-
 abstract class Color {
   static const maxOpacity = 100;
 
