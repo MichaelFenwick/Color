@@ -13,15 +13,15 @@ class RgbColor extends Color {
   final int value;
 
   @override
-  num get opacity => alpha / maxAlpha;
+  num get opacity => num.parse((alpha / maxAlpha).toStringAsFixed(2));
 
-  int get alpha => value & 0xFF000000 >> 24;
+  int get alpha => (value & 0xFF000000) >> 24;
 
-  int get red => value & 0xFF0000 >> 16;
+  int get red => (value & 0x00FF0000) >> 16;
 
-  int get green => value & 0x00FF00 >> 8;
+  int get green => (value & 0x0000FF00) >> 8;
 
-  int get blue => value & 0x0000FF >> 0;
+  int get blue => (value & 0x000000FF) >> 0;
 
   // -----
   // Constructors
@@ -31,43 +31,43 @@ class RgbColor extends Color {
       : assert(value != null),
         value = value & 0xFFFFFFFF;
 
+  // TODO: Maybe adjust how out of range values will get brought into range.
+  const RgbColor.fromHex(int hex)
+      : assert(hex != null),
+        value = (((hex > 0xFFFFFF ? (hex >> 8) : hex) & 0xFFFFFF) |
+            ((hex > 0xFFFFFF ? (hex & 0xFF) : 0xFF) << 24)) & 0xFFFFFFFF;
+
   const RgbColor.fromRgba(
       {@required int red, @required int green, @required int blue, int alpha})
       : assert(red != null),
         assert(green != null),
         assert(blue != null),
-        value = ((alpha ?? maxAlpha & 0xff) << 24) |
-            ((red & 0xff) << 16) |
-            ((green & 0xff) << 8) |
-            ((blue & 0xff) << 0) & 0xFFFFFF;
+        value = (((alpha ?? maxAlpha) & 0xFF) << 24) |
+            ((red & 0xFF) << 16) |
+            ((green & 0xFF) << 8) |
+            ((blue & 0xFF) << 0) & 0xFFFFFFFF;
 
   const RgbColor.fromRgbo(
       {@required int red, @required int green, @required int blue, num opacity})
       : assert(red != null),
         assert(green != null),
         assert(blue != null),
-        value = (((maxAlpha ~/ (1 / (opacity ?? maxOpacity))) & 0xff) << 24) |
-            ((red & 0xff) << 16) |
-            ((green & 0xff) << 8) |
-            ((blue & 0xff) << 0) & 0xFFFFFF;
+        value = (((maxAlpha + ((1 / (opacity ?? maxOpacity)) ~/2 )) ~/ (1 / (opacity ?? maxOpacity)) & 0xff) << 24) |
+            ((red & 0xFF) << 16) |
+            ((green & 0xFF) << 8) |
+            ((blue & 0xFF) << 0) & 0xFFFFFFFF;
 
   // -----
   // Manipulation
   // -----
 
-  Color withAlpha(int alpha) => opacity != null
+  Color withAlpha(int alpha) => alpha != null
       ? RgbColor.fromRgba(red: red, green: green, blue: blue, alpha: alpha)
       : this;
 
   Color withOpacity(num opacity) => opacity != null
       ? RgbColor.fromRgbo(red: red, green: green, blue: blue, opacity: opacity)
       : this;
-
-  @override
-  Color lighten(num steps) => toHsl().lighten(steps);
-
-  @override
-  Color darken(num steps) => toHsl().darken(steps);
 
   // -----
   // Conversion
@@ -107,11 +107,11 @@ class RgbColor extends Color {
       saturation = delta / (1 - (lightness * 2 - 1).abs());
     }
 
-    return HslColor.fromHsla(
+    return HslColor.fromHslo(
         hue: hue,
         saturation: saturation * 100,
         lightness: lightness * 100,
-        alpha: alpha);
+        opacity: opacity);
   }
 
   @override

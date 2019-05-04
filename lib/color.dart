@@ -35,9 +35,6 @@ abstract class Color {
       num lightness,
       num opacity}) = HslColor.fromHslo;
 
-  const factory Color.hsla(
-      {num hue, num saturation, num lightness, int alpha}) = HslColor.fromHsla;
-
   num get opacity;
 
   bool get isOpaque => opacity == maxOpacity;
@@ -56,11 +53,5 @@ abstract class Color {
   // Manipulation
   // -----
 
-  Color withAlpha(int alpha);
-
   Color withOpacity(int opacity);
-
-  Color lighten(num steps);
-
-  Color darken(num steps);
 }

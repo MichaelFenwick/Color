@@ -61,32 +61,13 @@ class HslColor extends Color {
         assert(saturation != null),
         assert(lightness != null),
         this.hue = hue % maxHue,
-        this.saturation = saturation % maxSaturation,
-        this.lightness = lightness % maxLightness,
+        this.saturation = ((((saturation * 100) + 0.5) ~/ 1) / 100) % maxSaturation,
+        this.lightness = ((((lightness * 100) + 0.5) ~/ 1) / 100) % maxLightness ,
         this.opacity = (opacity ?? maxOpacity) % maxOpacity;
-
-  const HslColor.fromHsla(
-      {@required num hue,
-      @required num saturation,
-      @required num lightness,
-      int alpha})
-      : assert(hue != null),
-        assert(saturation != null),
-        assert(lightness != null),
-        this.hue = hue % maxHue,
-        this.saturation = saturation % maxSaturation,
-        this.lightness = lightness % maxLightness,
-        this.opacity = ((alpha ?? maxAlpha) % maxAlpha) / maxAlpha;
 
   // -----
   // Manipulation
   // -----
-
-  @override
-  Color withAlpha(int alpha) => alpha != null
-      ? HslColor.fromHsla(
-          hue: hue, saturation: saturation, lightness: lightness, alpha: alpha)
-      : this;
 
   @override
   Color withOpacity(int opacity) => opacity != null
@@ -97,13 +78,19 @@ class HslColor extends Color {
           opacity: opacity)
       : this;
 
-  @override
   Color lighten(num steps) =>
       steps != null ? _copy(lightness: this.lightness + steps) : this;
 
-  @override
   Color darken(num steps) =>
       steps != null ? _copy(lightness: this.lightness - steps) : this;
+
+  Color lightenBy(num percent) => percent != null
+      ? _copy(lightness: this.lightness - this.lightness * percent)
+      : this;
+
+  Color darkenBy(num percent) => percent != null
+      ? _copy(lightness: this.lightness + this.lightness * percent)
+      : this;
 
   // -----
   // Conversion
