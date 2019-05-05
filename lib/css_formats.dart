@@ -33,9 +33,9 @@ class PrefixRgbFormat implements CssColorFormat {
       stringBuffer.write(rgbPart(rgbColor.red.toString(),
           rgbColor.green.toString(), rgbColor.blue.toString()));
     } else {
-      final redAsPercent = _decimalAsPercent(rgbColor.red / 255);
-      final greenAsPercent = _decimalAsPercent(rgbColor.green / 255);
-      final blueAsPercent = _decimalAsPercent(rgbColor.blue / 255);
+      final redAsPercent = _fractionalAsPercent(rgbColor.red / 255);
+      final greenAsPercent = _fractionalAsPercent(rgbColor.green / 255);
+      final blueAsPercent = _fractionalAsPercent(rgbColor.blue / 255);
       stringBuffer.write(rgbPart(redAsPercent, greenAsPercent, blueAsPercent));
     }
     if (_shouldIncludeOpacity(opacityMode, color.isTransparent)) {
@@ -80,13 +80,13 @@ class RgbaFormat implements CssColorFormat {
   String format(Color color) => _format.format(color);
 }
 
-class _HslFormat implements CssColorFormat {
+class PrefixHslFormat implements CssColorFormat {
   final OpacityMode opacityMode;
   final DegreeOrDecimal hueStyle;
   final PercentOrDecimal opacityStyle;
   final String prefix;
 
-  _HslFormat(
+  PrefixHslFormat(
       {OpacityMode opacityMode,
       DegreeOrDecimal hueStyle,
       PercentOrDecimal opacityStyle,
@@ -101,8 +101,8 @@ class _HslFormat implements CssColorFormat {
     final stringBuffer = StringBuffer();
 
     final hue = _formatHue(hueStyle, hslColor.hue);
-    final saturation = '${hslColor.saturation}%';
-    final lightness = '${hslColor.lightness}%';
+    final saturation = '${_decimalAsPercent(hslColor.saturation)}';
+    final lightness = '${_decimalAsPercent(hslColor.lightness)}';
 
     stringBuffer.write('$prefix($hue, $saturation, $lightness');
     if (_shouldIncludeOpacity(opacityMode, color.isTransparent)) {
@@ -115,13 +115,13 @@ class _HslFormat implements CssColorFormat {
 }
 
 class HslFormat implements CssColorFormat {
-  final _HslFormat _format;
+  final PrefixHslFormat _format;
 
   HslFormat(
       {OpacityMode opacityMode,
       DegreeOrDecimal hueStyle,
       PercentOrDecimal opacityStyle})
-      : _format = _HslFormat(
+      : _format = PrefixHslFormat(
             opacityMode: opacityMode,
             hueStyle: hueStyle,
             opacityStyle: opacityStyle,
@@ -132,13 +132,13 @@ class HslFormat implements CssColorFormat {
 }
 
 class HslaFormat implements CssColorFormat {
-  final _HslFormat _format;
+  final PrefixHslFormat _format;
 
   HslaFormat(
       {OpacityMode opacityMode,
       DegreeOrDecimal hueStyle,
       PercentOrDecimal opacityStyle})
-      : _format = _HslFormat(
+      : _format = PrefixHslFormat(
             opacityMode: opacityMode,
             hueStyle: hueStyle,
             opacityStyle: opacityStyle,
@@ -184,18 +184,20 @@ String _formatOpacity(PercentOrDecimal style, num value) {
   if (style == PercentOrDecimal.decimal) {
     return value.toStringAsFixed(2);
   }
-  return _decimalAsPercent(value);
+  return _fractionalAsPercent(value);
 }
 
 String _decimalAsPercent(num decimal) {
-  final asPercent = decimal * 100;
   final asString =
-      (asPercent % 1) == 0 ? asPercent.toInt() : asPercent.toStringAsFixed(2);
+      (decimal % 1) == 0 ? decimal.toInt() : decimal.toStringAsFixed(2);
   return '$asString%';
 }
 
+String _fractionalAsPercent(num fractional) =>
+    _decimalAsPercent(fractional * 100);
+
 String _formatHue(DegreeOrDecimal style, num value) =>
-    style == DegreeOrDecimal.degree ? '${value}' : '${value}deg';
+    style == DegreeOrDecimal.degree ? '${value}deg' : '${value}';
 
 bool _shouldIncludeOpacity(OpacityMode opacityMode, bool isTranslucent) =>
     opacityMode == OpacityMode.always ||
