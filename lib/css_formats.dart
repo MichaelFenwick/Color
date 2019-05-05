@@ -6,18 +6,18 @@ abstract class CssColorFormat {
   String format(Color color);
 }
 
-class _RgbFormat implements CssColorFormat {
+class PrefixRgbFormat implements CssColorFormat {
   final OpacityMode opacityMode;
   final PercentOrDecimal rgbStyle;
   final PercentOrDecimal opacityStyle;
   final String prefix;
 
-  _RgbFormat(
+  PrefixRgbFormat(
       {OpacityMode opacityMode,
       PercentOrDecimal rgbStyle,
       PercentOrDecimal opacityStyle,
       @required String prefix})
-      : this.opacityMode = opacityMode ?? OpacityMode.whenTranslucent,
+      : this.opacityMode = opacityMode ?? OpacityMode.whenTransparent,
         this.rgbStyle = rgbStyle ?? PercentOrDecimal.decimal,
         this.opacityStyle = opacityStyle ?? PercentOrDecimal.percent,
         this.prefix = prefix;
@@ -25,8 +25,19 @@ class _RgbFormat implements CssColorFormat {
   String format(Color color) {
     final rgbColor = color.toRgb();
     final stringBuffer = StringBuffer();
-    stringBuffer
-        .write('$prefix(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue}');
+
+    String rgbPart(String red, String green, String blue) =>
+        '$prefix($red, $green, $blue';
+
+    if (rgbStyle == PercentOrDecimal.decimal) {
+      stringBuffer.write(rgbPart(rgbColor.red.toString(),
+          rgbColor.green.toString(), rgbColor.blue.toString()));
+    } else {
+      final redAsPercent = _decimalAsPercent(rgbColor.red / 255);
+      final greenAsPercent = _decimalAsPercent(rgbColor.green / 255);
+      final blueAsPercent = _decimalAsPercent(rgbColor.blue / 255);
+      stringBuffer.write(rgbPart(redAsPercent, greenAsPercent, blueAsPercent));
+    }
     if (_shouldIncludeOpacity(opacityMode, color.isTransparent)) {
       stringBuffer.write(', ${_formatOpacity(opacityStyle, color.opacity)}');
     }
@@ -36,13 +47,13 @@ class _RgbFormat implements CssColorFormat {
 }
 
 class RgbFormat implements CssColorFormat {
-  final _RgbFormat _format;
+  final PrefixRgbFormat _format;
 
   RgbFormat(
       {OpacityMode opacityMode,
       PercentOrDecimal rgbStyle,
       PercentOrDecimal opacityStyle})
-      : _format = _RgbFormat(
+      : _format = PrefixRgbFormat(
             opacityMode: opacityMode,
             rgbStyle: rgbStyle,
             opacityStyle: opacityStyle,
@@ -53,17 +64,20 @@ class RgbFormat implements CssColorFormat {
 }
 
 class RgbaFormat implements CssColorFormat {
-  final _RgbFormat _format;
+  final PrefixRgbFormat _format;
 
   RgbaFormat(
       {OpacityMode opacityMode,
       PercentOrDecimal rgbStyle,
       PercentOrDecimal opacityStyle})
-      : _format = _RgbFormat(
+      : _format = PrefixRgbFormat(
             opacityMode: opacityMode,
             rgbStyle: rgbStyle,
             opacityStyle: opacityStyle,
             prefix: 'rgba');
+
+  @override
+  String format(Color color) => _format.format(color);
 }
 
 class _HslFormat implements CssColorFormat {
@@ -77,7 +91,7 @@ class _HslFormat implements CssColorFormat {
       DegreeOrDecimal hueStyle,
       PercentOrDecimal opacityStyle,
       @required String prefix})
-      : this.opacityMode = opacityMode ?? OpacityMode.whenTranslucent,
+      : this.opacityMode = opacityMode ?? OpacityMode.whenTransparent,
         this.hueStyle = hueStyle ?? DegreeOrDecimal.decimal,
         this.opacityStyle = opacityStyle ?? PercentOrDecimal.percent,
         this.prefix = prefix;
@@ -140,7 +154,7 @@ class HexFormat implements CssColorFormat {
 
   HexFormat({bool isUpperCase, bool isCompact, OpacityMode opacityMode})
       : this.isUpperCase = isUpperCase ?? true,
-        this.opacityMode = opacityMode ?? OpacityMode.whenTranslucent;
+        this.opacityMode = opacityMode ?? OpacityMode.whenTransparent;
 
   @override
   String format(Color color) {
@@ -166,18 +180,29 @@ class HexFormat implements CssColorFormat {
 // Utils
 // -----
 
-String _formatOpacity(PercentOrDecimal style, num value) =>
-    style == PercentOrDecimal.decimal ? '${value}' : '${value * 100}';
+String _formatOpacity(PercentOrDecimal style, num value) {
+  if (style == PercentOrDecimal.decimal) {
+    return value.toStringAsFixed(2);
+  }
+  return _decimalAsPercent(value);
+}
+
+String _decimalAsPercent(num decimal) {
+  final asPercent = decimal * 100;
+  final asString =
+      (asPercent % 1) == 0 ? asPercent.toInt() : asPercent.toStringAsFixed(2);
+  return '$asString%';
+}
 
 String _formatHue(DegreeOrDecimal style, num value) =>
     style == DegreeOrDecimal.degree ? '${value}' : '${value}deg';
 
 bool _shouldIncludeOpacity(OpacityMode opacityMode, bool isTranslucent) =>
     opacityMode == OpacityMode.always ||
-    opacityMode == OpacityMode.whenTranslucent && isTranslucent;
+    opacityMode == OpacityMode.whenTransparent && isTranslucent;
 
 enum PercentOrDecimal { percent, decimal }
 
 enum DegreeOrDecimal { degree, decimal }
 
-enum OpacityMode { always, never, whenTranslucent }
+enum OpacityMode { always, never, whenTransparent }
