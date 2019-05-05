@@ -1,24 +1,26 @@
 import 'package:color/color.dart';
 import 'package:color/rgb_color.dart';
+import 'package:meta/meta.dart';
 
 abstract class CssColorFormat {
   String format(Color color);
 }
 
-abstract class _RgbFormat implements CssColorFormat {
+class _RgbFormat implements CssColorFormat {
   final OpacityMode opacityMode;
   final PercentOrDecimal rgbStyle;
   final PercentOrDecimal opacityStyle;
-
-  String get prefix;
+  final String prefix;
 
   _RgbFormat(
       {OpacityMode opacityMode,
       PercentOrDecimal rgbStyle,
-      PercentOrDecimal opacityStyle})
+      PercentOrDecimal opacityStyle,
+      @required String prefix})
       : this.opacityMode = opacityMode ?? OpacityMode.whenTranslucent,
         this.rgbStyle = rgbStyle ?? PercentOrDecimal.decimal,
-        this.opacityStyle = opacityStyle ?? PercentOrDecimal.percent;
+        this.opacityStyle = opacityStyle ?? PercentOrDecimal.percent,
+        this.prefix = prefix;
 
   String format(Color color) {
     final rgbColor = color.toRgb();
@@ -33,48 +35,52 @@ abstract class _RgbFormat implements CssColorFormat {
   }
 }
 
-class RgbFormat extends _RgbFormat implements CssColorFormat {
-  @override
-  final prefix = 'rgb';
+class RgbFormat implements CssColorFormat {
+  final _RgbFormat _format;
 
   RgbFormat(
       {OpacityMode opacityMode,
       PercentOrDecimal rgbStyle,
       PercentOrDecimal opacityStyle})
-      : super(
+      : _format = _RgbFormat(
             opacityMode: opacityMode,
             rgbStyle: rgbStyle,
-            opacityStyle: opacityStyle);
+            opacityStyle: opacityStyle,
+            prefix: 'rgb');
+
+  @override
+  String format(Color color) => _format.format(color);
 }
 
-class RgbaFormat extends _RgbFormat implements CssColorFormat {
-  @override
-  final prefix = 'rgba';
+class RgbaFormat implements CssColorFormat {
+  final _RgbFormat _format;
 
   RgbaFormat(
       {OpacityMode opacityMode,
       PercentOrDecimal rgbStyle,
       PercentOrDecimal opacityStyle})
-      : super(
+      : _format = _RgbFormat(
             opacityMode: opacityMode,
             rgbStyle: rgbStyle,
-            opacityStyle: opacityStyle);
+            opacityStyle: opacityStyle,
+            prefix: 'rgba');
 }
 
-abstract class _HslFormat implements CssColorFormat {
+class _HslFormat implements CssColorFormat {
   final OpacityMode opacityMode;
   final DegreeOrDecimal hueStyle;
   final PercentOrDecimal opacityStyle;
-
-  String get prefix;
+  final String prefix;
 
   _HslFormat(
       {OpacityMode opacityMode,
-      PercentOrDecimal hueStyle,
-      PercentOrDecimal opacityStyle})
+      DegreeOrDecimal hueStyle,
+      PercentOrDecimal opacityStyle,
+      @required String prefix})
       : this.opacityMode = opacityMode ?? OpacityMode.whenTranslucent,
         this.hueStyle = hueStyle ?? DegreeOrDecimal.decimal,
-        this.opacityStyle = opacityStyle ?? PercentOrDecimal.percent;
+        this.opacityStyle = opacityStyle ?? PercentOrDecimal.percent,
+        this.prefix = prefix;
 
   String format(Color color) {
     final hslColor = color.toHsl();
@@ -94,30 +100,38 @@ abstract class _HslFormat implements CssColorFormat {
   }
 }
 
-class HslFormat extends _HslFormat {
-  final prefix = "hsl";
+class HslFormat implements CssColorFormat {
+  final _HslFormat _format;
 
   HslFormat(
       {OpacityMode opacityMode,
-      PercentOrDecimal hueStyle,
+      DegreeOrDecimal hueStyle,
       PercentOrDecimal opacityStyle})
-      : super(
+      : _format = _HslFormat(
             opacityMode: opacityMode,
             hueStyle: hueStyle,
-            opacityStyle: opacityStyle);
+            opacityStyle: opacityStyle,
+            prefix: 'hsl');
+
+  @override
+  String format(Color color) => _format.format(color);
 }
 
-class HslaFormat extends _HslFormat {
-  final prefix = "hsla";
+class HslaFormat implements CssColorFormat {
+  final _HslFormat _format;
 
   HslaFormat(
       {OpacityMode opacityMode,
-      PercentOrDecimal hueStyle,
+      DegreeOrDecimal hueStyle,
       PercentOrDecimal opacityStyle})
-      : super(
+      : _format = _HslFormat(
             opacityMode: opacityMode,
             hueStyle: hueStyle,
-            opacityStyle: opacityStyle);
+            opacityStyle: opacityStyle,
+            prefix: 'hsla');
+
+  @override
+  String format(Color color) => _format.format(color);
 }
 
 class HexFormat implements CssColorFormat {
