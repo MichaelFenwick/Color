@@ -12,7 +12,7 @@ import 'package:color/rgb_color.dart';
 import 'hsl_color.dart';
 
 abstract class Color {
-  static const maxOpacity = 100;
+  static const maxOpacity = 1;
 
   const Color();
 
@@ -53,5 +53,5 @@ abstract class Color {
   // Manipulation
   // -----
 
-  Color withOpacity(int opacity);
+  Color withOpacity(double opacity);
 }

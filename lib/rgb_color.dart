@@ -6,7 +6,6 @@ import 'hsl_color.dart';
 
 class RgbColor extends Color {
   static const maxAlpha = 255;
-  static const maxOpacity = 1;
 
   static const minAlpha = 0;
 
@@ -52,7 +51,7 @@ class RgbColor extends Color {
       : assert(red != null),
         assert(green != null),
         assert(blue != null),
-        value = (((maxAlpha + ((1 / (opacity ?? maxOpacity)) ~/2 )) ~/ (1 / (opacity ?? maxOpacity)) & 0xff) << 24) |
+        value = (((maxAlpha + ((1 / (opacity ?? Color.maxOpacity)) ~/2 )) ~/ (1 / (opacity ?? Color.maxOpacity)) & 0xff) << 24) |
             ((red & 0xFF) << 16) |
             ((green & 0xFF) << 8) |
             ((blue & 0xFF) << 0) & 0xFFFFFFFF;
@@ -65,6 +64,7 @@ class RgbColor extends Color {
       ? RgbColor.fromRgba(red: red, green: green, blue: blue, alpha: alpha)
       : this;
 
+  @override
   Color withOpacity(num opacity) => opacity != null
       ? RgbColor.fromRgbo(red: red, green: green, blue: blue, opacity: opacity)
       : this;

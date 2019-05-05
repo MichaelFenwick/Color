@@ -3,7 +3,7 @@ import 'package:color/rgb_color.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group("Should construct an RgbColor", () {
+  group("Should construct a RgbColor", () {
     test(
         "with min alpha when using the RgbColor constructor with only 6 bytes supplied.",
         () {
@@ -77,15 +77,6 @@ void main() {
       expect(color.blue, 120);
     });
     test(
-        "with max alpha when using the RgbColor.fromRgbo constructor with no opacity supplied.",
-        () {
-      final color = RgbColor.fromRgbo(red: 52, green: 86, blue: 120);
-      expect(color.alpha, RgbColor.maxAlpha);
-      expect(color.red, 52);
-      expect(color.green, 86);
-      expect(color.blue, 120);
-    });
-    test(
         "with the alpha value brought into range when using the RgbColor.fromRgba constructor with an out of range alpha value.",
         () {
       final color = RgbColor.fromRgba(red: 0, green: 0, blue: 0, alpha: 257);
@@ -108,6 +99,15 @@ void main() {
         () {
       final color = RgbColor.fromRgba(red: 0, green: 0, blue: 257);
       expect(color.blue, 1);
+    });
+    test(
+        "with max alpha when using the RgbColor.fromRgbo constructor with no opacity supplied.",
+        () {
+      final color = RgbColor.fromRgbo(red: 52, green: 86, blue: 120);
+      expect(color.alpha, RgbColor.maxAlpha);
+      expect(color.red, 52);
+      expect(color.green, 86);
+      expect(color.blue, 120);
     });
     test(
         "with alpha when using the RgbColor.fromRgbo constructor with opacity supplied.",

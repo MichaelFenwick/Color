@@ -9,13 +9,10 @@ class HslColor extends Color {
   static const minHue = 0;
   static const minSaturation = 0;
   static const minLightness = 0;
-  static const minOpacity = 0;
 
   static const maxHue = 360;
   static const maxSaturation = 100;
   static const maxLightness = 100;
-  static const maxOpacity = 1;
-  static const maxAlpha = 255;
 
   @override
   final num opacity;
@@ -60,17 +57,23 @@ class HslColor extends Color {
       : assert(hue != null),
         assert(saturation != null),
         assert(lightness != null),
-        this.hue = hue % maxHue,
-        this.saturation = ((((saturation * 100) + 0.5) ~/ 1) / 100) % maxSaturation,
-        this.lightness = ((((lightness * 100) + 0.5) ~/ 1) / 100) % maxLightness ,
-        this.opacity = (opacity ?? maxOpacity) % maxOpacity;
+        this.hue = hue != maxHue ? hue % maxHue : hue,
+        this.saturation = saturation != maxSaturation
+            ? ((((saturation * 100) + (lightness >= 0 ? 0.5 : -0.5)) ~/ 1) / 100) % maxSaturation
+            : saturation,
+        this.lightness = lightness != maxLightness
+            ? ((((lightness * 100) + (lightness >= 0 ? 0.5 : -0.5)) ~/ 1) / 100) % maxLightness
+            : lightness,
+        this.opacity = (opacity ?? Color.maxOpacity) != Color.maxOpacity
+            ? opacity % Color.maxOpacity
+            : Color.maxOpacity;
 
   // -----
   // Manipulation
   // -----
 
   @override
-  Color withOpacity(int opacity) => opacity != null
+  Color withOpacity(num opacity) => opacity != null
       ? HslColor.fromHslo(
           hue: hue,
           saturation: saturation,
@@ -78,18 +81,22 @@ class HslColor extends Color {
           opacity: opacity)
       : this;
 
-  Color lighten(num steps) =>
-      steps != null ? _copy(lightness: this.lightness + steps) : this;
-
-  Color darken(num steps) =>
-      steps != null ? _copy(lightness: this.lightness - steps) : this;
-
-  Color lightenBy(num percent) => percent != null
-      ? _copy(lightness: this.lightness - this.lightness * percent)
+  HslColor withLightness(num value) => value != null ?
+  _copy(lightness: value)
       : this;
 
-  Color darkenBy(num percent) => percent != null
-      ? _copy(lightness: this.lightness + this.lightness * percent)
+  HslColor lightenBySteps(num steps) =>
+      steps != null ? _copy(lightness: this.lightness + steps) : this;
+
+  HslColor lightenByFraction(num fraction) => fraction != null
+      ? _copy(lightness: this.lightness + this.lightness * fraction)
+      : this;
+
+  HslColor darkenBySteps(num steps) =>
+      steps != null ? _copy(lightness: this.lightness - steps) : this;
+
+  HslColor darkenByFraction(num fraction) => fraction != null
+      ? _copy(lightness: this.lightness - this.lightness * fraction)
       : this;
 
   // -----
@@ -102,10 +109,12 @@ class HslColor extends Color {
   /// Using https://en.wikipedia.org/wiki/HSL_and_HSV#Alternative_HSL_to_RGB
   @override
   RgbColor toRgb() {
+    final saturationFractional = saturation / 100;
+    final lightnessFractional = lightness / 100;
     int f(int n) {
-      final a = saturation * min(lightness, 1 - lightness);
+      final a = saturationFractional * min(lightnessFractional, 1 - lightnessFractional);
       final k = (n + hue / 30) % 12;
-      return lightness - a * max(min(min(k - 3, 9 - k), 1), -1);
+      return ((lightnessFractional - a * max(min(min(k - 3, 9 - k), 1), -1)) * RgbColor.maxAlpha).round();
     }
 
     return RgbColor.fromRgbo(
