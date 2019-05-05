@@ -25,7 +25,7 @@ abstract class _RgbFormat implements CssColorFormat {
     final stringBuffer = StringBuffer();
     stringBuffer
         .write('$prefix(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue}');
-    if (_shouldIncludeOpacity(opacityMode, color.isTranslucent)) {
+    if (_shouldIncludeOpacity(opacityMode, color.isTransparent)) {
       stringBuffer.write(', ${_formatOpacity(opacityStyle, color.opacity)}');
     }
     stringBuffer.write(')');
@@ -85,7 +85,7 @@ abstract class _HslFormat implements CssColorFormat {
     final lightness = '${hslColor.lightness}%';
 
     stringBuffer.write('$prefix($hue, $saturation, $lightness');
-    if (_shouldIncludeOpacity(opacityMode, color.isTranslucent)) {
+    if (_shouldIncludeOpacity(opacityMode, color.isTransparent)) {
       stringBuffer.write(', ${_formatOpacity(opacityStyle, color.opacity)}');
     }
     stringBuffer.write(')');
@@ -135,7 +135,7 @@ class HexFormat implements CssColorFormat {
 
     final stringBuffer = StringBuffer();
     stringBuffer.write("#$rgbHex");
-    if (_shouldIncludeOpacity(opacityMode, rgbColor.isTranslucent)) {
+    if (_shouldIncludeOpacity(opacityMode, rgbColor.isTransparent)) {
       final alphaHex = rgbColor.alpha == RgbColor.minAlpha
           ? "00"
           : rgbColor.alpha.toRadixString(16);

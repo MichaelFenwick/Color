@@ -39,7 +39,7 @@ abstract class Color {
 
   bool get isOpaque => opacity == maxOpacity;
 
-  bool get isTranslucent => opacity != maxOpacity;
+  bool get isTransparent => opacity != maxOpacity;
 
   // -----
   // Conversion
