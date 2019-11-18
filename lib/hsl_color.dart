@@ -25,6 +25,9 @@ class HslColor extends Color implements CssColorSpace {
    */
   const HslColor(num this.h, num this.s, num this.l);
 
+  @override
+  int get hashCode => _hash3(h, s, l);
+
   RgbColor toRgbColor() {
     List<num> rgb = [0, 0, 0];
 

@@ -30,6 +30,9 @@ class RgbColor extends Color implements CssColorSpace {
     }
   }
 
+  @override
+  int get hashCode => _hash3(r, g, b);
+
   RgbColor toRgbColor() => this;
 
   HslColor toHslColor() {

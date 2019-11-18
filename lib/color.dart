@@ -17,6 +17,7 @@ part 'cielab_color.dart';
 part 'color_filter.dart';
 part 'css_color_space.dart';
 part 'color_parser.dart';
+part 'hash.dart';
 
 /**
  * An object representing a color.
@@ -41,11 +42,6 @@ abstract class Color {
 
   String toString();
   Map<String, num> toMap();
-
-  get hashCode {
-    RgbColor rgb = this.toRgbColor();
-    return 256 * 256 * rgb.r.toInt() + 256 * rgb.g.toInt() + rgb.b.toInt();
-  }
 
   operator ==(Object other) => other is Color && this.hashCode == other.hashCode;
 

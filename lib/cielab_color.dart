@@ -12,6 +12,9 @@ class CielabColor extends Color {
     return xyz.toRgbColor();
   }
 
+  @override
+  int get hashCode => _hash3(l, a, b);
+
   HslColor toHslColor() => this.toRgbColor().toHslColor();
 
   XyzColor toXyzColor() {

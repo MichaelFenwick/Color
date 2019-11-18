@@ -9,6 +9,9 @@ class XyzColor extends Color {
 
   const XyzColor(num this.x, num this.y, num this.z);
 
+  @override
+  int get hashCode => _hash3(x, y, z);
+
   RgbColor toRgbColor() {
     num x = this.x / 100;
     num y = this.y / 100;
