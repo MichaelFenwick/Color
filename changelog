@@ -50,3 +50,7 @@
 2.0.1
 -----
 * Removed a switch statement that was preventing dart2js compilation.
+
+2.2.0
+-----
+* Added hsv support and conversion functions.

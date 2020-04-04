@@ -66,6 +66,8 @@ class RgbColor extends Color implements CssColorSpace {
     return new HslColor(hue, saturation * 100, luminance * 100);
   }
 
+  HsvColor toHsvColor() => toHslColor().toHsvColor();
+
   XyzColor toXyzColor() {
     Map<String, num> rgb = {'r': r / 255, 'g': g / 255, 'b': b / 255};
 

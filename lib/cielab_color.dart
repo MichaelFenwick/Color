@@ -14,6 +14,8 @@ class CielabColor extends Color {
 
   HslColor toHslColor() => this.toRgbColor().toHslColor();
 
+  HsvColor toHsvColor() => this.toRgbColor().toHsvColor();
+
   XyzColor toXyzColor() {
     Map<String, num> xyz = {'x': a / 500 + (l + 16) / 116, 'y': (l + 16) / 116, 'z': (l + 16) / 116 - b / 200};
 

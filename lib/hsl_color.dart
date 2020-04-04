@@ -67,6 +67,16 @@ class HslColor extends Color implements CssColorSpace {
 
   HslColor toHslColor() => this;
 
+  HsvColor toHsvColor() {
+    num hslSaturation = s / 100;
+    num lightness = l / 100;
+
+    num value = lightness + hslSaturation * min(lightness, 1 - lightness);
+    num saturation = value == 0 ? 0 : 2 * (1 - lightness / value);
+
+    return HsvColor(h, saturation * 100, value * 100);
+  }
+
   XyzColor toXyzColor() => this.toRgbColor().toXyzColor();
 
   CielabColor toCielabColor() => this.toRgbColor().toXyzColor().toCielabColor();

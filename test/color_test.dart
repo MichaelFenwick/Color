@@ -1,4 +1,5 @@
-import '../lib/color.dart';
+import 'package:color/color.dart';
+
 import 'package:test/test.dart';
 
 void main() {
@@ -23,6 +24,13 @@ void main() {
       expect(color.h, equals(163.8));
       expect(color.s, equals(100));
       expect(color.l, equals(87.6));
+    });
+    test("through the Color.hsv constructor", () {
+      HsvColor color = new Color.hsv(163.8, 24.7, 100);
+     expect(color is Color, isTrue);
+      expect(color.h, equals(163.8));
+      expect(color.s, equals(24.7));
+      expect(color.v, equals(100));
     });
     test("through the Color.xyz constructor", () {
       XyzColor color = new Color.xyz(72.931, 88.9, 94.204);
@@ -66,6 +74,13 @@ void main() {
       expect(color.s, equals(100));
       expect(color.l, equals(87.6));
     });
+    test("as a HsvColor", () {
+      HsvColor color = new HsvColor(163.8, 24.7, 100);
+      expect(color is Color, isTrue);
+      expect(color.h, equals(163.8));
+      expect(color.s, equals(24.7));
+      expect(color.v, equals(100));
+    });
     test("as a XyzColor", () {
       XyzColor color = new XyzColor(72.931, 88.9, 94.204);
       expect(color is Color, isTrue);
@@ -102,6 +117,11 @@ void main() {
       Color color = const Color.hsl(163.8, 100.0, 87.6);
       String string = color.toString();
       expect(string, equals('h: 163.8, s: 100.0%, l: 87.6%'));
+    });
+    test("from an HsvColor", () {
+      Color color = const Color.hsv(163.8, 24.7, 100);
+      String string = color.toString();
+      expect(string, equals('h: 163.8, s: 24.7%, v: 100%'));
     });
     test("from a XyzColor", () {
       Color color = const Color.xyz(72.931, 88.9, 94.204);
@@ -159,12 +179,14 @@ void main() {
     RgbColor rgb;
     HexColor hex;
     HslColor hsl;
+    HsvColor hsv;
     XyzColor xyz;
     CielabColor cielab;
     setUp(() {
       rgb = const RgbColor(192, 255, 238);
       hex = new HexColor('c0ffee');
       hsl = const HslColor(163.8, 100, 87.6);
+      hsv = const HsvColor(163.8, 24.7, 100);
       xyz = const XyzColor(72.931, 88.9, 94.204);
       cielab = const CielabColor(95.538, -23.02, 1.732);
     });
@@ -176,6 +198,10 @@ void main() {
     test("from rgb to hsl", () {
       HslColor conversion = rgb.toHslColor();
       expect(conversion, equals(hsl));
+    });
+    test("from rgb to hsv", () {
+      HsvColor conversion = rgb.toHsvColor();
+      expect(conversion, equals(hsv));
     });
     test("from rgb to xyz", () {
       XyzColor conversion = rgb.toXyzColor();
@@ -194,6 +220,10 @@ void main() {
       HslColor conversion = hex.toHslColor();
       expect(conversion, equals(hsl));
     });
+    test("from hex to hsv", () {
+      HsvColor conversion = hex.toHsvColor();
+      expect(conversion, equals(hsv));
+    });
     test("from hex to xyz", () {
       XyzColor conversion = hex.toXyzColor();
       expect(conversion, equals(hsl));
@@ -207,6 +237,10 @@ void main() {
       RgbColor conversion = hsl.toRgbColor();
       expect(conversion, equals(rgb));
     });
+    test("from hsl to hsv", () {
+      HsvColor conversion = hsl.toHsvColor();
+      expect(conversion, equals(hsv));
+    });
     test("from hsl to xyz", () {
       XyzColor conversion = hsl.toXyzColor();
       expect(conversion, equals(hsl));
@@ -216,6 +250,23 @@ void main() {
       expect(conversion, equals(hsl));
     });
 
+    test("from hsv to rgb", () {
+      RgbColor conversion = hsv.toRgbColor();
+      expect(conversion, equals(rgb));
+    });
+    test("from hsv to hsl", () {
+      HslColor conversion = hsv.toHslColor();
+      expect(conversion, equals(hsl));
+    });
+    test("from hsv to xyz", () {
+      XyzColor conversion = hsv.toXyzColor();
+      expect(conversion, equals(hsv));
+    });
+    test("from hsv to cielab", () {
+      CielabColor conversion = hsv.toCielabColor();
+      expect(conversion, equals(hsv));
+    });
+
     test("from xyz to rgb", () {
       RgbColor conversion = xyz.toRgbColor();
       expect(conversion, equals(rgb));
@@ -223,6 +274,10 @@ void main() {
     test("from xyz to hsl", () {
       HslColor conversion = xyz.toHslColor();
       expect(conversion, equals(hsl));
+    });
+    test("from xyz to hsv", () {
+      HsvColor conversion = xyz.toHsvColor();
+      expect(conversion, equals(hsv));
     });
     test("from xyz to cielab", () {
       CielabColor conversion = xyz.toCielabColor();
@@ -236,6 +291,10 @@ void main() {
     test("from cielab to hsl", () {
       HslColor conversion = cielab.toHslColor();
       expect(conversion, equals(hsl));
+    });
+    test("from cielab to hsv", () {
+      HsvColor conversion = cielab.toHsvColor();
+      expect(conversion, equals(hsv));
     });
     test("from cielab to xyz", () {
       XyzColor conversion = cielab.toXyzColor();
