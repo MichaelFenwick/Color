@@ -34,6 +34,8 @@ class XyzColor extends Color {
 
   HslColor toHslColor() => this.toRgbColor().toHslColor();
 
+  HsvColor toHsvColor() => this.toRgbColor().toHsvColor();
+
   XyzColor toXyzColor() => this;
 
   CielabColor toCielabColor() {
