@@ -5,7 +5,7 @@ class CielabColor extends Color {
   final num a;
   final num b;
 
-  const CielabColor(num this.l, num this.a, num this.b);
+  const CielabColor(this.l, this.a, this.b);
 
   RgbColor toRgbColor() {
     XyzColor xyz = toXyzColor();
@@ -17,7 +17,11 @@ class CielabColor extends Color {
   HsvColor toHsvColor() => this.toRgbColor().toHsvColor();
 
   XyzColor toXyzColor() {
-    Map<String, num> xyz = {'x': a / 500 + (l + 16) / 116, 'y': (l + 16) / 116, 'z': (l + 16) / 116 - b / 200};
+    Map<String, num> xyz = {
+      'x': a / 500 + (l + 16) / 116,
+      'y': (l + 16) / 116,
+      'z': (l + 16) / 116 - b / 200
+    };
 
     xyz.forEach((key, value) {
       num cube = pow(value, 3);
@@ -26,15 +30,15 @@ class CielabColor extends Color {
       } else {
         xyz[key] = (value - 16 / 116) / 7.787;
       }
-      xyz[key] *= XyzColor.referenceWhite[key];
+      xyz[key] = xyz[key]! * XyzColor.referenceWhite[key];
     });
 
-    return new XyzColor(xyz['x'], xyz['y'], xyz['z']);
+    return XyzColor(xyz['x']!, xyz['y']!, xyz['z']!);
   }
 
   CielabColor toCielabColor() => this;
 
   String toString() => "l: $l, a: $a, b: $b";
 
-  Map<String, num> toMap() => {'l': l, 'a': a, 'b': b};
+  Map<String, num?> toMap() => {'l': l, 'a': a, 'b': b};
 }

@@ -43,7 +43,7 @@ abstract class Color {
   CielabColor toCielabColor();
 
   String toString();
-  Map<String, num> toMap();
+  Map<String, num?> toMap();
 
   get hashCode {
     RgbColor rgb = this.toRgbColor();

@@ -5,91 +5,91 @@ import 'package:test/test.dart';
 void main() {
   group("A Color can be constructed", () {
     test("through the Color.rgb constructor", () {
-      RgbColor color = new Color.rgb(192, 255, 238);
+      RgbColor color = Color.rgb(192, 255, 238) as RgbColor;
       expect(color is Color, isTrue);
       expect(color.r, equals(192));
       expect(color.g, equals(255));
       expect(color.b, equals(238));
     });
     test("through the Color.hex constructor", () {
-      HexColor color = new Color.hex('c0ffee');
+      HexColor color = Color.hex('c0ffee') as HexColor;
       expect(color is Color, isTrue);
       expect(color.r, equals(192));
       expect(color.g, equals(255));
       expect(color.b, equals(238));
     });
     test("through the Color.hsl constructor", () {
-      HslColor color = new Color.hsl(163.8, 100, 87.6);
+      HslColor color = Color.hsl(163.8, 100, 87.6) as HslColor;
       expect(color is Color, isTrue);
       expect(color.h, equals(163.8));
       expect(color.s, equals(100));
       expect(color.l, equals(87.6));
     });
     test("through the Color.hsv constructor", () {
-      HsvColor color = new Color.hsv(163.8, 24.7, 100);
-     expect(color is Color, isTrue);
+      HsvColor color = Color.hsv(163.8, 24.7, 100) as HsvColor;
+      expect(color is Color, isTrue);
       expect(color.h, equals(163.8));
       expect(color.s, equals(24.7));
       expect(color.v, equals(100));
     });
     test("through the Color.xyz constructor", () {
-      XyzColor color = new Color.xyz(72.931, 88.9, 94.204);
+      XyzColor color = Color.xyz(72.931, 88.9, 94.204) as XyzColor;
       expect(color is Color, isTrue);
       expect(color.x, equals(72.931));
       expect(color.y, equals(88.9));
       expect(color.z, equals(94.204));
     });
     test("through the Color.cielab constructor", () {
-      CielabColor color = new Color.cielab(95.538, -23.02, 1.732);
+      CielabColor color = Color.cielab(95.538, -23.02, 1.732) as CielabColor;
       expect(color is Color, isTrue);
       expect(color.l, equals(95.538));
       expect(color.a, equals(-23.02));
       expect(color.b, equals(1.732));
     });
     test("as an RgbColor", () {
-      RgbColor color = new RgbColor(192, 255, 238);
+      RgbColor color = RgbColor(192, 255, 238);
       expect(color is Color, isTrue);
       expect(color.r, equals(192));
       expect(color.g, equals(255));
       expect(color.b, equals(238));
     });
     test("as a HexColor", () {
-      HexColor color = new HexColor('c0ffee');
+      HexColor color = HexColor('c0ffee');
       expect(color is Color, isTrue);
       expect(color.r, equals(192));
       expect(color.g, equals(255));
       expect(color.b, equals(238));
     });
     test("as a HexColor with leading hash", () {
-      HexColor color = new HexColor('#c0ffee');
+      HexColor color = HexColor('#c0ffee');
       expect(color is Color, isTrue);
       expect(color.r, equals(192));
       expect(color.g, equals(255));
       expect(color.b, equals(238));
     });
     test("as a HslColor", () {
-      HslColor color = new HslColor(163.8, 100, 87.6);
+      HslColor color = HslColor(163.8, 100, 87.6);
       expect(color is Color, isTrue);
       expect(color.h, equals(163.8));
       expect(color.s, equals(100));
       expect(color.l, equals(87.6));
     });
     test("as a HsvColor", () {
-      HsvColor color = new HsvColor(163.8, 24.7, 100);
+      HsvColor color = HsvColor(163.8, 24.7, 100);
       expect(color is Color, isTrue);
       expect(color.h, equals(163.8));
       expect(color.s, equals(24.7));
       expect(color.v, equals(100));
     });
     test("as a XyzColor", () {
-      XyzColor color = new XyzColor(72.931, 88.9, 94.204);
+      XyzColor color = XyzColor(72.931, 88.9, 94.204);
       expect(color is Color, isTrue);
       expect(color.x, equals(72.931));
       expect(color.y, equals(88.9));
       expect(color.z, equals(94.204));
     });
     test("as a CielabColor", () {
-      CielabColor color = new CielabColor(95.538, -23.02, 1.732);
+      CielabColor color = CielabColor(95.538, -23.02, 1.732);
       expect(color is Color, isTrue);
       expect(color.l, equals(95.538));
       expect(color.a, equals(-23.02));
@@ -103,13 +103,13 @@ void main() {
       expect(string, equals('r: 192, g: 255, b: 238'));
     });
     test("from a HexColor", () {
-      Color color = new Color.hex('c0ffee');
+      Color color = Color.hex('c0ffee');
       String string = color.toString();
       expect(string, equals('c0ffee'));
     });
     test("and hex strings are prepended with 0s properly", () {
-      Color black = new Color.hex('000000');
-      Color green = new Color.hex('00ff00');
+      Color black = Color.hex('000000');
+      Color green = Color.hex('00ff00');
       expect(black.toString(), equals('000000'));
       expect(green.toString(), equals('00ff00'));
     });
@@ -136,35 +136,35 @@ void main() {
   });
   group("Colors can be converted to css style strings", () {
     test("from an RgbColor", () {
-      RgbColor color = const Color.rgb(192, 255, 238);
+      RgbColor color = const Color.rgb(192, 255, 238) as RgbColor;
       String string = color.toCssString();
       expect(string, equals('rgb(192, 255, 238)'));
     });
     test("from a HexColor", () {
-      HexColor color = new Color.hex('c0ffee');
+      HexColor color = Color.hex('c0ffee') as HexColor;
       String string = color.toCssString();
       expect(string, equals('#c0ffee'));
     });
     test("and hex strings are prepended with 0s properly", () {
-      HexColor black = new Color.hex('000000');
-      HexColor green = new Color.hex('00ff00');
+      HexColor black = Color.hex('000000') as HexColor;
+      HexColor green = Color.hex('00ff00') as HexColor;
       expect(black.toCssString(), equals('#000000'));
       expect(green.toCssString(), equals('#00ff00'));
     });
     test("from an HslColor", () {
-      HslColor color = const Color.hsl(163.8, 100.0, 87.6);
+      HslColor color = const Color.hsl(163.8, 100.0, 87.6) as HslColor;
       String string = color.toCssString();
       expect(string, equals('hsl(163.8, 100.0%, 87.6%)'));
     });
   });
   group("Colors can be compared to each other ", () {
-    Color coffee1;
-    Color coffee2;
-    Color tea;
+    late Color coffee1;
+    late Color coffee2;
+    late Color tea;
     setUp(() {
-      coffee1 = new Color.hex('c0ffee');
-      coffee2 = new Color.hex('c0ffee');
-      tea = new Color.hex('7e47e4');
+      coffee1 = Color.hex('c0ffee');
+      coffee2 = Color.hex('c0ffee');
+      tea = Color.hex('7e47e4');
     });
     test("by comparing their hashes,", () {
       expect(coffee1.hashCode, equals(coffee2.hashCode));
@@ -176,15 +176,15 @@ void main() {
     });
   });
   group("Colors can be converted", () {
-    RgbColor rgb;
-    HexColor hex;
-    HslColor hsl;
-    HsvColor hsv;
-    XyzColor xyz;
-    CielabColor cielab;
+    late RgbColor rgb;
+    late HexColor hex;
+    late HslColor hsl;
+    late HsvColor hsv;
+    late XyzColor xyz;
+    late CielabColor cielab;
     setUp(() {
       rgb = const RgbColor(192, 255, 238);
-      hex = new HexColor('c0ffee');
+      hex = HexColor('c0ffee');
       hsl = const HslColor(163.8, 100, 87.6);
       hsv = const HsvColor(163.8, 24.7, 100);
       xyz = const XyzColor(72.931, 88.9, 94.204);
@@ -302,114 +302,127 @@ void main() {
     });
   });
   group("Colors can be parsed", () {
-    ColorParser parser = new ColorParser();
+    ColorParser parser = ColorParser();
     test("from a named color", () {
-      Color c = parser.parse("black");
-      expect(c, equals(new RgbColor.name("black")));
+      Color? c = parser.parse("black");
+      expect(c, equals(RgbColor.name("black")));
     });
     test("from a named color with mixed case", () {
-      Color c = parser.parse("Khaki");
-      expect(c, equals(new RgbColor.name("khaki")));
+      Color? c = parser.parse("Khaki");
+      expect(c, equals(RgbColor.name("khaki")));
     });
     test("from a named color, irrespective of whitespace", () {
-      Color c = parser.parse("  black  ");
-      expect(c, equals(new RgbColor.name("black")));
+      Color? c = parser.parse("  black  ");
+      expect(c, equals(RgbColor.name("black")));
     });
     test("for all well-known name values", () {
       RgbColor.namedColors.keys.forEach(
           (key) => expect(parser.parse(key), RgbColor.namedColors[key]));
     });
     test("from an explicit hex color", () {
-      Color c = parser.parse("#FFFAFA");
-      expect(c, equals(new HexColor("FFFAFA")));
+      Color? c = parser.parse("#FFFAFA");
+      expect(c, equals(HexColor("FFFAFA")));
     });
     test("from an implicit hex color", () {
-      Color c = parser.parse("FA8072");
-      expect(c, equals(new HexColor("FA8072")));
+      Color? c = parser.parse("FA8072");
+      expect(c, equals(HexColor("FA8072")));
     });
     test("from an abbreviated, explicit hex color", () {
-      Color c = parser.parse("#ff0");
-      expect(c, equals(new HexColor("FFFF00")));
+      Color? c = parser.parse("#ff0");
+      expect(c, equals(HexColor("FFFF00")));
     });
     test("from an abbreviated, implicit hex color", () {
-      Color c = parser.parse("ff0");
-      expect(c, equals(new HexColor("FFFF00")));
+      Color? c = parser.parse("ff0");
+      expect(c, equals(HexColor("FFFF00")));
     });
     test("from a hex color, irrespective of whitespace", () {
-      Color c = parser.parse(" c0ffee ");
-      expect(c, equals(new HexColor("c0ffee")));
-      Color c2 = parser.parse(" #c0ffee ");
-      expect(c2, equals(new HexColor("c0ffee")));
-      Color c3 = parser.parse(" cfe ");
-      expect(c3, equals(new HexColor("ccffee")));
-      Color c4 = parser.parse(" #cfe ");
-      expect(c4, equals(new HexColor("ccffee")));
+      Color? c = parser.parse(" c0ffee ");
+      expect(c, equals(HexColor("c0ffee")));
+      Color? c2 = parser.parse(" #c0ffee ");
+      expect(c2, equals(HexColor("c0ffee")));
+      Color? c3 = parser.parse(" cfe ");
+      expect(c3, equals(HexColor("ccffee")));
+      Color? c4 = parser.parse(" #cfe ");
+      expect(c4, equals(HexColor("ccffee")));
     });
     test("for a broad sample of legit hex codes", () {
       List<int> decimalSamples = [0, 1, 2, 126, 127, 128, 129, 254, 255];
-      String _base16Padded(int decimal) => decimal.toRadixString(16).padLeft(2, "0");
-      decimalSamples.forEach((r) =>
-          decimalSamples.forEach((g) =>
-              decimalSamples.forEach((b) =>
-                  expect(parser.parse("${_base16Padded(r)}${_base16Padded(g)}${_base16Padded(b)}"), equals(new RgbColor(r, g, b)))
-              )
-          )
-      );
+      String _base16Padded(int decimal) =>
+          decimal.toRadixString(16).padLeft(2, "0");
+      decimalSamples.forEach((r) => decimalSamples.forEach((g) =>
+          decimalSamples.forEach((b) => expect(
+              parser.parse(
+                  "${_base16Padded(r)}${_base16Padded(g)}${_base16Padded(b)}"),
+              equals(RgbColor(r, g, b))))));
     });
     test("from an explicit decimal rgb color", () {
-      Color c = parser.parse("rgb(119,136,153)");
-      expect(c, equals(new RgbColor(119,136,153)));
+      Color? c = parser.parse("rgb(119,136,153)");
+      expect(c, equals(RgbColor(119, 136, 153)));
     });
     test("from an implicit decimal rgb color", () {
-      Color c = parser.parse("72,61,139");
-      expect(c, equals(new RgbColor(72,61,139)));
+      Color? c = parser.parse("72,61,139");
+      expect(c, equals(RgbColor(72, 61, 139)));
     });
     test("from a decimal rgb color, irrespective of whitespace", () {
-      Color c = parser.parse(" 192 , 255  ,  238 ");
-      expect(c, equals(new HexColor("c0ffee")));
-      Color c2 = parser.parse(" rgb( 192 , 255  ,  238 ) ");
-      expect(c2, equals(new HexColor("c0ffee")));
+      Color? c = parser.parse(" 192 , 255  ,  238 ");
+      expect(c, equals(HexColor("c0ffee")));
+      Color? c2 = parser.parse(" rgb( 192 , 255  ,  238 ) ");
+      expect(c2, equals(HexColor("c0ffee")));
     });
     test("for a broad sample of legit decimal rgb values", () {
       List<int> decimalSamples = [0, 1, 2, 126, 127, 128, 129, 254, 255];
-      decimalSamples.forEach((r) =>
-          decimalSamples.forEach((g) =>
-              decimalSamples.forEach((b) =>
-                  expect(parser.parse("$r,$g,$b"), equals(new RgbColor(r, g, b)))
-              )
-          )
-      );
+      decimalSamples.forEach((r) => decimalSamples.forEach((g) =>
+          decimalSamples.forEach((b) =>
+              expect(parser.parse("$r,$g,$b"), equals(RgbColor(r, g, b))))));
     });
     test("from an explicit hsl color", () {
-      Color c = parser.parse("hsl(240,100%, 50%)");
-      expect(c, equals(new HslColor(240, 100, 50)));
+      Color? c = parser.parse("hsl(240,100%, 50%)");
+      expect(c, equals(HslColor(240, 100, 50)));
     });
     test("from an explicit hsl color, irrespective of whitespace", () {
-      Color c = parser.parse("  hsl(  240  ,  100%   , 50% )  ");
-      expect(c, equals(new HslColor(240, 100, 50)));
+      Color? c = parser.parse("  hsl(  240  ,  100%   , 50% )  ");
+      expect(c, equals(HslColor(240, 100, 50)));
     });
     test("from an explicit hsl color, with varying decimal formats", () {
-      Color c = parser.parse("hsl(0,0.25%,0.25%)");
-      expect(c, equals(new HslColor(0, 0.25, 0.25)));
-      Color c2 = parser.parse("hsl(0,.25%,.25%)");
-      expect(c2, equals(new HslColor(0, 0.25, 0.25)));
+      Color? c = parser.parse("hsl(0,0.25%,0.25%)");
+      expect(c, equals(HslColor(0, 0.25, 0.25)));
+      Color? c2 = parser.parse("hsl(0,.25%,.25%)");
+      expect(c2, equals(HslColor(0, 0.25, 0.25)));
     });
     test("for a broad sample of legit hsl values", () {
-      List<int> hueSamples = [0, 1, 2, 179, 180, 181, 359, 360, 361, 362, 719, 720];
-      List<double> percentSamples = [0.0, 0.1, 0.9, 49.0, 49.5, 50.0, 99.9999, 100.0];
-      hueSamples.forEach((h) =>
-          percentSamples.forEach((s) =>
-              percentSamples.forEach((l) =>
-                  expect(parser.parse("hsl($h,$s%,$l%)"), equals(new HslColor(h, s, l)))
-              )
-          )
-      );
+      List<int> hueSamples = [
+        0,
+        1,
+        2,
+        179,
+        180,
+        181,
+        359,
+        360,
+        361,
+        362,
+        719,
+        720
+      ];
+      List<double> percentSamples = [
+        0.0,
+        0.1,
+        0.9,
+        49.0,
+        49.5,
+        50.0,
+        99.9999,
+        100.0
+      ];
+      hueSamples.forEach((h) => percentSamples.forEach((s) =>
+          percentSamples.forEach((l) => expect(
+              parser.parse("hsl($h,$s%,$l%)"), equals(HslColor(h, s, l))))));
     });
     test("... or else there is a fallback", () {
-      Color c = parser.parse("amarillo");
+      Color? c = parser.parse("amarillo");
       expect(c, isNull);
-      Color c2 = parser.parse("azul", orElse: () => new HexColor("c0ffee"));
-      expect(c2, equals(new HexColor("c0ffee")));
+      Color? c2 = parser.parse("azul", orElse: () => HexColor("c0ffee"));
+      expect(c2, equals(HexColor("c0ffee")));
     });
   });
 }

@@ -7,7 +7,7 @@ class XyzColor extends Color {
 
   static const referenceWhite = const XyzColor(95.047, 100, 108.883);
 
-  const XyzColor(num this.x, num this.y, num this.z);
+  const XyzColor(this.x, this.y, this.z);
 
   RgbColor toRgbColor() {
     num x = this.x / 100;
@@ -26,10 +26,10 @@ class XyzColor extends Color {
       } else {
         rgb[key] = value * 12.92;
       }
-      rgb[key] *= 255;
+      rgb[key] = rgb[key]! * 255;
     });
 
-    return new RgbColor(rgb['r'], rgb['g'], rgb['b']);
+    return new RgbColor(rgb['r']!, rgb['g']!, rgb['b']!);
   }
 
   HslColor toHslColor() => this.toRgbColor().toHslColor();
@@ -42,8 +42,8 @@ class XyzColor extends Color {
     Map<String, num> lab = {};
     Map<String, num> xyz = {};
 
-    this.toMap().forEach((String key, num value) {
-      value /= referenceWhite[key];
+    this.toMap().forEach((String key, num? value) {
+      value = value! / referenceWhite[key];
 
       if (value > 0.008856) {
         value = pow(value, 1 / 3);
@@ -53,14 +53,14 @@ class XyzColor extends Color {
       xyz[key] = value;
     });
 
-    lab['l'] = (116 * xyz['y']) - 16;
-    lab['a'] = 500 * (xyz['x'] - xyz['y']);
-    lab['b'] = 200 * (xyz['y'] - xyz['z']);
+    lab['l'] = (116 * xyz['y']!) - 16;
+    lab['a'] = 500 * (xyz['x']! - xyz['y']!);
+    lab['b'] = 200 * (xyz['y']! - xyz['z']!);
 
-    return new CielabColor(lab['l'], lab['a'], lab['b']);
+    return new CielabColor(lab['l']!, lab['a']!, lab['b']!);
   }
 
   String toString() => "x: $x, y: $y, z: $z";
 
-  Map<String, num> toMap() => {'x': x, 'y': y, 'z': z};
+  Map<String, num?> toMap() => {'x': x, 'y': y, 'z': z};
 }
