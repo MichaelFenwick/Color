@@ -5,16 +5,17 @@ class XyzColor extends Color {
   final num y;
   final num z;
 
-  static const referenceWhite = const XyzColor(95.047, 100, 108.883);
+  static const referenceWhite = XyzColor(95.047, 100, 108.883);
 
-  const XyzColor(num this.x, num this.y, num this.z);
+  const XyzColor(this.x, this.y, this.z);
 
+  @override
   RgbColor toRgbColor() {
     num x = this.x / 100;
     num y = this.y / 100;
     num z = this.z / 100;
 
-    Map<String, num> rgb = {
+    var rgb = <String, num>{
       'r': x * 3.2406 + y * -1.5372 + z * -0.4986,
       'g': x * -0.9689 + y * 1.8758 + z * 0.0415,
       'b': x * 0.0557 + y * -0.2040 + z * 1.0570
@@ -29,20 +30,24 @@ class XyzColor extends Color {
       rgb[key] *= 255;
     });
 
-    return new RgbColor(rgb['r'], rgb['g'], rgb['b']);
+    return RgbColor(rgb['r'], rgb['g'], rgb['b']);
   }
 
-  HslColor toHslColor() => this.toRgbColor().toHslColor();
+  @override
+  HslColor toHslColor() => toRgbColor().toHslColor();
 
-  HsvColor toHsvColor() => this.toRgbColor().toHsvColor();
+  @override
+  HsvColor toHsvColor() => toRgbColor().toHsvColor();
 
+  @override
   XyzColor toXyzColor() => this;
 
+  @override
   CielabColor toCielabColor() {
-    Map<String, num> lab = {};
-    Map<String, num> xyz = {};
+    var lab = <String, num>{};
+    var xyz = <String, num>{};
 
-    this.toMap().forEach((String key, num value) {
+    toMap().forEach((String key, num value) {
       value /= referenceWhite[key];
 
       if (value > 0.008856) {
@@ -57,10 +62,12 @@ class XyzColor extends Color {
     lab['a'] = 500 * (xyz['x'] - xyz['y']);
     lab['b'] = 200 * (xyz['y'] - xyz['z']);
 
-    return new CielabColor(lab['l'], lab['a'], lab['b']);
+    return CielabColor(lab['l'], lab['a'], lab['b']);
   }
 
-  String toString() => "x: $x, y: $y, z: $z";
+  @override
+  String toString() => 'x: $x, y: $y, z: $z';
 
+  @override
   Map<String, num> toMap() => {'x': x, 'y': y, 'z': z};
 }

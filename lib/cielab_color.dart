@@ -5,22 +5,26 @@ class CielabColor extends Color {
   final num a;
   final num b;
 
-  const CielabColor(num this.l, num this.a, num this.b);
+  const CielabColor(this.l, this.a, this.b);
 
+  @override
   RgbColor toRgbColor() {
-    XyzColor xyz = toXyzColor();
+    var xyz = toXyzColor();
     return xyz.toRgbColor();
   }
 
-  HslColor toHslColor() => this.toRgbColor().toHslColor();
+  @override
+  HslColor toHslColor() => toRgbColor().toHslColor();
 
-  HsvColor toHsvColor() => this.toRgbColor().toHsvColor();
+  @override
+  HsvColor toHsvColor() => toRgbColor().toHsvColor();
 
+  @override
   XyzColor toXyzColor() {
-    Map<String, num> xyz = {'x': a / 500 + (l + 16) / 116, 'y': (l + 16) / 116, 'z': (l + 16) / 116 - b / 200};
+    var xyz = <String, num>{'x': a / 500 + (l + 16) / 116, 'y': (l + 16) / 116, 'z': (l + 16) / 116 - b / 200};
 
     xyz.forEach((key, value) {
-      num cube = pow(value, 3);
+      var cube = pow(value, 3);
       if (cube > 0.008856) {
         xyz[key] = cube;
       } else {
@@ -29,12 +33,15 @@ class CielabColor extends Color {
       xyz[key] *= XyzColor.referenceWhite[key];
     });
 
-    return new XyzColor(xyz['x'], xyz['y'], xyz['z']);
+    return XyzColor(xyz['x'], xyz['y'], xyz['z']);
   }
 
+  @override
   CielabColor toCielabColor() => this;
 
-  String toString() => "l: $l, a: $a, b: $b";
+  @override
+  String toString() => 'l: $l, a: $a, b: $b';
 
+  @override
   Map<String, num> toMap() => {'l': l, 'a': a, 'b': b};
 }

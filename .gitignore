@@ -5,7 +5,7 @@
 .pub/
 
 build/
-
+pubspec.lock
 
 .
 .project

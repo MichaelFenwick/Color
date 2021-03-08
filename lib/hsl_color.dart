@@ -11,22 +11,21 @@ class HslColor extends Color implements CssColorSpace {
   static const num sMax = 100;
   static const num lMax = 100;
 
-  /**
-   * Creates a [HslColor] using a vector describing its hue, saturation, and
-   * luminance.
-   *
-   * The [hue] is given as a number in degrees, typically ranging in value
-   * between 0 and 360.  Values outside of this converted as `hue % 360` to
-   * be fit into the standard angle range.
-   *
-   * The [saturation] is given as a percentage between 0 and 100 (inclusive).
-   *
-   * The [luminance] is given as a percentage between 0 and 100 (inclusive).
-   */
-  const HslColor(num this.h, num this.s, num this.l);
+  /// Creates a [HslColor] using a vector describing its hue, saturation, and
+  /// luminance.
+  ///
+  /// The [hue] is given as a number in degrees, typically ranging in value
+  /// between 0 and 360.  Values outside of this converted as `hue % 360` to
+  /// be fit into the standard angle range.
+  ///
+  /// The [saturation] is given as a percentage between 0 and 100 (inclusive).
+  ///
+  /// The [luminance] is given as a percentage between 0 and 100 (inclusive).
+  const HslColor(this.h, this.s, this.l);
 
+  @override
   RgbColor toRgbColor() {
-    List<num> rgb = [0, 0, 0];
+    var rgb = <num>[0, 0, 0];
 
     num hue = h / 360 % 1;
     num saturation = s / 100;
@@ -62,28 +61,35 @@ class HslColor extends Color implements CssColorSpace {
 
     rgb = rgb.map((val) => (val * 255).round()).toList();
 
-    return new RgbColor(rgb[0], rgb[1], rgb[2]);
+    return RgbColor(rgb[0], rgb[1], rgb[2]);
   }
 
+  @override
   HslColor toHslColor() => this;
 
+  @override
   HsvColor toHsvColor() {
     num hslSaturation = s / 100;
     num lightness = l / 100;
 
-    num value = lightness + hslSaturation * min(lightness, 1 - lightness);
-    num saturation = value == 0 ? 0 : 2 * (1 - lightness / value);
+    var value = lightness + hslSaturation * min(lightness, 1 - lightness);
+    var saturation = value == 0 ? 0 : 2 * (1 - lightness / value);
 
     return HsvColor(h, saturation * 100, value * 100);
   }
 
-  XyzColor toXyzColor() => this.toRgbColor().toXyzColor();
+  @override
+  XyzColor toXyzColor() => toRgbColor().toXyzColor();
 
-  CielabColor toCielabColor() => this.toRgbColor().toXyzColor().toCielabColor();
+  @override
+  CielabColor toCielabColor() => toRgbColor().toXyzColor().toCielabColor();
 
-  String toString() => "h: $h, s: $s%, l: $l%";
+  @override
+  String toString() => 'h: $h, s: $s%, l: $l%';
 
+  @override
   String toCssString() => 'hsl($h, $s%, $l%)';
 
+  @override
   Map<String, num> toMap() => {'h': h, 's': s, 'l': l};
 }

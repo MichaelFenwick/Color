@@ -1,43 +1,43 @@
-0.1.0
------
+## 0.1.0
+
 * Creation of the Color class supporting rgb colors.
 
-0.2.0
------
+## 0.2.0
+
 * Added hex support and conversion functions.
 
-0.3.0
------
+## 0.3.0
+
 * Added hsl support and conversion functions.
 
-0.3.1
------
+## 0.3.1
+
 * Resolved bug where Color.toHexString() was not prepending each byte with 0s as appropriate.
 * Added Color.toRgbString() as an alias for Color.toSting().
 
-1.0.0
------
+## 1.0.0
+
 * Major refactor which will break code using earlier versions.
 * Refactored to pull each color space into its own subclass extending a base Color class.
 
-1.1.0
------
+## 1.1.0
+
 * Added XYZ color space support with bidirectional conversions between XYZ and RGB color spaces.
 
-1.2.0
------
+## 1.2.0
+
 * Added CIELAB color space support with bidirectional conversions with the XYZ color space (and the RGB color space using XYZ as an intermediary).
 
-1.3.0
------
+## 1.3.0
+
 * Added toXXXColor() conversion methods for all possible color space transitions.
 * Added Color.clone() method to make a copy of a Color object.
 * Added toCssString() method to RGB, Hex, and HSL colors for easier use with CSS.
 * Added ColorFilters to alter colors according to various filtering rules.
 * Added a demo page to test the package and see the effect of filters.
 
-2.0.0
------
+## 2.0.0
+
 * Color and all subclasses now implement a const constructor.
 * Colors are no longer mutable, and all conversion and filter methods return new Color objects.
 * Removed the Color.clone() method (this was only generally useful when Colors were mutable).
@@ -47,10 +47,15 @@
 * Added a Color.toHexColor() method for easier conversion to the HexColor class.
 * Added a CssColorSpace interface for the color spaces which have representation in the CSS standard (RGB, HEX, and HSL).
 
-2.0.1
------
+## 2.0.1
+
 * Removed a switch statement that was preventing dart2js compilation.
 
-2.2.0
------
+## 2.2.0
+
 * Added hsv support and conversion functions.
+
+## 2.2.1
+
+* Added pedantic analysis options and updated code to resolve warnings raised by it.
+* Renamed changelog so that pub can see it properly.
