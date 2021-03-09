@@ -50,7 +50,13 @@ abstract class Color {
   @override
   bool operator ==(Object other) => other is Color && hashCode == other.hashCode;
 
-  num operator [](String key) => toMap()[key];
+  num operator [](String key) {
+    var thisAsMap = toMap();
+    if (!thisAsMap.containsKey(key)) {
+      throw ArgumentError('`$key` is not a valid key for a $runtimeType');
+    }
+    return thisAsMap[key]!;
+  }
 
   Color _convert(Type colorType) {
     if (colorType is RgbColor) {

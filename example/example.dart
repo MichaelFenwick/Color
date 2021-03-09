@@ -2,10 +2,10 @@ import 'dart:html';
 
 import 'package:color/color.dart';
 
-Element body = querySelector('body');
+Element body = querySelector('body')!;
 
 void main() {
-  addGrid('Normal');
+  addGrid('Normal', ColorFilter.identity);
   addGrid('Sepia', ColorFilter.sepia);
   addGrid('Greyscale', ColorFilter.greyscale);
   addGrid('Inverted', ColorFilter.invert);
@@ -13,7 +13,7 @@ void main() {
   addGrid('Darkened (20%)', ColorFilter.darken, [.2]);
 }
 
-void addGrid(String name, [ColorFilter filter, List<num> filterArgs = const []]) {
+void addGrid(String name, ColorFilter filter, [List<num> filterArgs = const []]) {
   body.appendText(name);
   var grid = Element.div()..classes.add('grid');
   body.append(grid);
@@ -24,9 +24,7 @@ void addGrid(String name, [ColorFilter filter, List<num> filterArgs = const []])
     for (num a = -128; a <= 127; a += step) {
       for (num b = -128; b <= 127; b += step) {
         var color = CielabColor(l, a, b);
-        if (filter != null) {
-          color = filter(color, filterArgs) as CielabColor;
-        }
+        color = filter(color, filterArgs) as CielabColor;
         block.append(Element.div()
           ..classes.add('color-block')
           ..style.background = color.toRgbColor().toCssString());

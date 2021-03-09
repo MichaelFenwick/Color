@@ -20,12 +20,11 @@ class RgbColor extends Color implements CssColorSpace {
   const RgbColor(this.r, this.g, this.b);
 
   factory RgbColor.name(String name) {
-    if (RgbColor.namedColors.containsKey(name)) {
-      return RgbColor.namedColors[name];
-    } else {
+    if (!RgbColor.namedColors.containsKey(name)) {
       throw ArgumentError(
           'Only the color names defined by the CSS3 spec are supported. See http://www.w3.org/TR/css3-color/#svg-color for a list of valid color names.');
     }
+    return RgbColor.namedColors[name]!;
   }
 
   @override
@@ -33,9 +32,9 @@ class RgbColor extends Color implements CssColorSpace {
 
   @override
   HslColor toHslColor() {
-    num rf = r / 255;
-    num gf = g / 255;
-    num bf = b / 255;
+    var rf = r / 255;
+    var gf = g / 255;
+    var bf = b / 255;
     var cMax = [rf, gf, bf].reduce(max);
     var cMin = [rf, gf, bf].reduce(min);
     var delta = cMax - cMin;
@@ -79,12 +78,12 @@ class RgbColor extends Color implements CssColorSpace {
       } else {
         rgb[key] = value / 12.92;
       }
-      rgb[key] *= 100;
+      rgb[key] = rgb[key]! * 100;
     });
 
-    var x = rgb['r'] * 0.4124 + rgb['g'] * 0.3576 + rgb['b'] * 0.1805;
-    var y = rgb['r'] * 0.2126 + rgb['g'] * 0.7152 + rgb['b'] * 0.0722;
-    var z = rgb['r'] * 0.0193 + rgb['g'] * 0.1192 + rgb['b'] * 0.9505;
+    var x = rgb['r']! * 0.4124 + rgb['g']! * 0.3576 + rgb['b']! * 0.1805;
+    var y = rgb['r']! * 0.2126 + rgb['g']! * 0.7152 + rgb['b']! * 0.0722;
+    var z = rgb['r']! * 0.0193 + rgb['g']! * 0.1192 + rgb['b']! * 0.9505;
 
     return XyzColor(x, y, z);
   }

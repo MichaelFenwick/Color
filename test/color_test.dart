@@ -157,9 +157,9 @@ void main() {
     });
   });
   group('Colors can be compared to each other ', () {
-    Color coffee1;
-    Color coffee2;
-    Color tea;
+    late Color coffee1;
+    late Color coffee2;
+    late Color tea;
     setUp(() {
       coffee1 = Color.hex('c0ffee');
       coffee2 = Color.hex('c0ffee');
@@ -175,12 +175,12 @@ void main() {
     });
   });
   group('Colors can be converted', () {
-    RgbColor rgb;
-    HexColor hex;
-    HslColor hsl;
-    HsvColor hsv;
-    XyzColor xyz;
-    CielabColor cielab;
+    late RgbColor rgb;
+    late HexColor hex;
+    late HslColor hsl;
+    late HsvColor hsv;
+    late XyzColor xyz;
+    late CielabColor cielab;
     setUp(() {
       rgb = const RgbColor(192, 255, 238);
       hex = HexColor('c0ffee');

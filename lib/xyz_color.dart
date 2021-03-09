@@ -27,10 +27,10 @@ class XyzColor extends Color {
       } else {
         rgb[key] = value * 12.92;
       }
-      rgb[key] *= 255;
+      rgb[key] = rgb[key]! * 255;
     });
 
-    return RgbColor(rgb['r'], rgb['g'], rgb['b']);
+    return RgbColor(rgb['r']!, rgb['g']!, rgb['b']!);
   }
 
   @override
@@ -58,11 +58,11 @@ class XyzColor extends Color {
       xyz[key] = value;
     });
 
-    lab['l'] = (116 * xyz['y']) - 16;
-    lab['a'] = 500 * (xyz['x'] - xyz['y']);
-    lab['b'] = 200 * (xyz['y'] - xyz['z']);
+    lab['l'] = (116 * xyz['y']!) - 16;
+    lab['a'] = 500 * (xyz['x']! - xyz['y']!);
+    lab['b'] = 200 * (xyz['y']! - xyz['z']!);
 
-    return CielabColor(lab['l'], lab['a'], lab['b']);
+    return CielabColor(lab['l']!, lab['a']!, lab['b']!);
   }
 
   @override

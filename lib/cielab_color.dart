@@ -30,10 +30,10 @@ class CielabColor extends Color {
       } else {
         xyz[key] = (value - 16 / 116) / 7.787;
       }
-      xyz[key] *= XyzColor.referenceWhite[key];
+      xyz[key] = xyz[key]! * XyzColor.referenceWhite[key];
     });
 
-    return XyzColor(xyz['x'], xyz['y'], xyz['z']);
+    return XyzColor(xyz['x']!, xyz['y']!, xyz['z']!);
   }
 
   @override
