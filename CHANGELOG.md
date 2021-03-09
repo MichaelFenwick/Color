@@ -60,6 +60,6 @@
 * Added pedantic analysis options and updated code to resolve warnings raised by it.
 * Renamed changelog so that pub can see it properly.
 
-## 2.3.0
+## 3.0.0
 
 * Updated code for null safety.
